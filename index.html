@@ -29,7 +29,6 @@
       sizes="16x16"
       href="assets/favicon/favicon-16x16.png"
     />
-    <link rel="manifest" href="/site.webmanifest" />
     <!-- CSS -->
     <link rel="stylesheet" href="src/css/styles.css" />
     <!-- Bootstrap CSS -->
@@ -55,9 +54,9 @@
   </head>
   <body>
     <!-- Header -->
-    <header>
-      <div id="logo">
-        <img src="assets/images/logo.png" alt="Auction House logo" />
+    <header class="d-flex justify-content-between px-2 px-sm-3 px-lg-5">
+      <div class="logo-img">
+        <img id="logo" src="assets/images/logo.png" alt="Auction House logo" />
       </div>
       <form role="search" class="search-form">
         <input
@@ -68,24 +67,38 @@
         />
       </form>
       <!-- Desktop navbar -->
-      <nav class="desktop-nav">
+      <nav class="desktop-nav d-none d-sm-flex">
         <!-- Logged out links -->
-        <a href="html/login.html" class="nav-link logged-out"></a>
-        <a href="html/register.html" class="nav-link logged-out"></a>
+        <a href="html/login.html" class="nav-link logged-out d-inline-block"
+          >Login</a
+        >
+        <a href="html/register.html" class="nav-link logged-out d-inline-block"
+          >Register</a
+        >
 
         <!-- Logged in links -->
-        <a href="html/profile.html" class="nav-link logged-in">Profile</a>
-        <a href="#" class="nav-link logged-in" id="logout">Logout</a>
+        <a href="html/profile.html" class="nav-link logged-in d-none"
+          >Profile</a
+        >
+        <a href="#" class="nav-link logged-in d-none" id="logout">Logout</a>
+        <div id="user-credits" class="nav-credits d-none"></div>
       </nav>
       <!-- Mobile navbar -->
-      <nav class="mobile-nav">
+      <nav class="mobile-nav d-sm-none">
         <!-- Logged out links -->
-        <a href="html/login.html" class="nav-link logged-out"></a>
-        <a href="html/register.html" class="nav-link logged-out"></a>
+        <a href="html/login.html" class="nav-link logged-out d-inline-block"
+          >Login</a
+        >
+        <a href="html/register.html" class="nav-link logged-out d-inline-block"
+          >Register</a
+        >
 
         <!-- Logged in links -->
-        <a href="html/profile.html" class="nav-link logged-in">Profile</a>
-        <a href="#" class="nav-link logged-in" id="logout">Logout</a>
+        <a href="html/profile.html" class="nav-link logged-in d-none"
+          >Profile</a
+        >
+        <a href="#" class="nav-link logged-in d-none" id="logout">Logout</a>
+        <div id="user-credits" class="nav-credits d-none"></div>
       </nav>
     </header>
     <!-- Main content -->

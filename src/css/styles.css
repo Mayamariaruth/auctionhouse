@@ -1,0 +1,16 @@
+#logo {
+  width: 167px;
+  height: auto;
+}
+
+@media (min-width: 576px) {
+  #logo {
+    width: 200px;
+  }
+}
+
+@media (min-width: 768px) {
+  #logo {
+    width: 230px;
+  }
+}
