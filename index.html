@@ -62,7 +62,7 @@
       </div>
       <form
         role="search"
-        class="search-form flex-grow-1 mx-3 position-relative"
+        class="search-form flex-grow-1 mx-3 position-relative d-none d-md-flex"
       >
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
         <input
@@ -75,7 +75,7 @@
       </form>
 
       <!-- Desktop navbar -->
-      <nav class="desktop-nav d-none d-sm-flex align-items-center">
+      <nav class="desktop-nav d-none d-md-flex align-items-center">
         <!-- Logged out links -->
         <a
           href="html/login.html"
@@ -100,21 +100,42 @@
         <div id="user-credits" class="nav-credits d-none"></div>
       </nav>
       <!-- Mobile navbar -->
-      <nav class="mobile-nav d-sm-none">
-        <!-- Logged out links -->
-        <a href="html/login.html" class="nav-link logged-out d-inline-block"
-          >Login</a
-        >
-        <a href="html/register.html" class="nav-link logged-out d-inline-block"
-          >Register</a
-        >
+      <nav class="mobile-nav d-md-none position-relative">
+        <!-- Hamburger button -->
+        <button id="mobile-menu-toggle" class="btn btn-link p-0">
+          <i class="fa-solid fa-bars fa-2x"></i>
+        </button>
 
-        <!-- Logged in links -->
-        <a href="html/profile.html" class="nav-link logged-in d-none"
-          >Profile</a
+        <!-- Menu links -->
+        <div
+          id="mobile-menu"
+          class="mobile-menu d-none flex-column mt-2 bg-white border border-secondary rounded shadow-sm p-3"
         >
-        <a href="#" class="nav-link logged-in d-none" id="logout">Logout</a>
-        <div id="user-credits" class="nav-credits d-none"></div>
+          <!-- Mobile search form -->
+          <form
+            role="search"
+            class="search-form position-relative mb-3 d-flex d-md-none"
+          >
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input
+              type="search"
+              name="query"
+              class="form-control search-input ps-5"
+              placeholder="Search by title or category..."
+              aria-label="Search listings"
+            />
+          </form>
+
+          <!-- Mobile nav links (logged out)-->
+          <a href="html/login.html" class="nav-link logged-out">Login</a>
+          <a href="html/register.html" class="nav-link logged-out">Register</a>
+          <!-- Logged in links -->
+          <a href="html/profile.html" class="nav-link logged-in d-none"
+            >Profile</a
+          >
+          <a href="#" class="nav-link logged-in d-none" id="logout">Logout</a>
+          <div id="user-credits" class="nav-credits d-none mt-2"></div>
+        </div>
       </nav>
     </header>
     <!-- Main content -->

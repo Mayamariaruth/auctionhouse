@@ -3,6 +3,8 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+/* Navigation */
+
 header {
   box-shadow: 0 2px 8px rgba(99, 99, 99, 0.2);
 }
@@ -34,6 +36,11 @@ header {
   transform: translateY(-50%);
   color: #717171;
   pointer-events: none;
+}
+
+#mobile-menu-toggle {
+  color: #000;
+  font-size: 15px;
 }
 
 @media (min-width: 576px) {
