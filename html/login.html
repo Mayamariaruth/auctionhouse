@@ -154,13 +154,46 @@
       </nav>
     </header>
     <!-- Main content -->
-    <main class="flex-grow-1">
-      <section>
-        <h1></h1>
+    <main class="flex-grow-1 mb-5">
+      <section class="title-section">
+        <h1>Login</h1>
+      </section>
+      <section class="auth-form d-flex flex-column">
+        <h2 class="fs-4">Log in to your account</h2>
+        <p>
+          Don’t have an account yet? Register
+          <a href="register.html" class="fw-bold">here</a>
+        </p>
+        <form method="POST" id="login" novalidate>
+          <div class="d-flex flex-column">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="kalle@stud.noroff.no"
+              required
+            />
+            <span class="error-message" id="email-error"></span>
+          </div>
+          <div class="d-flex flex-column">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="••••••••"
+              required
+            />
+            <span class="error-message" id="password-error"></span>
+          </div>
+          <p id="forgot-text">Forgot password?</p>
+          <button type="submit" class="form-btn">Login</button>
+        </form>
       </section>
     </main>
     <!-- Footer -->
-    <footer>
+    <footer class="mt-5">
       <p>© 2025 Auction House</p>
     </footer>
     <!-- Bootstrap JS -->
