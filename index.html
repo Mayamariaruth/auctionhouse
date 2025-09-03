@@ -99,23 +99,50 @@
         >
         <div id="user-credits" class="nav-credits d-none"></div>
       </nav>
+
       <!-- Mobile navbar -->
       <nav class="mobile-nav d-md-none position-relative">
-        <!-- Hamburger button -->
-        <button id="mobile-menu-toggle" class="btn btn-link p-0">
-          <i class="fa-solid fa-bars fa-2x"></i>
+        <button
+          id="mobile-menu-toggle"
+          class="btn btn-link p-0 position-relative"
+        >
+          <i class="fa-solid fa-bars fa-2x" id="menu-icon"></i>
         </button>
 
-        <!-- Menu links -->
+        <!-- Full screen mobile menu -->
         <div
           id="mobile-menu"
-          class="mobile-menu d-none flex-column mt-2 bg-white border border-secondary rounded shadow-sm p-3"
+          class="position-fixed top-0 start-0 w-100 h-100 bg-white d-none flex-column p-4"
         >
-          <!-- Mobile search form -->
-          <form
-            role="search"
-            class="search-form position-relative mb-3 d-flex d-md-none"
-          >
+          <!-- Nav links (logged out) -->
+          <div class="d-flex flex-column align-items-center gap-3 mt-5">
+            <a
+              href="html/login.html"
+              class="nav-link logged-out fs-5 fw-semibold"
+              >Login</a
+            >
+            <a
+              href="html/register.html"
+              class="nav-link logged-out fs-5 fw-semibold"
+              >Register</a
+            >
+            <!-- Logged in links -->
+            <a
+              href="html/profile.html"
+              class="nav-link logged-in d-none fs-5 fw-semibold"
+              >Profile</a
+            >
+            <a
+              href="#"
+              class="nav-link logged-in d-none fs-5 fw-semibold"
+              id="logout"
+              >Logout</a
+            >
+            <div id="user-credits" class="nav-credits d-none mt-3"></div>
+          </div>
+
+          <!-- Search form -->
+          <form role="search" class="search-form position-relative mt-5">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
             <input
               type="search"
@@ -125,16 +152,6 @@
               aria-label="Search listings"
             />
           </form>
-
-          <!-- Mobile nav links (logged out)-->
-          <a href="html/login.html" class="nav-link logged-out">Login</a>
-          <a href="html/register.html" class="nav-link logged-out">Register</a>
-          <!-- Logged in links -->
-          <a href="html/profile.html" class="nav-link logged-in d-none"
-            >Profile</a
-          >
-          <a href="#" class="nav-link logged-in d-none" id="logout">Logout</a>
-          <div id="user-credits" class="nav-credits d-none mt-2"></div>
         </div>
       </nav>
     </header>
