@@ -47,6 +47,19 @@ header {
   z-index: 1050;
 }
 
+/* Footer */
+footer {
+  border-top: solid #ebebeb 2px;
+}
+
+footer p {
+  color: #717171;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 300;
+}
+
 @media (min-width: 576px) {
   #logo {
     width: 200px;
@@ -75,5 +88,9 @@ header {
 
   .desktop-nav .nav-link {
     padding: 10px 30px;
+  }
+
+  footer p {
+    font-size: 16px;
   }
 }
