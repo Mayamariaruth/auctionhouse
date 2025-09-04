@@ -1,0 +1,19 @@
+#add-listing-btn {
+  background-color: #6b3d47;
+  color: white;
+  border: none;
+  padding: 9px 35px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+@media (min-width: 998px) {
+  #add-listing-btn {
+    font-size: 18px;
+    padding: 11px 55px;
+  }
+
+  .fa-plus {
+    font-size: 20px;
+  }
+}

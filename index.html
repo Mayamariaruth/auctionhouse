@@ -57,9 +57,9 @@
     <header
       class="d-flex justify-content-between align-items-center gap-sm-4 gap-lg-5 pt-3 pt-sm-4 px-3 px-sm-4 px-lg-5 pb-4"
     >
-      <div class="logo-img">
+      <a href="index.html">
         <img id="logo" src="assets/images/logo.png" alt="Auction House logo" />
-      </div>
+      </a>
       <form
         role="search"
         class="search-form flex-grow-1 mx-3 position-relative d-none d-md-flex"
@@ -157,8 +157,22 @@
     </header>
     <!-- Main content -->
     <main class="flex-grow-1">
-      <section>
-        <h1></h1>
+      <section class="title-section">
+        <h1>Listings</h1>
+      </section>
+      <section class="page-container">
+        <!-- Add Listing button -->
+        <div class="d-none justify-content-center">
+          <button id="add-listing-btn">
+            <i class="fa-solid fa-plus"></i> Add Listing
+          </button>
+        </div>
+
+        <!-- Listings grid -->
+        <div id="listings" class="row g-4"></div>
+
+        <!-- Pagination -->
+        <div id="pagination"></div>
       </section>
     </main>
     <!-- Footer -->

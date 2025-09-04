@@ -1,5 +1,5 @@
 @import url("./auth.css");
-@import url("./listing.css");
+@import url("./listings.css");
 @import url("./modals.css");
 @import url("./profile.css");
 
@@ -19,6 +19,13 @@ body {
 .title-section h1 {
   font-weight: bold;
   font-size: 24px;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 /* Navigation */
@@ -80,6 +87,11 @@ footer p {
 }
 
 @media (min-width: 576px) {
+  .page-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   #logo {
     width: 200px;
   }
@@ -101,6 +113,11 @@ footer p {
 }
 
 @media (min-width: 998px) {
+  .page-container {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
   .title-section {
     padding: 25px 0;
   }
@@ -123,6 +140,11 @@ footer p {
 }
 
 @media (min-width: 1200px) {
+  .page-container {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
   .title-section {
     padding: 30px 0;
   }
