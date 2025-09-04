@@ -23,6 +23,14 @@
 
 .auth-form input {
   height: 38px;
+  background-color: #fafafa;
+  border: solid #b5b4b4 1px;
+  padding-left: 15px;
+}
+
+.auth-form input::placeholder {
+  color: #b2b2b2;
+  font-weight: 300;
 }
 
 .auth-form input:focus {
@@ -55,6 +63,19 @@
 .form-btn:hover {
   background-color: #6b3d47;
   color: white;
+  border: none;
+}
+
+/* Validation */
+.error-message {
+  color: #f93232;
+  font-size: 14px;
+  margin-top: 8px;
+  display: none;
+}
+
+.error-message.active {
+  display: block;
 }
 
 @media (min-width: 998px) {
@@ -69,6 +90,10 @@
   .form-btn,
   .auth-form input {
     height: 44px;
+  }
+
+  .error-message {
+    font-size: 16px;
   }
 }
 
