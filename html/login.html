@@ -159,13 +159,13 @@
         <h1>Login</h1>
       </section>
       <section class="auth-form d-flex flex-column">
-        <h2 class="fs-4">Log in to your account</h2>
+        <h2>Log in to your account</h2>
         <p>
           Don’t have an account yet? Register
           <a href="register.html" class="fw-bold">here</a>
         </p>
         <form method="POST" id="login" novalidate>
-          <div class="d-flex flex-column">
+          <div class="d-flex flex-column mb-3">
             <label for="email">Email</label>
             <input
               type="email"
@@ -187,7 +187,7 @@
             />
             <span class="error-message" id="password-error"></span>
           </div>
-          <p id="forgot-text">Forgot password?</p>
+          <p class="forgot-text text-end mt-3 mb-4">Forgot password?</p>
           <button type="submit" class="form-btn">Login</button>
         </form>
       </section>
