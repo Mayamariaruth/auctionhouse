@@ -1,0 +1,57 @@
+<!-- Edit Profile Modal -->
+<div
+  class="modal fade"
+  id="edit-profile-modal"
+  tabindex="-1"
+  aria-labelledby="edit-profile-modal-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header">
+        <h2 class="modal-title" id="edit-profile-modal-label">
+          Edit Profile Details
+        </h2>
+      </div>
+      <!-- Form -->
+      <div class="modal-body">
+        <form id="edit-profile-form">
+          <!-- Banner field -->
+          <div class="mb-3">
+            <label for="profile-banner" class="form-label"
+              >Banner (URL link)</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="profile-banner"
+              required
+            />
+          </div>
+
+          <!-- Avatar field -->
+          <div class="mb-3">
+            <label for="profile-avatar" class="form-label"
+              >Avatar (URL link)</label
+            >
+            <input type="text" class="form-control" id="profile-avatar" />
+          </div>
+
+          <!-- Bio field -->
+          <div class="mb-3">
+            <label for="profile-bio" class="form-label">Bio</label>
+            <textarea class="form-control" id="profile-bio" rows="3"></textarea>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex flex-column gap-2">
+            <button type="submit" class="confirm-btn">Save</button>
+            <button type="button" class="cancel-btn" data-bs-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
