@@ -155,8 +155,30 @@
     </header>
     <!-- Main content -->
     <main class="flex-grow-1">
-      <section>
-        <h1></h1>
+      <!-- Page title -->
+      <section class="title-section">
+        <h1>Profile</h1>
+      </section>
+      <!-- Profile details -->
+      <section class="page-container">
+        <section class="profile-header position-relative mb-4">
+          <div id="profile-banner-wrapper">
+            <img id="profile-banner" src="" alt="Profile Banner" />
+          </div>
+          <div id="profile-avatar-wrapper" class="position-absolute">
+            <img id="profile-avatar" src="" alt="Profile Avatar" />
+          </div>
+          <div id="profile-info" class="mt-5">
+            <div>
+              <button id="edit-profile-btn">
+                <i class="fa-solid fa-pen"></i> Edit Details
+              </button>
+            </div>
+            <h1 id="profile-name"></h1>
+            <p id="profile-bio"></p>
+            <p id="profile-credits"></p>
+          </div>
+        </section>
       </section>
     </main>
     <!-- Footer -->

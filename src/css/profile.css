@@ -1,0 +1,13 @@
+#edit-profile-btn {
+  color: #717171;
+  font-weight: 300;
+  font-size: 14px;
+  border: none;
+  background-color: transparent;
+}
+
+@media (min-width: 998px) {
+  #edit-profile-btn {
+    font-size: 16px;
+  }
+}
