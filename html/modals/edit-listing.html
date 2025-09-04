@@ -1,0 +1,83 @@
+<!-- Edit Listing Modal -->
+<div
+  class="modal fade"
+  id="edit-listing-modal"
+  tabindex="-1"
+  aria-labelledby="edit-listing-modal-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header">
+        <h2 class="modal-title" id="edit-listing-modal-label">Edit Listing</h2>
+      </div>
+      <!-- Form -->
+      <div class="modal-body">
+        <form id="edit-listing-form">
+          <!-- Image field -->
+          <div class="mb-3">
+            <label for="edit-listing-image" class="form-label"
+              >Image (URL link)</label
+            >
+            <input type="text" class="form-control" id="edit-listing-image" />
+          </div>
+
+          <!-- Title field -->
+          <div class="mb-3">
+            <label for="edit-listing-title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="edit-listing-title"
+              required
+            />
+          </div>
+
+          <!-- Description field -->
+          <div class="mb-3">
+            <label for="edit-listing-description" class="form-label"
+              >Description</label
+            >
+            <textarea
+              class="form-control"
+              id="edit-listing-description"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <!-- Tags field -->
+          <div class="mb-3">
+            <label for="listing-tags" class="form-label">Tags</label>
+            <input
+              type="text"
+              class="form-control"
+              id="listing-tags"
+              name="tags"
+            />
+          </div>
+
+          <!-- Deadline field -->
+          <div class="mb-3">
+            <label for="edit-listing-deadline" class="form-label"
+              >Deadline</label
+            >
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="edit-listing-deadline"
+              required
+            />
+          </div>
+          <!-- Buttons -->
+          <div class="d-flex flex-column gap-2">
+            <button type="submit" class="confirm-btn">Save</button>
+            <button type="button" class="cancel-btn" data-bs-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
