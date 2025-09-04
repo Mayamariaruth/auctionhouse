@@ -1,0 +1,78 @@
+<!-- Add Listing Modal -->
+<div
+  class="modal fade"
+  id="add-listing-modal"
+  tabindex="-1"
+  aria-labelledby="add-listing-modal-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header">
+        <h2 class="modal-title" id="add-listing-modal-label">Add Listing</h2>
+      </div>
+      <!-- Form -->
+      <div class="modal-body">
+        <form id="add-listing-form">
+          <!-- Image field -->
+          <div class="mb-3">
+            <label for="listing-image" class="form-label"
+              >Image (URL link)</label
+            >
+            <input type="text" class="form-control" id="listing-image" />
+          </div>
+          <!-- Title field -->
+          <div class="mb-3">
+            <label for="listing-title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="listing-title"
+              required
+            />
+          </div>
+          <!-- Description field -->
+          <div class="mb-3">
+            <label for="listing-description" class="form-label"
+              >Description</label
+            >
+            <textarea
+              class="form-control"
+              id="listing-description"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <!-- Tags field -->
+          <div class="mb-3">
+            <label for="listing-tags" class="form-label">Tags</label>
+            <input
+              type="text"
+              class="form-control"
+              id="listing-tags"
+              name="tags"
+              placeholder="Add tags, separated by commas (e.g., vintage, rare)"
+            />
+          </div>
+          <!-- Deadline field -->
+          <div class="mb-3">
+            <label for="listing-deadline" class="form-label">Deadline</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="listing-deadline"
+              required
+            />
+          </div>
+          <!-- Buttons -->
+          <div class="d-flex flex-column gap-2">
+            <button type="submit" class="confirm-btn">Add</button>
+            <button type="button" class="cancel-btn" data-bs-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+.confirm-btn {
+  background-color: #6b3d47;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#confirm-delete-btn {
+  background-color: #f93232;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#confirm-delete-btn:hover {
+  background-color: white;
+  color: black;
+  border: solid #f93232 1px;
+}
+
+.cancel-btn {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+@media (min-width: 998px) {
+  .confirm-btn,
+  #confirm-delete-btn,
+  .cancel-btn {
+    font-size: 18px;
+  }
+}
