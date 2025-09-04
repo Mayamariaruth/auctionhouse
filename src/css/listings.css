@@ -4,6 +4,13 @@
   border: none;
   padding: 9px 35px;
   font-weight: bold;
+}
+
+.back-btn {
+  color: #717171;
+  text-decoration: none;
+  font-weight: 300;
+  font-weight: 300;
   font-size: 14px;
 }
 
@@ -15,5 +22,9 @@
 
   .fa-plus {
     font-size: 20px;
+  }
+
+  .back-btn {
+    font-size: 16px;
   }
 }

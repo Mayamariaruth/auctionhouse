@@ -155,9 +155,11 @@
     </header>
     <!-- Main content -->
     <main class="flex-grow-1 mb-5">
+      <!-- Page title -->
       <section class="title-section">
         <h1>Login</h1>
       </section>
+      <!-- Login form -->
       <section class="auth-form d-flex flex-column">
         <h2>Log in to your account</h2>
         <p>
@@ -165,6 +167,7 @@
           <a href="register.html" class="fw-bold">here</a>
         </p>
         <form method="POST" id="login" novalidate>
+          <!-- Email field -->
           <div class="d-flex flex-column mb-3">
             <label for="email">Email</label>
             <input
@@ -176,6 +179,7 @@
             />
             <span class="error-message" id="email-error"></span>
           </div>
+          <!-- Password field -->
           <div class="d-flex flex-column">
             <label for="password">Password</label>
             <input
@@ -188,6 +192,7 @@
             <span class="error-message" id="password-error"></span>
           </div>
           <p class="forgot-text text-end mt-3 mb-4">Forgot password?</p>
+          <!-- Submit button -->
           <button type="submit" class="form-btn">Login</button>
         </form>
       </section>
