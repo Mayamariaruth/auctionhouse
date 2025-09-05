@@ -3,8 +3,13 @@ import { apiFetch } from "../request.js";
 
 // Delete listing by ID
 export async function deleteListing(id) {
-  return await apiFetch(`${API_AUCTIONS_LISTINGS}/${id}`, {
-    method: "DELETE",
-    auth: true,
-  });
+  try {
+    return await apiFetch(`${API_AUCTIONS_LISTINGS}/${id}`, {
+      method: "DELETE",
+      auth: true,
+    });
+  } catch (error) {
+    console.error(`Failed to delete listing with ID ${id}:`, error);
+    throw error;
+  }
 }

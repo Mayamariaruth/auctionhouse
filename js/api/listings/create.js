@@ -3,9 +3,14 @@ import { apiFetch } from "../request.js";
 
 // Create a new listing
 export async function createListing(listingData) {
-  return apiFetch(API_AUCTIONS_LISTINGS, {
-    method: "POST",
-    body: listingData,
-    auth: true,
-  });
+  try {
+    return await apiFetch(API_AUCTIONS_LISTINGS, {
+      method: "POST",
+      body: listingData,
+      auth: true,
+    });
+  } catch (error) {
+    console.error("Failed to create listing:", error);
+    throw error;
+  }
 }

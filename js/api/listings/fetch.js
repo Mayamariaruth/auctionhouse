@@ -20,6 +20,11 @@ export async function fetchListings({ search } = {}) {
 
 // Fetch a single listing by ID
 export async function fetchListingById(id) {
-  const url = `${API_AUCTIONS_LISTINGS}/${id}?_bids=true&_seller=true`;
-  return apiFetch(url);
+  try {
+    const url = `${API_AUCTIONS_LISTINGS}/${id}?_bids=true&_seller=true`;
+    return await apiFetch(url);
+  } catch (error) {
+    console.error(`Failed to fetch listing with ID ${id}:`, error);
+    throw error;
+  }
 }
