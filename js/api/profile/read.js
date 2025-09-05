@@ -1,5 +1,5 @@
-import { API_AUCTIONS_PROFILES } from "./constants.js";
-import { apiFetch } from "./request.js";
+import { API_AUCTIONS_PROFILES } from "../constants.js";
+import { apiFetch } from "../request.js";
 
 // Fetch a profile by name
 export async function readProfile(name) {

@@ -1,5 +1,5 @@
-import { API_AUCTIONS_LISTINGS } from "./constants.js";
-import { apiFetch } from "./request.js";
+import { API_AUCTIONS_LISTINGS } from "../constants.js";
+import { apiFetch } from "../request.js";
 
 // Fetch listings from API
 export async function fetchListings({ search } = {}) {
