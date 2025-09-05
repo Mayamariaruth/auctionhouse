@@ -1,32 +1,21 @@
 import { API_AUCTIONS_LISTINGS } from "../constants.js";
 import { apiFetch } from "../request.js";
 
-// Fetch listings from API
+// Fetch listings from API, including bids and optionally filtered by search
 export async function fetchListings({ search } = {}) {
-  if (!search) {
-    // Return all listings with bids
-    return await apiFetch(`${API_AUCTIONS_LISTINGS}?_bids=true`);
+  try {
+    const url = search
+      ? `${API_AUCTIONS_LISTINGS}?q=${encodeURIComponent(
+          search
+        )}&tags_like=${encodeURIComponent(search)}&_bids=true`
+      : `${API_AUCTIONS_LISTINGS}?_bids=true`;
+
+    const data = await apiFetch(url);
+    return data?.data || [];
+  } catch (error) {
+    console.error("Failed to fetch listings:", error);
+    throw error;
   }
-
-  // Search by title/description
-  const byQuery = await apiFetch(
-    `${API_AUCTIONS_LISTINGS}?q=${encodeURIComponent(search)}&_bids=true`
-  );
-
-  // Search by tags
-  const byTags = await apiFetch(
-    `${API_AUCTIONS_LISTINGS}?tags_like=${encodeURIComponent(
-      search
-    )}&_bids=true`
-  );
-
-  // Merge search results
-  const merged = [...byQuery, ...byTags];
-  const unique = merged.filter(
-    (item, index, self) => index === self.findIndex((i) => i.id === item.id)
-  );
-
-  return unique;
 }
 
 // Fetch a single listing by ID
