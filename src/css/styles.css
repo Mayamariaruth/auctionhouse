@@ -28,6 +28,20 @@ body {
   padding-right: 16px;
 }
 
+/* Notifications */
+.notifications {
+  z-index: 200;
+}
+
+.notification-success {
+  font-size: 16px;
+  border: solid #439f6e 1px;
+}
+.notification-error {
+  font-size: 16px;
+  border: solid #f93232 1px;
+}
+
 /* Navigation */
 header {
   box-shadow: 0 2px 8px rgba(99, 99, 99, 0.2);
