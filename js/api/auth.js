@@ -1,24 +1,46 @@
-import { API_AUTH_REGISTER, API_AUTH_LOGIN } from "./constants.js";
+import {
+  API_AUTH_REGISTER,
+  API_AUTH_LOGIN,
+  API_AUCTIONS_PROFILES,
+} from "./constants.js";
 import { apiFetch } from "./request.js";
 
 // Registers a new user in the API
-export function registerUser(username, email, password) {
-  return apiFetch(API_AUTH_REGISTER, {
-    method: "POST",
-    body: { name: username, email, password },
-  });
+export async function registerUser(username, email, password) {
+  try {
+    return await apiFetch(API_AUTH_REGISTER, {
+      method: "POST",
+      body: { name: username, email, password },
+    });
+  } catch (error) {
+    console.error("Registration failed:", error);
+    throw error;
+  }
 }
 
-// Authenticates user login and returns a valid access token
+// Authenticates user login and returns profile details
 export async function loginUser({ email, password }) {
-  const data = await apiFetch(API_AUTH_LOGIN, {
-    method: "POST",
-    body: { email, password },
-  });
+  try {
+    const data = await apiFetch(API_AUTH_LOGIN, {
+      method: "POST",
+      body: { email, password },
+    });
 
-  // Store access token and user data in local storage
-  localStorage.setItem("accessToken", data.data.accessToken);
-  localStorage.setItem("username", data.data.name);
+    // Store access token
+    localStorage.setItem("accessToken", data.data.accessToken);
 
-  return data.data;
+    // Fetch full profile details from login response
+    const profile = await apiFetch(
+      `${API_AUCTIONS_PROFILES}/${data.data.name}`,
+      {
+        auth: true,
+      }
+    );
+    localStorage.setItem("profile", JSON.stringify(profile));
+
+    return profile;
+  } catch (error) {
+    console.error("Login failed:", error);
+    throw error;
+  }
 }
