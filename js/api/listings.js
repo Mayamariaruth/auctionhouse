@@ -1,20 +1,30 @@
 import { API_AUCTIONS_LISTINGS } from "./constants.js";
 import { apiFetch } from "./request.js";
 
-// Fetch listings by title or tags
-export async function readListings(search = "") {
-  const url = new URL(API_AUCTIONS_LISTINGS);
-
-  if (search) {
-    url.searchParams.append("_tag", search); // filter by tag
-    url.searchParams.append("_title", search); // filter by title
+// Fetch listings from API
+export async function fetchListings({ search } = {}) {
+  if (!search) {
+    // Return all listings with bids
+    return await apiFetch(`${API_AUCTIONS_LISTINGS}?_bids=true`);
   }
 
-  try {
-    const listings = await apiFetch(url.toString());
-    return listings;
-  } catch (error) {
-    console.error("Failed to fetch listings:", error);
-    throw error;
-  }
+  // Search by title/description
+  const byQuery = await apiFetch(
+    `${API_AUCTIONS_LISTINGS}?q=${encodeURIComponent(search)}&_bids=true`
+  );
+
+  // Search by tags
+  const byTags = await apiFetch(
+    `${API_AUCTIONS_LISTINGS}?tags_like=${encodeURIComponent(
+      search
+    )}&_bids=true`
+  );
+
+  // Merge search results
+  const merged = [...byQuery, ...byTags];
+  const unique = merged.filter(
+    (item, index, self) => index === self.findIndex((i) => i.id === item.id)
+  );
+
+  return unique;
 }
