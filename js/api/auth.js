@@ -1,7 +1,7 @@
 import { API_AUTH_REGISTER, API_AUTH_LOGIN } from "./constants.js";
 import { apiFetch } from "./request.js";
 
-// Registers a new user and returns the server response
+// Registers a new user in the API
 export function registerUser(username, email, password) {
   return apiFetch(API_AUTH_REGISTER, {
     method: "POST",

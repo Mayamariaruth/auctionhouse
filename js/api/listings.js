@@ -28,3 +28,9 @@ export async function fetchListings({ search } = {}) {
 
   return unique;
 }
+
+// Fetch a single listing by ID
+export async function fetchListingById(id) {
+  const url = `${API_AUCTIONS_LISTINGS}/${id}?_bids=true&_seller=true`;
+  return apiFetch(url);
+}
