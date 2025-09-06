@@ -67,6 +67,11 @@
 }
 
 /* Validation */
+.input-error {
+  border: solid #f93232 1px;
+  background-color: #ffe0e0;
+}
+
 .error-message {
   color: #f93232;
   font-size: 14px;

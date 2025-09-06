@@ -26,8 +26,9 @@ export function updateNavbar() {
   const loggedInMobile = document.querySelectorAll(".mobile-nav .logged-in");
   const loggedOutMobile = document.querySelectorAll(".mobile-nav .logged-out");
 
-  // User credits
-  const userCredits = document.querySelectorAll(".user-credits");
+  // User credits (desktop + mobile)
+  const userCreditsDesktop = document.getElementById("user-credits-desktop");
+  const userCreditsMobile = document.getElementById("user-credits-mobile");
 
   if (token && profile) {
     // Show logged-in links
@@ -37,9 +38,15 @@ export function updateNavbar() {
     loggedInMobile.forEach((el) => el.classList.remove("d-none"));
     loggedOutMobile.forEach((el) => el.classList.add("d-none"));
 
-    if (userCredits) {
-      userCredits.textContent = `Credits: ${profile.credits ?? 0}`;
-      userCredits.classList.remove("d-none");
+    // Update credits
+    const creditsText = `Credits: ${profile.credits ?? 0}`;
+    if (userCreditsDesktop) {
+      userCreditsDesktop.textContent = creditsText;
+      userCreditsDesktop.classList.remove("d-none");
+    }
+    if (userCreditsMobile) {
+      userCreditsMobile.textContent = creditsText;
+      userCreditsMobile.classList.remove("d-none");
     }
   } else {
     // Show logged-out links
@@ -49,6 +56,8 @@ export function updateNavbar() {
     loggedInMobile.forEach((el) => el.classList.add("d-none"));
     loggedOutMobile.forEach((el) => el.classList.remove("d-none"));
 
-    if (userCredits) userCredits.classList.add("d-none");
+    // Hide credits
+    if (userCreditsDesktop) userCreditsDesktop.classList.add("d-none");
+    if (userCreditsMobile) userCreditsMobile.classList.add("d-none");
   }
 }
