@@ -8,9 +8,11 @@ import { apiFetch } from "./request.js";
 // Registers a new user in the API
 export async function registerUser(name, email, password) {
   try {
+    const body = { name, email, password };
+
     return await apiFetch(API_AUTH_REGISTER, {
       method: "POST",
-      body: { name, email, password },
+      body,
     });
   } catch (error) {
     console.error("Registration failed:", error);

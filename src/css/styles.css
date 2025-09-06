@@ -28,6 +28,11 @@ body {
   padding-right: 16px;
 }
 
+.input-error {
+  border: solid #f93232 1px !important;
+  background-color: #ffe0e0 !important;
+}
+
 /* Notifications */
 .notifications {
   z-index: 200;
@@ -38,6 +43,7 @@ body {
   font-size: 16px;
   border: solid #439f6e 1px;
 }
+
 .notification-error {
   font-size: 16px;
   border: solid #f93232 1px;
