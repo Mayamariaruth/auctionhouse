@@ -7,6 +7,7 @@
 body {
   color: black;
   font-family: "Open Sans", sans-serif;
+  max-width: 1500px;
 }
 
 .title-section {
@@ -34,9 +35,17 @@ body {
 }
 
 /* Notifications */
-.notifications {
+#notifications {
   z-index: 200;
-  padding: 1rem;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.notification {
+  display: block;
+  max-width: 450px;
+  margin: 0 16px 1rem 16px;
+  padding: 13px 7px;
 }
 
 .notification-success {
@@ -44,9 +53,22 @@ body {
   border: solid #439f6e 1px;
 }
 
+.fa-circle-check {
+  color: #439f6e;
+}
+
 .notification-error {
   font-size: 16px;
   border: solid #f93232 1px;
+}
+
+.fa-triangle-exclamation {
+  color: #f93232;
+}
+
+.notification button {
+  border: none;
+  background-color: transparent;
 }
 
 /* Navigation */
@@ -108,6 +130,10 @@ footer p {
 }
 
 @media (min-width: 576px) {
+  .notification {
+    margin-left: auto;
+  }
+
   .page-container {
     padding-left: 24px;
     padding-right: 24px;
