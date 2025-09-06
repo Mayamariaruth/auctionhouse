@@ -39,6 +39,36 @@ export async function onRegister(event) {
     return;
   }
 
+  // Name validation
+  const punctuationMatches = name.match(/[^\w\s]/g);
+  if (
+    punctuationMatches &&
+    punctuationMatches.length > 0 &&
+    !name.includes("_")
+  ) {
+    nameField.classList.add("input-error");
+    showNotification(
+      "Name can only contain letters, numbers, and underscores",
+      "error"
+    );
+    return;
+  }
+
+  // Email validation
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email) || !email.endsWith("@stud.noroff.no")) {
+    emailField.classList.add("input-error");
+    showNotification("Email must be a valid @stud.noroff.no address", "error");
+    return;
+  }
+
+  // Password validation
+  if (password.length < 8) {
+    passwordField.classList.add("input-error");
+    showNotification("Password must be at least 8 characters", "error");
+    return;
+  }
+
   try {
     const result = await registerUser(name, email, password);
 
