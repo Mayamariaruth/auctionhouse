@@ -17,17 +17,9 @@ export async function onLogin(event) {
   );
 
   // Input validation
-  let hasError = false;
-  if (!email) {
-    emailField.classList.add("input-error");
-    hasError = true;
-  }
-  if (!password) {
-    passwordField.classList.add("input-error");
-    hasError = true;
-  }
-
-  if (hasError) {
+  if (!email || !password) {
+    if (!email) emailField.classList.add("input-error");
+    if (!password) passwordField.classList.add("input-error");
     showNotification("Please enter both email and password", "error");
     return;
   }
@@ -46,6 +38,14 @@ export async function onLogin(event) {
 
     window.location.href = "/index.html";
   } catch (error) {
-    showNotification(error.message, "error");
+    if (error.message.includes("Email must be a valid email")) {
+      emailField.classList.add("input-error");
+      showNotification(error.message, "error");
+    } else if (error.message.includes("Invalid email or password")) {
+      passwordField.classList.add("input-error");
+      showNotification("Password is incorrect", "error");
+    } else {
+      showNotification(error.message, "error");
+    }
   }
 }

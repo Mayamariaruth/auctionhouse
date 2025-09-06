@@ -29,15 +29,12 @@ export async function loginUser({ email, password }) {
     });
 
     // Store access token
-    localStorage.setItem("accessToken", data.data.accessToken);
+    localStorage.setItem("accessToken", data.accessToken);
 
     // Fetch full profile details from login response
-    const profile = await apiFetch(
-      `${API_AUCTIONS_PROFILES}/${data.data.name}`,
-      {
-        auth: true,
-      }
-    );
+    const profile = await apiFetch(`${API_AUCTIONS_PROFILES}/${data.name}`, {
+      auth: true,
+    });
     localStorage.setItem("profile", JSON.stringify(profile));
 
     return profile;

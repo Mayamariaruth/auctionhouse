@@ -38,13 +38,12 @@ body {
 #notifications {
   z-index: 200;
   width: 100%;
-  margin-bottom: 2rem;
 }
 
 .notification {
   display: block;
   max-width: 450px;
-  margin: 0 16px 1rem 16px;
+  margin: 0 16px 2rem 16px;
   padding: 13px 9px;
 }
 
