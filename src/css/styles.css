@@ -115,6 +115,12 @@ header {
   z-index: 1050;
 }
 
+#user-credits-mobile,
+#user-credits-desktop {
+  background-color: #ebebeb;
+  padding: 7px 12px;
+}
+
 /* Footer */
 footer {
   border-top: solid #ebebeb 2px;

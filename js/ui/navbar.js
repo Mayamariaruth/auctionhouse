@@ -39,7 +39,7 @@ export function updateNavbar() {
     loggedOutMobile.forEach((el) => el.classList.add("d-none"));
 
     // Update credits
-    const creditsText = `Credits: ${profile.credits ?? 0}`;
+    const creditsText = `${profile.credits ?? 0} credits`;
     if (userCreditsDesktop) {
       userCreditsDesktop.textContent = creditsText;
       userCreditsDesktop.classList.remove("d-none");
