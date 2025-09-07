@@ -1,10 +1,12 @@
 import { isLoggedIn } from "../../utils/auth.js";
+import { fetchListings } from "../../api/listings/fetch.js";
 
 // Initialize listings grid and button
 export async function initListingsPage() {
   toggleListingButton();
   await loadAddListingModal();
   initAddListingModal();
+  await displayListings();
 }
 
 // Toggle Add Listing button
@@ -46,4 +48,28 @@ export function initAddListingModal() {
   const bsModal = new bootstrap.Modal(modalEl);
 
   addBtn.addEventListener("click", () => bsModal.show());
+}
+
+// Display all listings in the grid
+async function displayListings(search = "") {
+  const listingsContainer = document.getElementById("listings");
+  if (!listingsContainer) return;
+
+  try {
+    const listings = await fetchListings({ search });
+    listingsContainer.innerHTML = "";
+
+    if (!listings.length) {
+      listingsContainer.innerHTML = `<p class="text-center fs-4">No listings found.</p>`;
+      return;
+    }
+
+    listings.forEach((listing) => {
+      const listingEl = createListingCard(listing);
+      listingsContainer.appendChild(listingEl);
+    });
+  } catch (err) {
+    listingsContainer.innerHTML = `<p class="text-danger text-center fs-4">Failed to load listings</p>`;
+    console.error(err);
+  }
 }
