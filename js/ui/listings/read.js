@@ -73,3 +73,69 @@ async function displayListings(search = "") {
     console.error(err);
   }
 }
+
+export function createListingCard(listing, container) {
+  if (!listing || !container) return;
+
+  const {
+    id,
+    title,
+    description,
+    media,
+    endsAt,
+    tags,
+    _count: { bids } = { bids: 0 },
+    seller,
+  } = listing;
+
+  const imageUrl =
+    media && media.length
+      ? media[0]
+      : "https://pixabay.com/vectors/image-media-icon-symbol-visual-2935360/";
+  const sellerName = seller?.name || "Unknown";
+
+  // Create card column
+  const col = document.createElement("div");
+  col.className = "col-sm-6 col-md-4 col-lg-3";
+
+  // Card HTML
+  col.innerHTML = `
+    <div class="card listing-card">
+      <div class="listing-image-wrapper position-relative">
+        <img src="${imageUrl}" class="card-img-top" alt="${title}" />
+        <div class="bids-box position-absolute top-0 start-0 m-2 px-2 py-1">
+          ${bids} bid${bids !== 1 ? "s" : ""}
+        </div>
+        <div class="seller-box position-absolute bottom-0 start-0 end-0 m-2 px-2 py-1">
+          Posted by ${sellerName}
+        </div>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">${title}</h5>
+        <p class="card-text">${description}</p>
+        <p class="mb-1">Ends ${new Date(endsAt).toLocaleString()}</p>
+        <div class="listing-tags">
+          ${renderTags(tags)}
+        </div>
+        <button class="listing-btn">
+          ${isLoggedIn() ? "Bid" : "See Listing"}
+        </button>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(col);
+
+  // Button handler
+  const btn = col.querySelector(".listing-btn");
+  btn.addEventListener("click", () => {
+    window.location.href = `/html/listing.html?id=${id}`;
+  });
+}
+
+// Render tags as boxes
+function renderTags(tags = []) {
+  if (!tags.length) return '<span class="tag-box">None</span>';
+
+  return tags.map((tag) => `<span class="tag-box">${tag}</span>`).join(" ");
+}
