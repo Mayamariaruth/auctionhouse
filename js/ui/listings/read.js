@@ -1,11 +1,13 @@
 import { isLoggedIn } from "../../utils/auth.js";
 import { fetchListings } from "../../api/listings/fetch.js";
+import { initAddListingForm } from "./create.js";
 
 // Initialize listings grid and button
 export async function initListingsPage() {
   toggleListingButton();
   await loadAddListingModal();
   initAddListingModal();
+  initAddListingForm();
   await displayListings();
 }
 
@@ -51,7 +53,7 @@ export function initAddListingModal() {
 }
 
 // Display all listings in the grid
-async function displayListings(search = "") {
+export async function displayListings(search = "") {
   const listingsContainer = document.getElementById("listings");
   if (!listingsContainer) return;
 
@@ -76,6 +78,7 @@ async function displayListings(search = "") {
 export function createListingCard(listing, container) {
   if (!listing || !container) return;
 
+  // Destructure listing data
   const {
     id,
     title,
