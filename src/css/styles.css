@@ -83,12 +83,15 @@ header {
 
 .search-input {
   background-color: #fafafa !important;
-  color: #717171 !important;
   border: solid #b5b4b4 1px !important;
   border-radius: 0 !important;
   padding-left: 2.4rem !important;
-  font-weight: 200 !important;
   max-width: 700px;
+}
+
+.search-input::placeholder {
+  font-weight: 200 !important;
+  color: #b2b2b2 !important;
 }
 
 .form-control:focus {

@@ -1,8 +1,10 @@
 import { isLoggedIn } from "../../utils/auth.js";
 
 // Initialize listings grid and button
-export function initListingsPage() {
+export async function initListingsPage() {
   toggleListingButton();
+  await loadAddListingModal();
+  initAddListingModal();
 }
 
 // Toggle Add Listing button
@@ -17,4 +19,31 @@ function toggleListingButton() {
     addBtnContainer.classList.add("d-none");
     addBtnContainer.classList.remove("d-flex");
   }
+}
+
+// Load Add listing modal HTML
+async function loadAddListingModal() {
+  const container = document.getElementById("modal-container");
+  if (!container) return;
+
+  try {
+    const response = await fetch("/html/modals/add-listing.html");
+    const html = await response.text();
+    container.innerHTML = html;
+  } catch (err) {
+    console.error("Failed to load Add Listing modal:", err);
+  }
+}
+
+// Initialize Add listing modal
+export function initAddListingModal() {
+  const addBtn = document.getElementById("add-listing-btn");
+  const modalEl = document.getElementById("add-listing-modal");
+
+  if (!addBtn) return console.warn("Add Listing button not found");
+  if (!modalEl) return console.warn("Add Listing modal not found");
+
+  const bsModal = new bootstrap.Modal(modalEl);
+
+  addBtn.addEventListener("click", () => bsModal.show());
 }

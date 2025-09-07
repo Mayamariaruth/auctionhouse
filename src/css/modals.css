@@ -1,8 +1,42 @@
+.modal-header {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#add-listing-form label {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+#add-listing-form input,
+textarea {
+  background-color: #fafafa !important;
+  border: solid #b5b4b4 1px !important;
+  border-radius: 0 !important;
+}
+
+#add-listing-form input::placeholder,
+textarea::placeholder {
+  font-weight: 200 !important;
+  color: #b2b2b2 !important;
+}
+
+#add-listing-form input:focus {
+  border: solid #000 1.5px !important;
+  box-shadow: none !important;
+}
+
 .confirm-btn {
   background-color: #6b3d47;
   color: white;
   font-weight: bold;
   font-size: 16px;
+  padding: 5px 0;
 }
 
 #confirm-delete-btn {
@@ -21,12 +55,28 @@
 .cancel-btn {
   font-weight: 600;
   font-size: 16px;
+  border: none;
+  background-color: transparent;
 }
 
 @media (min-width: 998px) {
+  .modal-title {
+    font-size: 30px;
+  }
+
+  #add-listing-form label {
+    font-size: 18px;
+  }
+
   .confirm-btn,
   #confirm-delete-btn,
   .cancel-btn {
     font-size: 18px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .modal-title {
+    font-size: 36px;
   }
 }

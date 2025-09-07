@@ -174,7 +174,11 @@
       <section class="page-container">
         <!-- Add Listing button -->
         <div class="add-btn-container d-none justify-content-center">
-          <button id="add-listing-btn">
+          <button
+            id="add-listing-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#add-listing-modal"
+          >
             <i class="fa-solid fa-plus"></i> Add Listing
           </button>
         </div>
@@ -195,10 +199,10 @@
       <p>© 2025 Auction House</p>
     </footer>
 
-    <!-- Modal Container -->
-    <div id="modal-container"></div>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Modal Container -->
+    <div id="modal-container"></div>
   </body>
 </html>
