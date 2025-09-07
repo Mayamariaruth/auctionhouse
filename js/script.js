@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   updateNavbar();
   showStoredNotification();
+  logoutListener();
 
   // Form submissions (register + login)
   const registerForm = document.getElementById("register");
