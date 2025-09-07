@@ -60,16 +60,15 @@ async function displayListings(search = "") {
     listingsContainer.innerHTML = "";
 
     if (!listings.length) {
-      listingsContainer.innerHTML = `<p class="text-center fs-4">No listings found.</p>`;
+      listingsContainer.innerHTML = `<p class="text-center fs-5">No listings found.</p>`;
       return;
     }
 
     listings.forEach((listing) => {
-      const listingEl = createListingCard(listing);
-      listingsContainer.appendChild(listingEl);
+      createListingCard(listing, listingsContainer);
     });
   } catch (err) {
-    listingsContainer.innerHTML = `<p class="text-danger text-center fs-4">Failed to load listings</p>`;
+    listingsContainer.innerHTML = `<p class="text-danger text-center fs-5">Failed to load listings</p>`;
     console.error(err);
   }
 }
@@ -107,7 +106,7 @@ export function createListingCard(listing, container) {
           ${bids} bid${bids !== 1 ? "s" : ""}
         </div>
         <div class="seller-box position-absolute bottom-0 start-0 end-0 m-2 px-2 py-1">
-          Posted by ${sellerName}
+          Posted by <strong>${sellerName}</strong>
         </div>
       </div>
       <div class="card-body">
