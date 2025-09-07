@@ -1,8 +1,12 @@
+import { isLoggedIn, getProfile } from "../utils/auth.js";
+
 // Mobile menu toggle
 export function initMobileMenu() {
   const toggleBtn = document.getElementById("mobile-menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
   const menuIcon = document.getElementById("menu-icon");
+
+  if (!toggleBtn || !mobileMenu || !menuIcon) return;
 
   toggleBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("d-none");
@@ -13,8 +17,8 @@ export function initMobileMenu() {
 
 // Update navbar links based on user state and add credits element
 export function updateNavbar() {
-  const token = localStorage.getItem("accessToken");
-  const profile = JSON.parse(localStorage.getItem("profile"));
+  const loggedIn = isLoggedIn();
+  const profile = getProfile();
 
   // Desktop links
   const loggedInDesktop = document.querySelectorAll(".desktop-nav .logged-in");
@@ -30,7 +34,7 @@ export function updateNavbar() {
   const userCreditsDesktop = document.getElementById("user-credits-desktop");
   const userCreditsMobile = document.getElementById("user-credits-mobile");
 
-  if (token && profile) {
+  if (loggedIn) {
     // Show logged-in links
     loggedInDesktop.forEach((el) => el.classList.remove("d-none"));
     loggedOutDesktop.forEach((el) => el.classList.add("d-none"));
@@ -39,7 +43,7 @@ export function updateNavbar() {
     loggedOutMobile.forEach((el) => el.classList.add("d-none"));
 
     // Update credits
-    const creditsText = `${profile.credits ?? 0} credits`;
+    const creditsText = `${profile?.credits ?? 0} credits`;
     if (userCreditsDesktop) {
       userCreditsDesktop.textContent = creditsText;
       userCreditsDesktop.classList.remove("d-none");
