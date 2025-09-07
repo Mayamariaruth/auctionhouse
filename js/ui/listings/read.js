@@ -75,6 +75,7 @@ export async function displayListings(search = "") {
   }
 }
 
+// Create each listing card
 export function createListingCard(listing, container) {
   if (!listing || !container) return;
 
@@ -90,10 +91,16 @@ export function createListingCard(listing, container) {
     seller,
   } = listing;
 
+  const fallbackImage =
+    "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0";
   const imageUrl =
     media && media.length
-      ? media[0]
-      : "https://pixabay.com/vectors/image-media-icon-symbol-visual-2935360/";
+      ? typeof media[0] === "string"
+        ? media[0]
+        : media[0]?.url || fallbackImage
+      : fallbackImage;
+
+  const imageAlt = title;
   const sellerName = seller?.name || "Unknown";
 
   // Create card column
@@ -102,31 +109,42 @@ export function createListingCard(listing, container) {
 
   // Card HTML
   col.innerHTML = `
-    <div class="card listing-card">
-      <div class="listing-image-wrapper position-relative">
-        <img src="${imageUrl}" class="card-img-top" alt="${title}" />
-        <div class="bids-box position-absolute top-0 start-0 m-2 px-2 py-1">
-          ${bids} bid${bids !== 1 ? "s" : ""}
-        </div>
-        <div class="seller-box position-absolute bottom-0 start-0 end-0 m-2 px-2 py-1">
-          Posted by <strong>${sellerName}</strong>
-        </div>
+  <div class="card listing-card">
+    <div class="listing-image-wrapper position-relative">
+      <img src="${imageUrl}" class="card-img-top" alt="${imageAlt}" />
+      <div class="bids-box position-absolute top-0 start-0 m-2 px-2 py-1">
+        ${bids} bid${bids !== 1 ? "s" : ""}
       </div>
-      <div class="card-body">
-        <h5 class="card-title">${title}</h5>
-        <p class="card-text">${description}</p>
-        <p class="mb-1">Ends ${new Date(endsAt).toLocaleString()}</p>
-        <div class="listing-tags">
-          ${renderTags(tags)}
-        </div>
-        <button class="listing-btn">
-          ${isLoggedIn() ? "Bid" : "See Listing"}
-        </button>
+      <div class="seller-box position-absolute bottom-0 start-0 end-0 m-2 px-2 py-1">
+        Posted by <strong>${sellerName}</strong>
       </div>
     </div>
-  `;
+    <div class="card-body">
+      <h5 class="card-title">${title}</h5>
+      <p class="card-text">${description}</p>
+      <p class="mb-1">Ends ${new Date(endsAt).toLocaleString()}</p>
+      <div class="listing-tags">
+        ${renderTags(tags)}
+      </div>
+      <button class="listing-btn">
+        ${isLoggedIn() ? "Bid" : "See Listing"}
+      </button>
+    </div>
+  </div>
+`;
 
   container.appendChild(col);
+
+  // Fallback for images
+  const img = col.querySelector("img");
+  if (img) {
+    img.onerror = () => {
+      img.onerror = null;
+      img.src =
+        "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+      img.alt = "Image unavailable";
+    };
+  }
 
   // Button handler
   const btn = col.querySelector(".listing-btn");
@@ -137,7 +155,7 @@ export function createListingCard(listing, container) {
 
 // Render tags as boxes
 function renderTags(tags = []) {
-  if (!tags.length) return '<span class="tag-box">None</span>';
+  if (!tags.length) return '<span class="tag-box">No tags</span>';
 
   return tags.map((tag) => `<span class="tag-box">${tag}</span>`).join(" ");
 }

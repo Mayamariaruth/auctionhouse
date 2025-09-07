@@ -4,17 +4,17 @@ import { apiFetch } from "../request.js";
 // Fetch listings from API, including bids and optionally filtered by search
 export async function fetchListings({ search } = {}) {
   try {
-    const url = search
-      ? `${API_AUCTIONS_LISTINGS}?q=${encodeURIComponent(
-          search
-        )}&tags_like=${encodeURIComponent(search)}&_bids=true`
-      : `${API_AUCTIONS_LISTINGS}?_bids=true`;
+    let url = `${API_AUCTIONS_LISTINGS}?_bids=true&_seller=true`;
 
-    const data = await apiFetch(url);
-    return data?.data || [];
+    if (search) {
+      url += `&title=${encodeURIComponent(search)}`;
+    }
+
+    const listings = await apiFetch(url);
+    return listings;
   } catch (error) {
     console.error("Failed to fetch listings:", error);
-    throw error;
+    return [];
   }
 }
 
