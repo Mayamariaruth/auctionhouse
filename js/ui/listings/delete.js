@@ -46,3 +46,18 @@ export function initDeleteListingModal() {
     });
   }
 }
+
+// Open Delete Listing modal
+export function openDeleteListingModal(listingId) {
+  currentDeleteListingId = listingId;
+
+  // Close Edit Listing modal if it's open
+  const editModalEl = document.getElementById("edit-listing-modal");
+  const bsEditModal = bootstrap.Modal.getInstance(editModalEl);
+  if (bsEditModal) bsEditModal.hide();
+
+  // Show Delete Listing modal
+  const deleteModalEl = document.getElementById("delete-listing-modal");
+  const bsDeleteModal = new bootstrap.Modal(deleteModalEl);
+  bsDeleteModal.show();
+}

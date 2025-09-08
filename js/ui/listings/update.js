@@ -2,6 +2,7 @@
 import { API_AUCTIONS_LISTINGS } from "../../api/constants.js";
 import { apiFetch } from "../../api/request.js";
 import { displayListings } from "./read.js";
+import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 
 let currentListingId = null;
@@ -51,6 +52,15 @@ export function initEditListingModal(listing) {
 export function initEditListingForm() {
   const form = document.getElementById("edit-listing-form");
   if (!form) return;
+
+  // Delete listing button
+  const editDeleteBtn = form.querySelector("#edit-delete-btn");
+  if (editDeleteBtn) {
+    editDeleteBtn.addEventListener("click", () => {
+      if (!currentListingId) return;
+      openDeleteListingModal(currentListingId);
+    });
+  }
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
