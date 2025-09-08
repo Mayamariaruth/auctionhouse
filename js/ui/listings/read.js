@@ -6,16 +6,19 @@ import {
   initEditListingModal,
   loadEditListingModal,
 } from "./update.js";
+import { loadDeleteModal, initDeleteListingModal } from "./delete.js";
 
 // Initialize landing page with button, listings grid and modals
 export async function initListingsPage() {
   toggleListingButton();
   await loadAddListingModal();
   await loadEditListingModal();
+  await loadDeleteModal();
   initAddListingModal();
   initAddListingForm();
   initEditListingModal();
   initEditListingForm();
+  initDeleteListingModal();
   await displayListings();
 }
 

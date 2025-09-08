@@ -123,7 +123,7 @@ export function initEditListingForm() {
 
     try {
       await apiFetch(`${API_AUCTIONS_LISTINGS}/${currentListingId}`, {
-        method: "PATCH",
+        method: "PUT",
         body: updatedData,
         auth: true,
       });

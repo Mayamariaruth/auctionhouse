@@ -10,7 +10,7 @@
 
 #add-listing-form label,
 #edit-listing-form label {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
 }
 
@@ -42,7 +42,8 @@
   color: white;
   font-weight: bold;
   font-size: 16px;
-  padding: 5px 0;
+  padding: 7px 0;
+  border: none;
 }
 
 .confirm-btn:hover {
@@ -51,14 +52,18 @@
   color: black;
 }
 
-#confirm-delete-btn {
+#edit-delete-btn,
+#delete-btn {
   background-color: #f93232;
   color: white;
   font-weight: bold;
   font-size: 16px;
+  padding: 6px 0;
+  border: none;
 }
 
-#confirm-delete-btn:hover {
+#edit-delete-btn:hover,
+#delete-btn:hover {
   background-color: white;
   color: black;
   border: solid #f93232 1px;
@@ -82,7 +87,8 @@
   }
 
   .confirm-btn,
-  #confirm-delete-btn,
+  #edit-delete-btn,
+  #delete-btn,
   .cancel-btn {
     font-size: 18px;
   }
