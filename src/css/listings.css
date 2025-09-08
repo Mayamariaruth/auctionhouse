@@ -107,6 +107,14 @@
   color: white;
 }
 
+.edit-listing-btn {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  color: #717171;
+}
+
 @media (min-width: 998px) {
   .card-title {
     font-size: 20px;

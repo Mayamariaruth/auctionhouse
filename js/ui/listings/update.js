@@ -1,40 +1,56 @@
+// update.js
 import { API_AUCTIONS_LISTINGS } from "../../api/constants.js";
 import { apiFetch } from "../../api/request.js";
 import { displayListings } from "./read.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 
-// Initialize Edit Listing form
+let currentListingId = null;
+
+// Load Edit listing modal HTML
+export async function loadEditListingModal() {
+  const container = document.getElementById("modal-container");
+  if (!container) return;
+
+  try {
+    const response = await fetch("/html/modals/edit-listing.html");
+    const html = await response.text();
+    container.insertAdjacentHTML("beforeend", html);
+  } catch (err) {
+    console.error("Failed to load Edit Listing modal:", err);
+  }
+}
+
+// Initialize Edit listing modal
+export function initEditListingModal(listing) {
+  if (!listing) return;
+
+  const form = document.getElementById("edit-listing-form");
+  if (!form) return console.warn("Edit listing form not found in DOM");
+
+  currentListingId = listing.id;
+
+  form.querySelector("#edit-listing-title").value = listing.title || "";
+  form.querySelector("#edit-listing-description").value =
+    listing.description || "";
+  form.querySelector("#edit-listing-image").value =
+    listing.media?.[0]?.url || "";
+  form.querySelector("#edit-listing-tags").value =
+    listing.tags?.join(", ") || "";
+  form.querySelector("#edit-listing-deadline").value = listing.endsAt
+    ? new Date(listing.endsAt).toISOString().slice(0, 16)
+    : "";
+
+  clearErrors(form);
+
+  const modalEl = document.getElementById("edit-listing-modal");
+  const bsModal = new bootstrap.Modal(modalEl);
+  bsModal.show();
+}
+
+// Edit listing form submission
 export function initEditListingForm() {
   const form = document.getElementById("edit-listing-form");
   if (!form) return;
-
-  let currentListingId = null;
-
-  // Function to open the modal with existing data
-  window.openEditListingModal = async (listing) => {
-    if (!listing) return;
-
-    currentListingId = listing.id;
-
-    // Pre-fill form fields
-    form.querySelector("#edit-listing-title").value = listing.title || "";
-    form.querySelector("#edit-listing-description").value =
-      listing.description || "";
-    form.querySelector("#edit-listing-image").value =
-      listing.media?.[0]?.url || "";
-    form.querySelector("#edit-listing-tags").value =
-      listing.tags?.join(", ") || "";
-    form.querySelector("#edit-listing-deadline").value = listing.endsAt
-      ? new Date(listing.endsAt).toISOString().slice(0, 16)
-      : "";
-
-    clearErrors(form);
-
-    // Show modal
-    const modalEl = document.getElementById("edit-listing-modal");
-    const bsModal = new bootstrap.Modal(modalEl);
-    bsModal.show();
-  };
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -52,7 +68,6 @@ export function initEditListingForm() {
 
     let hasError = false;
 
-    // Title validation
     if (!title) {
       setError(form, "title", "Title is required");
       hasError = true;
@@ -61,7 +76,6 @@ export function initEditListingForm() {
       hasError = true;
     }
 
-    // Description validation
     if (!description) {
       setError(form, "description", "Description is required");
       hasError = true;
@@ -77,13 +91,11 @@ export function initEditListingForm() {
       hasError = true;
     }
 
-    // Image validation
     if (mediaInput && !isValidImageUrl(mediaInput)) {
       setError(form, "image", "Invalid image URL");
       hasError = true;
     }
 
-    // Deadline validation
     if (!endsAt) {
       setError(form, "deadline", "Deadline is required");
       hasError = true;
@@ -94,7 +106,6 @@ export function initEditListingForm() {
 
     if (hasError) return;
 
-    // Tags cleanup
     const tags = tagsInput
       ? tagsInput
           .split(",")
@@ -102,7 +113,6 @@ export function initEditListingForm() {
           .filter(Boolean)
       : [];
 
-    // Listing data to send
     const updatedData = {
       title,
       description,
@@ -118,14 +128,12 @@ export function initEditListingForm() {
         auth: true,
       });
 
-      // Close modal
       const modalEl = document.getElementById("edit-listing-modal");
       const bsModal = bootstrap.Modal.getInstance(modalEl);
       bsModal.hide();
 
       displayListings();
     } catch (err) {
-      console.error(err);
       setError(form, "title", err.message || "Failed to update listing");
     }
   });

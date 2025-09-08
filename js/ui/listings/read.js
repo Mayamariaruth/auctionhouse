@@ -1,13 +1,21 @@
 import { isLoggedIn } from "../../utils/auth.js";
 import { fetchListings } from "../../api/listings/fetch.js";
 import { initAddListingForm } from "./create.js";
+import {
+  initEditListingForm,
+  initEditListingModal,
+  loadEditListingModal,
+} from "./update.js";
 
-// Initialize listings grid and button
+// Initialize landing page with button, listings grid and modals
 export async function initListingsPage() {
   toggleListingButton();
   await loadAddListingModal();
+  await loadEditListingModal();
   initAddListingModal();
   initAddListingForm();
+  initEditListingModal();
+  initEditListingForm();
   await displayListings();
 }
 
@@ -107,6 +115,10 @@ export function createListingCard(listing, container) {
       ? description
       : "No description provided.";
 
+  // Check if current user is seller
+  const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
+  const isSeller = isLoggedIn() && seller?.name === userProfile?.name;
+
   // Create card column
   const col = document.createElement("div");
   col.className = "col-sm-6 col-md-4 col-lg-3";
@@ -125,6 +137,13 @@ export function createListingCard(listing, container) {
     </div>
     <div class="card-body">
       <h5 class="card-title">${title}</h5>
+      ${
+        isSeller
+          ? `<button class="edit-listing-btn" title="Edit">
+                   <i class="fa-solid fa-pen"></i>
+                 </button>`
+          : ""
+      }
       <p class="card-text">${safeDescription}</p>
       <p class="mb-2 date-text">Ends ${new Date(endsAt).toLocaleString()}</p>
       <div class="listing-tags mb-3">
@@ -138,6 +157,17 @@ export function createListingCard(listing, container) {
 `;
 
   container.appendChild(col);
+
+  // Open edit listing modal if current user is the seller
+  if (isSeller) {
+    const editBtn = col.querySelector(".edit-listing-btn");
+    if (editBtn) {
+      editBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        initEditListingModal(listing);
+      });
+    }
+  }
 
   // Fallback for images
   const img = col.querySelector("img");

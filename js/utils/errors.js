@@ -1,8 +1,8 @@
 // Validate image URL
 export function isValidImageUrl(url) {
   try {
-    new URL(url);
-    return /\.(jpeg|jpg|gif|png|webp)$/i.test(url);
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
   } catch {
     return false;
   }
