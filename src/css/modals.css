@@ -14,9 +14,9 @@
 }
 
 #add-listing-form input,
-textarea {
-  background-color: #fafafa !important;
-  border: solid #b5b4b4 1px !important;
+#add-listing-form textarea {
+  background-color: #fafafa;
+  border: solid #b5b4b4 1px;
   border-radius: 0 !important;
 }
 

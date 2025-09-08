@@ -29,9 +29,21 @@ body {
   padding-right: 16px;
 }
 
+/* Validation */
 .input-error {
   border: solid #f93232 1px !important;
   background-color: #ffe0e0 !important;
+}
+
+.error-message {
+  color: #f93232;
+  font-size: 14px;
+  margin-top: 8px;
+  display: none;
+}
+
+.error-message.active {
+  display: block;
 }
 
 /* Notifications */

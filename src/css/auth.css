@@ -66,23 +66,6 @@
   border: none;
 }
 
-/* Validation */
-.input-error {
-  border: solid #f93232 1px;
-  background-color: #ffe0e0;
-}
-
-.error-message {
-  color: #f93232;
-  font-size: 14px;
-  margin-top: 8px;
-  display: none;
-}
-
-.error-message.active {
-  display: block;
-}
-
 @media (min-width: 998px) {
   .auth-form h2 {
     font-size: 24px;

@@ -12,34 +12,71 @@ export function initAddListingForm() {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    if (!isLoggedIn()) {
-      showNotification("You must be logged in to add a listing", "error");
-      return;
-    }
+    clearErrors(form);
+
+    if (!isLoggedIn()) return setError(form, "title", "You must be logged in");
 
     const profile = getProfile();
-    if (!profile) {
-      showNotification("Profile not found", "error");
-      return;
-    }
+    if (!profile) return setError(form, "title", "Profile not found");
 
-    // Form fields
+    // Form elements
     const title = form.querySelector("#listing-title").value.trim();
     const description = form.querySelector("#listing-description").value.trim();
     const mediaInput = form.querySelector("#listing-image").value.trim();
     const tagsInput = form.querySelector("#listing-tags").value.trim();
     const endsAt = form.querySelector("#listing-deadline").value;
 
-    // Basic validation
-    if (!title || !description || !endsAt) {
-      showNotification(
-        "Title, description, and deadline are required",
-        "error"
-      );
-      return;
+    let hasError = false;
+
+    // Title validation
+    if (!title) {
+      setError(form, "title", "Title is required");
+      hasError = true;
+    } else if (title.length < 3) {
+      setError(form, "title", "Title must be at least 3 characters");
+      hasError = true;
     }
 
-    const tags = tagsInput ? tagsInput.split(",").map((t) => t.trim()) : [];
+    // Description validation
+    if (!description) {
+      setError(form, "description", "Description is required");
+      hasError = true;
+    } else if (description.length < 10) {
+      setError(
+        form,
+        "description",
+        "Description must be at least 10 characters"
+      );
+      hasError = true;
+    } else if (description.length > 150) {
+      setError(form, "description", "Description cannot exceed 150 characters");
+      hasError = true;
+    }
+
+    // Image validation
+    if (mediaInput && !isValidImageUrl(mediaInput)) {
+      setError(form, "image", "Invalid image URL");
+      hasError = true;
+    }
+
+    // Deadline validation
+    if (!endsAt) {
+      setError(form, "deadline", "Deadline is required");
+      hasError = true;
+    } else if (new Date(endsAt) <= new Date()) {
+      setError(form, "deadline", "Deadline must be in the future");
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Tags cleanup
+    const tags = tagsInput
+      ? tagsInput
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
+      : [];
 
     // Listing data
     const listingData = {
@@ -72,4 +109,36 @@ export function initAddListingForm() {
       showNotification(err.message || "Failed to add listing", "error");
     }
   });
+}
+
+// Validate image URL
+function isValidImageUrl(url) {
+  try {
+    new URL(url);
+    return /\.(jpeg|jpg|gif|png|webp)$/i.test(url);
+  } catch {
+    return false;
+  }
+}
+
+// Set error message and highlight field
+function setError(form, fieldId, message) {
+  const field = form.querySelector(`#listing-${fieldId}`);
+  const errorEl = form.querySelector(`#${fieldId}-error`);
+  if (field) field.classList.add("input-error");
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.classList.add("active");
+  }
+}
+
+// Clear all errors from the form
+function clearErrors(form) {
+  const errorEls = form.querySelectorAll(".error-message");
+  errorEls.forEach((el) => {
+    el.textContent = "";
+    el.classList.remove("active");
+  });
+  const fields = form.querySelectorAll(".form-control");
+  fields.forEach((el) => el.classList.remove("input-error"));
 }

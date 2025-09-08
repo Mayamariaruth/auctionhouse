@@ -13,7 +13,7 @@
       </div>
       <!-- Form -->
       <div class="modal-body">
-        <form id="add-listing-form">
+        <form id="add-listing-form" novalidate>
           <!-- Image field -->
           <div class="mb-3">
             <label for="listing-image" class="form-label"
@@ -25,6 +25,7 @@
               id="listing-image"
               placeholder="https://images.unsplash.com/photo-1756370473190-4c41ddbd5FNKENNRJNKNE77"
             />
+            <span class="error-message" id="image-error"></span>
           </div>
 
           <!-- Title field -->
@@ -37,6 +38,7 @@
               placeholder="Name your item"
               required
             />
+            <span class="error-message" id="title-error"></span>
           </div>
 
           <!-- Description field -->
@@ -51,6 +53,7 @@
               placeholder="Describe your item"
               required
             ></textarea>
+            <span class="error-message" id="description-error"></span>
           </div>
 
           <!-- Tags field -->
@@ -63,6 +66,7 @@
               name="tags"
               placeholder="Add tags, separated by commas (e.g., vintage, rare)"
             />
+            <span class="error-message" id="tags-error"></span>
           </div>
 
           <!-- Deadline field -->
@@ -74,6 +78,7 @@
               id="listing-deadline"
               required
             />
+            <span class="error-message" id="deadline-error"></span>
           </div>
 
           <!-- Buttons -->
