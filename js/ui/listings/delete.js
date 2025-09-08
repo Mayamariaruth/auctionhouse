@@ -12,7 +12,7 @@ export async function loadDeleteModal() {
   try {
     const response = await fetch("/html/modals/delete-listing.html");
     const html = await response.text();
-    container.innerHTML += html;
+    container.insertAdjacentHTML("beforeend", html);
   } catch (err) {
     console.error("Failed to load Delete Listing modal:", err);
   }
@@ -58,6 +58,8 @@ export function openDeleteListingModal(listingId) {
 
   // Show Delete Listing modal
   const deleteModalEl = document.getElementById("delete-listing-modal");
-  const bsDeleteModal = new bootstrap.Modal(deleteModalEl);
+  const bsDeleteModal =
+    bootstrap.Modal.getInstance(deleteModalEl) ||
+    new bootstrap.Modal(deleteModalEl);
   bsDeleteModal.show();
 }

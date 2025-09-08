@@ -5,7 +5,6 @@ export async function apiFetch(
   url,
   { method = "GET", body, auth = false } = {}
 ) {
-  // Get token from localStorage if auth is true
   const token = auth ? localStorage.getItem("accessToken") : null;
 
   const options = {
@@ -15,11 +14,21 @@ export async function apiFetch(
   };
 
   const response = await fetch(url, options);
-  const data = await response.json();
 
-  if (!response.ok) {
-    throw new Error(data.errors?.[0]?.message || "API request failed");
+  // Only parse JSON if there is content
+  let data = null;
+  const text = await response.text();
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch (err) {
+      console.warn("Response not valid JSON:", text);
+    }
   }
 
-  return data.data;
+  if (!response.ok) {
+    throw new Error(data?.errors?.[0]?.message || "API request failed");
+  }
+
+  return data?.data ?? null;
 }
