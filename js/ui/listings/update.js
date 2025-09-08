@@ -1,7 +1,7 @@
-import { isLoggedIn } from "../../utils/auth.js";
 import { API_AUCTIONS_LISTINGS } from "../../api/constants.js";
 import { apiFetch } from "../../api/request.js";
 import { displayListings } from "./read.js";
+import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 
 // Initialize Edit Listing form
 export function initEditListingForm() {
@@ -51,6 +51,65 @@ export function initEditListingForm() {
     const endsAt = form.querySelector("#edit-listing-deadline").value;
 
     let hasError = false;
+
+    // Title validation
+    if (!title) {
+      setError(form, "title", "Title is required");
+      hasError = true;
+    } else if (title.length < 3) {
+      setError(form, "title", "Title must be at least 3 characters");
+      hasError = true;
+    }
+
+    // Description validation
+    if (!description) {
+      setError(form, "description", "Description is required");
+      hasError = true;
+    } else if (description.length < 10) {
+      setError(
+        form,
+        "description",
+        "Description must be at least 10 characters"
+      );
+      hasError = true;
+    } else if (description.length > 150) {
+      setError(form, "description", "Description cannot exceed 150 characters");
+      hasError = true;
+    }
+
+    // Image validation
+    if (mediaInput && !isValidImageUrl(mediaInput)) {
+      setError(form, "image", "Invalid image URL");
+      hasError = true;
+    }
+
+    // Deadline validation
+    if (!endsAt) {
+      setError(form, "deadline", "Deadline is required");
+      hasError = true;
+    } else if (new Date(endsAt) <= new Date()) {
+      setError(form, "deadline", "Deadline must be in the future");
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Tags cleanup
+    const tags = tagsInput
+      ? tagsInput
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
+      : [];
+
+    // Listing data to send
+    const updatedData = {
+      title,
+      description,
+      media: mediaInput ? [{ url: mediaInput, alt: "Listing image" }] : [],
+      tags,
+      endsAt,
+    };
 
     try {
       await apiFetch(`${API_AUCTIONS_LISTINGS}/${currentListingId}`, {

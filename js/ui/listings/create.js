@@ -3,6 +3,7 @@ import { API_AUCTIONS_LISTINGS } from "../../api/constants.js";
 import { apiFetch } from "../../api/request.js";
 import { showNotification } from "../../utils/notifications.js";
 import { displayListings } from "./read.js";
+import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 
 // Add Listing form submission
 export function initAddListingForm() {
@@ -109,36 +110,4 @@ export function initAddListingForm() {
       showNotification(err.message || "Failed to add listing", "error");
     }
   });
-}
-
-// Validate image URL
-function isValidImageUrl(url) {
-  try {
-    new URL(url);
-    return /\.(jpeg|jpg|gif|png|webp)$/i.test(url);
-  } catch {
-    return false;
-  }
-}
-
-// Set error message and highlight field
-function setError(form, fieldId, message) {
-  const field = form.querySelector(`#listing-${fieldId}`);
-  const errorEl = form.querySelector(`#${fieldId}-error`);
-  if (field) field.classList.add("input-error");
-  if (errorEl) {
-    errorEl.textContent = message;
-    errorEl.classList.add("active");
-  }
-}
-
-// Clear all errors from the form
-function clearErrors(form) {
-  const errorEls = form.querySelectorAll(".error-message");
-  errorEls.forEach((el) => {
-    el.textContent = "";
-    el.classList.remove("active");
-  });
-  const fields = form.querySelectorAll(".form-control");
-  fields.forEach((el) => el.classList.remove("input-error"));
 }
