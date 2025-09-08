@@ -1,6 +1,4 @@
-// update.js
-import { API_AUCTIONS_LISTINGS } from "../../api/constants.js";
-import { apiFetch } from "../../api/request.js";
+import { editListing } from "../../api/listings/edit.js";
 import { displayListings } from "./read.js";
 import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
@@ -62,6 +60,7 @@ export function initEditListingForm() {
     });
   }
 
+  // Event listener
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     clearErrors(form);
@@ -132,16 +131,12 @@ export function initEditListingForm() {
     };
 
     try {
-      await apiFetch(`${API_AUCTIONS_LISTINGS}/${currentListingId}`, {
-        method: "PUT",
-        body: updatedData,
-        auth: true,
-      });
+      await editListing(currentListingId, updatedData);
 
       const modalEl = document.getElementById("edit-listing-modal");
       const bsModal = bootstrap.Modal.getInstance(modalEl);
-      bsModal.hide();
 
+      bsModal.hide();
       displayListings();
     } catch (err) {
       setError(form, "title", err.message || "Failed to update listing");

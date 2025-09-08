@@ -1,5 +1,4 @@
-import { API_AUCTIONS_LISTINGS } from "../../api/constants.js";
-import { apiFetch } from "../../api/request.js";
+import { deleteListing } from "../../api/listings/delete.js";
 import { displayListings } from "./read.js";
 
 let currentDeleteListingId = null;
@@ -26,25 +25,23 @@ export function initDeleteListingModal() {
   const bsDeleteModal = new bootstrap.Modal(deleteModalEl);
 
   const confirmBtn = deleteModalEl.querySelector("#delete-btn");
-  if (confirmBtn) {
-    confirmBtn.addEventListener("click", async () => {
-      if (!currentDeleteListingId) return;
+  if (!confirmBtn) return;
 
-      try {
-        await apiFetch(`${API_AUCTIONS_LISTINGS}/${currentDeleteListingId}`, {
-          method: "DELETE",
-          auth: true,
-        });
+  // Event listener
+  confirmBtn.addEventListener("click", async () => {
+    if (!currentDeleteListingId) return;
 
-        bsDeleteModal.hide();
-        currentDeleteListingId = null;
+    try {
+      await deleteListing(currentDeleteListingId);
 
-        displayListings();
-      } catch (err) {
-        console.error("Failed to delete listing:", err);
-      }
-    });
-  }
+      bsDeleteModal.hide();
+      currentDeleteListingId = null;
+
+      displayListings();
+    } catch (err) {
+      console.error("Failed to delete listing:", err);
+    }
+  });
 }
 
 // Open Delete Listing modal

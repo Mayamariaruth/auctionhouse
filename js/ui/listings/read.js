@@ -5,7 +5,7 @@ import {
   initEditListingForm,
   initEditListingModal,
   loadEditListingModal,
-} from "./update.js";
+} from "./edit.js";
 import { loadDeleteModal, initDeleteListingModal } from "./delete.js";
 
 // Initialize landing page with button, listings grid and modals

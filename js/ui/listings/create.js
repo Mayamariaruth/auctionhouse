@@ -1,6 +1,5 @@
 import { isLoggedIn, getProfile } from "../../utils/auth.js";
-import { API_AUCTIONS_LISTINGS } from "../../api/constants.js";
-import { apiFetch } from "../../api/request.js";
+import { createListing } from "../../api/listings/create.js"; // 👈 use API function
 import { showNotification } from "../../utils/notifications.js";
 import { displayListings } from "./read.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
@@ -89,11 +88,7 @@ export function initAddListingForm() {
     };
 
     try {
-      await apiFetch(API_AUCTIONS_LISTINGS, {
-        method: "POST",
-        body: listingData,
-        auth: true,
-      });
+      await createListing(listingData);
 
       showNotification("Listing added successfully!", "success");
 
