@@ -102,6 +102,10 @@ export function createListingCard(listing, container) {
 
   const imageAlt = title;
   const sellerName = seller?.name || "Unknown";
+  const safeDescription =
+    description && description.trim().length
+      ? description
+      : "No description provided.";
 
   // Create card column
   const col = document.createElement("div");
@@ -115,15 +119,15 @@ export function createListingCard(listing, container) {
       <div class="bids-box position-absolute top-0 start-0 m-2 px-2 py-1">
         ${bids} bid${bids !== 1 ? "s" : ""}
       </div>
-      <div class="seller-box position-absolute bottom-0 start-0 end-0 m-2 px-2 py-1">
+      <div class="seller-box position-absolute bottom-0 start-0 end-0 px-4 py-2">
         Posted by <strong>${sellerName}</strong>
       </div>
     </div>
     <div class="card-body">
       <h5 class="card-title">${title}</h5>
-      <p class="card-text">${description}</p>
-      <p class="mb-1">Ends ${new Date(endsAt).toLocaleString()}</p>
-      <div class="listing-tags">
+      <p class="card-text">${safeDescription}</p>
+      <p class="mb-2 date-text">Ends ${new Date(endsAt).toLocaleString()}</p>
+      <div class="listing-tags mb-3">
         ${renderTags(tags)}
       </div>
       <button class="listing-btn">

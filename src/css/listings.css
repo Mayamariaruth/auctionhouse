@@ -1,3 +1,57 @@
+.card {
+  border: none !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  padding: 8px 2px !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-img-top {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+.listing-image-wrapper {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+}
+
+.listing-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1em;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.date-text {
+  font-size: 14px;
+  font-weight: lighter;
+  color: #717171;
+}
+
 #add-listing-btn {
   background-color: #6b3d47;
   color: white;
@@ -21,41 +75,30 @@
 
 .bids-box {
   background-color: #5d5d5d;
-  border-radius: 4px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
+  color: white;
 }
 
 .seller-box {
   background-color: #5d5d5d;
   color: white;
-  border-radius: 4px;
-  font-size: 10px;
-}
-
-.listing-tags .tag-box {
-  display: inline-block;
-  background-color: #ebebeb;
-  color: #717171;
-  padding: 2px 6px;
-  margin: 0 4px 4px 0;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 14px;
 }
 
 .tag-box {
   display: inline-block;
-  background-color: #f0f0f0;
-  color: #333;
-  padding: 2px 6px;
-  margin: 0 4px 4px 0;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  background-color: #ebebeb;
+  color: #717171;
+  padding: 4px 13px;
+  font-size: 13px;
 }
 
 .listing-btn {
   background-color: white;
   border: solid #000 1px;
+  width: 100%;
+  padding: 5px 0;
 }
 
 .listing-btn:hover {
@@ -65,6 +108,10 @@
 }
 
 @media (min-width: 998px) {
+  .card-title {
+    font-size: 20px;
+  }
+
   #add-listing-btn {
     font-size: 18px;
     padding: 11px 55px;
