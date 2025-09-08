@@ -7,19 +7,20 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
+    <div class="modal-content p-3">
       <div class="modal-header">
         <h2 class="modal-title" id="edit-listing-modal-label">Edit Listing</h2>
       </div>
       <!-- Form -->
       <div class="modal-body">
-        <form id="edit-listing-form">
+        <form id="edit-listing-form" novalidate>
           <!-- Image field -->
           <div class="mb-3">
             <label for="edit-listing-image" class="form-label"
               >Image (URL link)</label
             >
             <input type="text" class="form-control" id="edit-listing-image" />
+            <span class="error-message" id="edit-image-error"></span>
           </div>
 
           <!-- Title field -->
@@ -31,6 +32,7 @@
               id="edit-listing-title"
               required
             />
+            <span class="error-message" id="edit-title-error"></span>
           </div>
 
           <!-- Description field -->
@@ -44,17 +46,19 @@
               rows="3"
               required
             ></textarea>
+            <span class="error-message" id="edit-description-error"></span>
           </div>
 
           <!-- Tags field -->
           <div class="mb-3">
-            <label for="listing-tags" class="form-label">Tags</label>
+            <label for="edit-listing-tags" class="form-label">Tags</label>
             <input
               type="text"
               class="form-control"
-              id="listing-tags"
+              id="edit-listing-tags"
               name="tags"
             />
+            <span class="error-message" id="edit-tags-error"></span>
           </div>
 
           <!-- Deadline field -->
@@ -68,9 +72,10 @@
               id="edit-listing-deadline"
               required
             />
+            <span class="error-message" id="edit-deadline-error"></span>
           </div>
           <!-- Buttons -->
-          <div class="d-flex flex-column gap-2">
+          <div class="d-flex flex-column gap-2 mt-4">
             <button type="submit" class="confirm-btn">Save</button>
             <button type="button" class="cancel-btn" data-bs-dismiss="modal">
               Cancel

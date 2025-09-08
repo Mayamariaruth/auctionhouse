@@ -8,25 +8,31 @@
   font-weight: bold;
 }
 
-#add-listing-form label {
+#add-listing-form label,
+#edit-listing-form label {
   font-weight: 500;
   font-size: 16px;
 }
 
 #add-listing-form input,
-#add-listing-form textarea {
+#add-listing-form textarea,
+#edit-listing-form input,
+#edit-listing-form textarea {
   background-color: #fafafa;
   border: solid #b5b4b4 1px;
   border-radius: 0 !important;
 }
 
 #add-listing-form input::placeholder,
-textarea::placeholder {
+#add-listing-form textarea::placeholder,
+#edit-listing-form input::placeholder,
+#edit-listing-form textarea::placeholder {
   font-weight: 200 !important;
   color: #b2b2b2 !important;
 }
 
-#add-listing-form input:focus {
+#add-listing-form input:focus,
+#edit-listing-form input:focus {
   border: solid #000 1.5px !important;
   box-shadow: none !important;
 }
@@ -64,7 +70,8 @@ textarea::placeholder {
     font-size: 30px;
   }
 
-  #add-listing-form label {
+  #add-listing-form label,
+  #edit-listing-form label {
     font-size: 18px;
   }
 
