@@ -1,5 +1,5 @@
 import { isLoggedIn, getProfile } from "../../utils/auth.js";
-import { createListing } from "../../api/listings/create.js"; // 👈 use API function
+import { createListing } from "../../api/listings/create.js";
 import { showNotification } from "../../utils/notifications.js";
 import { displayListings } from "./read.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
