@@ -42,7 +42,7 @@ function renderListingDetails(listing) {
 
   container.innerHTML = `
     <div class="detail-container">
-      <div class="detail-left">
+      <div class="detail-left mt-4 mt-md-0">
         <img src="${imageUrl}" alt="${
     listing.media?.[0]?.alt || "Listing image"
   }" />
@@ -73,24 +73,48 @@ function renderBiddingSection(listing) {
   const loggedInEl = document.querySelector("#bidding-section .logged-in");
   const loggedOutEl = document.querySelector("#bidding-section .logged-out");
 
-  // Bid history
   const bids = listing.bids || [];
+
   if (bids.length === 0) {
     bidHistoryEl.innerHTML = "<p>No bids yet</p>";
   } else {
     bidHistoryEl.innerHTML = `
       <h2>Bids</h2>
+      <div class="bid-history-wrapper">
+        <table class="bid-table">
+          <thead>
+            <tr>
+              <th>Bidder</th>
+              <th>Date</th>
+              <th>Credits</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${bids
+              .map(
+                (bid) => `
+                <tr>
+                  <td>${bid.bidder?.name || "Unknown"}</td>
+                  <td>${new Date(bid.created).toLocaleString()}</td>
+                  <td>${bid.amount}</td>
+                </tr>`
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+      <hr>
     `;
   }
 
-  // Toggle sections
+  // Logged-in form
   if (isLoggedIn()) {
     loggedOutEl.classList.add("d-none");
     loggedInEl.classList.remove("d-none");
 
     loggedInEl.innerHTML = `
       <form id="bid-form">
-        <input type="number" min="1" name="amount" required />
+        <input type="number" min="1" name="amount" placeholder="Enter bid" required />
         <button type="submit" class="bid-btn">Bid</button>
       </form>
     `;
