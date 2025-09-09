@@ -4,6 +4,7 @@ import { onRegister } from "./ui/auth/register.js";
 import { showStoredNotification } from "./utils/notifications.js";
 import { logoutListener } from "./ui/auth/logout.js";
 import { initListingsPage } from "./ui/listings/read.js";
+import { loadListingDetails } from "./ui/listings/details.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
@@ -11,6 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
   showStoredNotification();
   logoutListener();
   initListingsPage();
+
+  if (document.getElementById("listing-details")) {
+    loadListingDetails();
+  }
 
   // Form submissions (register + login)
   const registerForm = document.getElementById("register");

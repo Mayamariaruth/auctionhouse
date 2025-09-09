@@ -1,12 +1,47 @@
 .detail-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 1.5rem;
 }
 
 .detail-left img {
   width: 100%;
   object-fit: cover;
+}
+
+.detail-right {
+  border-bottom: solid #ebebeb 2px;
+}
+
+.detail-right h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.desc-details {
+  font-size: 20px;
+}
+
+.deadline-details {
+  font-size: 16px;
+  color: #717171;
+  font-weight: 100;
+}
+
+.seller-details {
+  font-size: 16px;
+  font-weight: 100;
+}
+
+#seller-name {
+  font-weight: bold;
+}
+
+.back-btn {
+  color: #717171;
+  text-decoration: none;
+  font-weight: 300;
+  font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -17,10 +52,26 @@
   }
 
   .detail-left {
-    flex: 1;
+    flex: 2;
   }
 
   .detail-right {
     flex: 2;
+  }
+
+  .detail-right h1 {
+    font-size: 28px;
+  }
+
+  .back-btn {
+    font-size: 16px;
+  }
+
+  .seller-details {
+    font-size: 18px;
+  }
+
+  #tags-details {
+    font-size: 16px;
   }
 }

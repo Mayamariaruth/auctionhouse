@@ -66,13 +66,6 @@
   border: solid black 1px;
 }
 
-.back-btn {
-  color: #717171;
-  text-decoration: none;
-  font-weight: 300;
-  font-size: 14px;
-}
-
 .bids-box {
   background-color: #5d5d5d;
   font-size: 13px;
@@ -127,9 +120,5 @@
 
   .fa-plus {
     font-size: 20px;
-  }
-
-  .back-btn {
-    font-size: 16px;
   }
 }

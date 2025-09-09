@@ -55,8 +55,8 @@ export function initAddListingModal() {
   const addBtn = document.getElementById("add-listing-btn");
   const modalEl = document.getElementById("add-listing-modal");
 
-  if (!addBtn) return console.warn("Add Listing button not found");
-  if (!modalEl) return console.warn("Add Listing modal not found");
+  if (!addBtn) return;
+  if (!modalEl) return;
 
   const bsModal = new bootstrap.Modal(modalEl);
 
@@ -183,7 +183,15 @@ export function createListingCard(listing, container) {
     };
   }
 
-  // Button handler
+  // Image handler
+  const imageWrapper = col.querySelector(".listing-image-wrapper");
+  if (imageWrapper) {
+    imageWrapper.addEventListener("click", () => {
+      window.location.href = `/html/listing.html?id=${id}`;
+    });
+  }
+
+  // Listing Button handler
   const btn = col.querySelector(".listing-btn");
   btn.addEventListener("click", () => {
     window.location.href = `/html/listing.html?id=${id}`;

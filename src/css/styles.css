@@ -1,4 +1,5 @@
 @import url("./auth.css");
+@import url("./details.css");
 @import url("./listings.css");
 @import url("./modals.css");
 @import url("./profile.css");
@@ -23,7 +24,7 @@ body {
 }
 
 .page-container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   padding-left: 16px;
   padding-right: 16px;
