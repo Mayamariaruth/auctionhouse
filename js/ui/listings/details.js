@@ -20,6 +20,7 @@ export async function loadListingDetails() {
   try {
     const listing = await fetchListingById(id);
     renderListingDetails(listing);
+    renderBiddingSection(listing);
   } catch (error) {
     console.error(error);
     showNotification("Failed to load listing details", "error");
@@ -55,13 +56,51 @@ function renderListingDetails(listing) {
         <div class="listing-tags mb-4">
           ${renderTags(tags)}
         </div>
-      </div>
-
-      <div id="bidding-section">
-        <div id="bid-history"></div>
-        <div class="logged-in d-none"></div>
-        <div class="logged-out d-none"></div>
+        <hr>
+        <div id="bidding-section">
+          <div id="bid-history"></div>
+          <div class="logged-in d-none"></div>
+          <div class="logged-out d-none"></div>
+        </div>
       </div>
     </div>
   `;
+}
+
+// Display the bidding section
+function renderBiddingSection(listing) {
+  const bidHistoryEl = document.getElementById("bid-history");
+  const loggedInEl = document.querySelector("#bidding-section .logged-in");
+  const loggedOutEl = document.querySelector("#bidding-section .logged-out");
+
+  // Bid history
+  const bids = listing.bids || [];
+  if (bids.length === 0) {
+    bidHistoryEl.innerHTML = "<p>No bids yet</p>";
+  } else {
+    bidHistoryEl.innerHTML = `
+      <h2>Bids</h2>
+    `;
+  }
+
+  // Toggle sections
+  if (isLoggedIn()) {
+    loggedOutEl.classList.add("d-none");
+    loggedInEl.classList.remove("d-none");
+
+    loggedInEl.innerHTML = `
+      <form id="bid-form">
+        <input type="number" min="1" name="amount" required />
+        <button type="submit" class="bid-btn">Bid</button>
+      </form>
+    `;
+  } else {
+    loggedInEl.classList.add("d-none");
+    loggedOutEl.classList.remove("d-none");
+
+    loggedOutEl.innerHTML = `
+      <p>Login to place a bid on this listing</p>
+      <a href="../login.html" id="details-login-btn">Login</a>
+    `;
+  }
 }
