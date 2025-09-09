@@ -1,0 +1,26 @@
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.detail-left img {
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .detail-container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .detail-left {
+    flex: 1;
+  }
+
+  .detail-right {
+    flex: 2;
+  }
+}

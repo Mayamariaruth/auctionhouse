@@ -191,7 +191,7 @@ export function createListingCard(listing, container) {
 }
 
 // Render tags as boxes
-function renderTags(tags = []) {
+export function renderTags(tags = []) {
   if (!tags.length) return '<span class="tag-box">No tags</span>';
 
   return tags.map((tag) => `<span class="tag-box">${tag}</span>`).join(" ");
