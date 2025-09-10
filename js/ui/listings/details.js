@@ -2,6 +2,7 @@ import { fetchListingById } from "../../api/listings/fetch.js";
 import { showNotification } from "../../utils/notifications.js";
 import { isLoggedIn } from "../../utils/auth.js";
 import { renderTags } from "./read.js";
+import { renderBidHistory } from "../bids/history.js";
 
 // Fetch listing ID from URL
 function getListingIdFromUrl() {
@@ -68,53 +69,22 @@ function renderListingDetails(listing) {
 }
 
 // Display the bidding section
-function renderBiddingSection(listing) {
+export function renderBiddingSection(listing) {
   const bidHistoryEl = document.getElementById("bid-history");
   const loggedInEl = document.querySelector("#bidding-section .logged-in");
   const loggedOutEl = document.querySelector("#bidding-section .logged-out");
 
-  const bids = listing.bids || [];
+  // Render bid history
+  renderBidHistory(listing.bids || [], bidHistoryEl);
 
-  if (bids.length === 0) {
-    bidHistoryEl.innerHTML = "<p>No bids yet</p>";
-  } else {
-    bidHistoryEl.innerHTML = `
-      <h2>Bids</h2>
-      <div class="bid-history-wrapper">
-        <table class="bid-table">
-          <thead>
-            <tr>
-              <th>Bidder</th>
-              <th>Date</th>
-              <th>Credits</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${bids
-              .map(
-                (bid) => `
-                <tr>
-                  <td>${bid.bidder?.name || "Unknown"}</td>
-                  <td>${new Date(bid.created).toLocaleString()}</td>
-                  <td>${bid.amount}</td>
-                </tr>`
-              )
-              .join("")}
-          </tbody>
-        </table>
-      </div>
-      <hr>
-    `;
-  }
-
-  // Logged-in form
+  // Toggle sections
   if (isLoggedIn()) {
     loggedOutEl.classList.add("d-none");
     loggedInEl.classList.remove("d-none");
 
     loggedInEl.innerHTML = `
       <form id="bid-form">
-        <input type="number" min="1" name="amount" placeholder="Enter bid" required />
+        <input type="number" min="1" name="amount" placeholder="Enter your bid" required />
         <button type="submit" class="bid-btn">Bid</button>
       </form>
     `;
