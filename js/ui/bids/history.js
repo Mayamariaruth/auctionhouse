@@ -35,6 +35,5 @@ export function renderBidHistory(bids, container) {
         </tbody>
       </table>
     </div>
-    <hr>
   `;
 }

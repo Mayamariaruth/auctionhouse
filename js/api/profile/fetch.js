@@ -29,9 +29,12 @@ export async function fetchListingsByProfile(name) {
 // Fetch all bids placed by a user
 export async function fetchBidsByProfile(name) {
   try {
-    return await apiFetch(`${API_AUCTIONS_PROFILES}/${name}/bids`, {
-      auth: true,
-    });
+    return await apiFetch(
+      `${API_AUCTIONS_PROFILES}/${name}/bids?_listings=true`,
+      {
+        auth: true,
+      }
+    );
   } catch (error) {
     console.error("Failed to fetch bids for profile:", error);
     throw error;

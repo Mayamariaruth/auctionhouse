@@ -1,5 +1,6 @@
 import { fetchProfile } from "../../api/profile/fetch.js";
 import { displayProfileListings } from "./listings.js";
+import { displayProfileBids } from "./bids.js";
 
 // Load profile details
 export async function loadProfile() {
@@ -28,6 +29,7 @@ export async function loadProfile() {
 
     // Load tabs content
     await displayProfileListings(username);
+    await displayProfileBids(username);
   } catch (err) {
     console.error("Failed to load profile:", err);
   }

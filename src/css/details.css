@@ -167,13 +167,22 @@
   font-weight: bold;
 }
 
-.details-login-btn {
+.details-login-text {
+  font-size: 18px;
+}
+
+#details-login-btn {
   border: solid black 1px;
   font-weight: bold;
+  color: black;
+  padding: 7px 50px;
+  text-decoration: none;
+  width: fit-content;
+  font-size: 16px;
 }
 
 .bid-btn:hover,
-.details-login-btn:hover {
+#details-login-btn:hover {
   background-color: #6b3d47;
   color: white;
   border: solid #6b3d47 1px;

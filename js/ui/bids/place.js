@@ -13,7 +13,6 @@ export function initBidForm(listingId, onSuccess) {
     e.preventDefault();
     const amountValue = Number(bidForm.amount.value);
 
-    // Validation
     if (!amountValue || isNaN(amountValue) || amountValue <= 0) {
       showNotification("Please enter a valid bid amount", "error");
       return;
@@ -24,11 +23,15 @@ export function initBidForm(listingId, onSuccess) {
       showNotification("Bid placed successfully!", "success");
       bidForm.reset();
 
-      // Fetch profile & update navbar credits
+      // Update navbar credits
       const user = getProfile();
       if (user?.name) {
         const profile = await fetchProfile(user.name);
         updateNavbarCredits(profile.credits);
+
+        // Refresh profile bids tab
+        const displayProfileBidsModule = await import("../profile/bids.js");
+        await displayProfileBidsModule.displayProfileBids(user.name);
       }
 
       if (onSuccess) onSuccess();

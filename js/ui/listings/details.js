@@ -84,6 +84,7 @@ function renderListingDetails(listing) {
         <hr>
         <div id="bidding-section">
           <div id="bid-history"></div>
+          <hr>
           <div class="logged-in d-none"></div>
           <div class="logged-out d-none"></div>
         </div>
@@ -134,8 +135,10 @@ export function renderBiddingSection(listing) {
     loggedOutEl.classList.remove("d-none");
 
     loggedOutEl.innerHTML = `
-      <p>Login to place a bid on this listing</p>
-      <a href="../login.html" id="details-login-btn">Login</a>
+      <div class="d-flex flex-column mt-4">
+        <p class="fw-semibold details-login-text">Login to place a bid on this listing</p>
+        <a href="/html/login.html" id="details-login-btn">Login</a>
+      </div>
     `;
   }
 }
