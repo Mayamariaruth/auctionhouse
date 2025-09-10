@@ -4,10 +4,12 @@ import { apiFetch } from "../request.js";
 // Fetch a profile by name
 export async function fetchProfile(name) {
   try {
-    const data = await apiFetch(`${API_AUCTIONS_PROFILES}/${name}`);
+    const data = await apiFetch(`${API_AUCTIONS_PROFILES}/${name}`, {
+      auth: true,
+    });
     return data;
   } catch (error) {
-    console.error(`Failed to fetch profile for ${username}:`, error);
+    console.error(`Failed to fetch profile for ${name}:`, error);
     throw error;
   }
 }

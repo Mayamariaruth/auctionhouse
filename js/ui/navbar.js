@@ -65,3 +65,20 @@ export function updateNavbar() {
     if (userCreditsMobile) userCreditsMobile.classList.add("d-none");
   }
 }
+
+// Update navbar credits (after placing bids)
+export function updateNavbarCredits(newCredits) {
+  // Update DOM
+  const desktopEl = document.querySelector("#user-credits-desktop");
+  const mobileEl = document.querySelector("#user-credits-mobile");
+
+  if (desktopEl) desktopEl.textContent = `${newCredits} credits`;
+  if (mobileEl) mobileEl.textContent = `${newCredits} credits`;
+
+  // Update localStorage
+  const profile = getProfile();
+  if (profile) {
+    profile.credits = newCredits;
+    localStorage.setItem("profile", JSON.stringify(profile));
+  }
+}
