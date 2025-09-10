@@ -18,6 +18,14 @@
 .detail-right h1 {
   font-size: 26px;
   font-weight: bold;
+  flex-grow: 1;
+  margin: 0;
+}
+
+.detail-header {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .desc-details {
@@ -44,6 +52,13 @@
   text-decoration: none;
   font-weight: 300;
   font-size: 14px;
+}
+
+.edit-detail-btn {
+  border: none;
+  background-color: transparent;
+  color: #717171;
+  font-size: 18px;
 }
 
 /* Bidding section */

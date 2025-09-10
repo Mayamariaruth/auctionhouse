@@ -1,3 +1,12 @@
+#profile-banner {
+  width: 100%;
+}
+
+#profile-avatar {
+  width: 100%;
+  border-radius: 50%;
+}
+
 #edit-profile-btn {
   color: #717171;
   font-weight: 300;

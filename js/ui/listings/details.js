@@ -4,6 +4,7 @@ import { isLoggedIn } from "../../utils/auth.js";
 import { renderTags } from "./read.js";
 import { initBidForm } from "../bids/place.js";
 import { renderBidHistory } from "../bids/history.js";
+import { initEditListingModal } from "./edit.js";
 
 // Fetch listing ID from URL
 function getListingIdFromUrl() {
@@ -37,9 +38,13 @@ function renderListingDetails(listing) {
     listing.media?.[0]?.url || "../../../assets/images/default-img.png";
   const title = listing.title;
   const description = listing.description?.trim() || "No description provided.";
-  const seller = listing.seller?.name || "Unknown seller";
+  const seller = listing.seller || { name: "Unknown seller" };
   const deadline = new Date(listing.endsAt).toLocaleString();
   const tags = listing.tags || [];
+
+  // Check if current user is seller
+  const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
+  const isSeller = isLoggedIn() && seller.name === userProfile?.name;
 
   container.innerHTML = `
     <div class="detail-container">
@@ -47,11 +52,22 @@ function renderListingDetails(listing) {
         <img src="${imageUrl}" alt="${
     listing.media?.[0]?.alt || "Listing image"
   }" />
-        <p class="seller-details mt-3">Posted by <span id="seller-name">${seller}</span></p>
+        <p class="seller-details mt-3">Posted by <span id="seller-name">${
+          seller.name
+        }</span></p>
       </div>
 
       <div class="detail-right">
-        <h1>${title}</h1>
+        <div class="detail-header">
+          <h1>${title}</h1>
+          ${
+            isSeller
+              ? `<button class="edit-detail-btn" title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>`
+              : ""
+          }
+        </div>
         <p class="desc-details">${description}</p>
         <p class="deadline-details">Ends ${deadline}</p>
         <div class="listing-tags mb-4">
@@ -66,6 +82,17 @@ function renderListingDetails(listing) {
       </div>
     </div>
   `;
+
+  // Open edit listing modal if current user is the seller
+  if (isSeller) {
+    const editBtn = container.querySelector(".edit-detail-btn");
+    if (editBtn) {
+      editBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        initEditListingModal(listing);
+      });
+    }
+  }
 }
 
 // Display the bidding section
