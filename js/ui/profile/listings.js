@@ -1,9 +1,14 @@
 import { fetchListingsByProfile } from "../../api/profile/fetch.js";
+import {
+  initEditListingModal,
+  loadEditListingModal,
+} from "../listings/edit.js";
+import { openDeleteListingModal, loadDeleteModal } from "../listings/delete.js";
 
 // Fetch listings
 export async function displayProfileListings(username) {
   const container = document.getElementById("user-listings");
-  if (!container) return;
+  if (!container || !username) return;
 
   try {
     const listings = await fetchListingsByProfile(username);
@@ -16,6 +21,32 @@ export async function displayProfileListings(username) {
 
     listings.forEach((listing) => {
       container.innerHTML += renderListingCard(listing);
+    });
+
+    // Load modals
+    await loadEditListingModal();
+    await loadDeleteModal();
+
+    // Attach button listeners
+    listings.forEach((listing) => {
+      const card = container.querySelector(`[data-id="${listing.id}"]`);
+      if (!card) return;
+
+      const deleteBtn = card.querySelector(".profile-delete-btn");
+      if (deleteBtn) {
+        deleteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openDeleteListingModal(listing.id, username);
+        });
+      }
+
+      const editBtn = card.querySelector(".profile-edit-listing-btn");
+      if (editBtn) {
+        editBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          initEditListingModal(listing, username);
+        });
+      }
     });
   } catch (err) {
     container.innerHTML = `<p class="text-danger text-center fs-5">Failed to load listings</p>`;
@@ -30,8 +61,8 @@ function renderListingCard(listing) {
   const bids = listing._count?.bids || 0;
 
   return `
-    <div class="col-12">
-      <div class="listing-card p-3 pt-2">
+    <div class="col-12" data-id="${listing.id}">
+      <div class="profile-listing-card p-3 pt-2">
         
         <!-- Image + text -->
         <div class="d-flex flex-row">
@@ -47,7 +78,7 @@ function renderListingCard(listing) {
           </div>
 
           <!-- Text content -->
-          <div class="listing-text flex-grow-1">
+          <div class="profile-listing-text flex-grow-1">
             <h5 class="mb-1 profile-listing-heading">
               <a href="/html/listing.html?id=${
                 listing.id

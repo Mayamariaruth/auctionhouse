@@ -2,6 +2,7 @@ import { editListing } from "../../api/listings/edit.js";
 import { displayListings } from "./read.js";
 import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
+import { displayProfileListings } from "../profile/listings.js";
 
 let currentListingId = null;
 
@@ -20,7 +21,7 @@ export async function loadEditListingModal() {
 }
 
 // Initialize Edit listing modal
-export function initEditListingModal(listing) {
+export function initEditListingModal(listing, onSuccess) {
   if (!listing) return;
 
   const form = document.getElementById("edit-listing-form");
@@ -44,6 +45,8 @@ export function initEditListingModal(listing) {
   const modalEl = document.getElementById("edit-listing-modal");
   const bsModal = new bootstrap.Modal(modalEl);
   bsModal.show();
+
+  form.dataset.onSuccess = onSuccess ? true : "";
 }
 
 // Edit listing form submission
@@ -135,9 +138,9 @@ export function initEditListingForm() {
 
       const modalEl = document.getElementById("edit-listing-modal");
       const bsModal = bootstrap.Modal.getInstance(modalEl);
-
       bsModal.hide();
-      displayListings();
+
+      window.location.reload();
     } catch (err) {
       setError(form, "title", err.message || "Failed to update listing");
     }

@@ -1,5 +1,6 @@
 import { deleteListing } from "../../api/listings/delete.js";
 import { displayListings } from "./read.js";
+import { displayProfileListings } from "../profile/listings.js";
 
 let currentDeleteListingId = null;
 
@@ -37,7 +38,7 @@ export function initDeleteListingModal() {
       bsDeleteModal.hide();
       currentDeleteListingId = null;
 
-      displayListings();
+      window.location.reload();
     } catch (err) {
       console.error("Failed to delete listing:", err);
     }

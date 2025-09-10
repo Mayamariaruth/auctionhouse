@@ -70,6 +70,11 @@
 
 /* Tabs styling */
 /* Listings */
+#user-listings,
+#user-bids {
+  overflow-y: scroll;
+  max-height: 600px;
+}
 .nav-tabs {
   border-bottom: solid #6b3d47 1px !important;
   display: flex;
@@ -103,7 +108,7 @@
   border: none;
 }
 
-.listing-card img {
+.profile-listing-card img {
   width: 120px;
   height: 120px;
   object-fit: cover;
@@ -124,7 +129,7 @@
   font-weight: 100;
 }
 
-.listing-text p {
+.profile-listing-text p {
   max-width: 100%;
 }
 
@@ -191,14 +196,14 @@ profile-auction-status.ended {
 /* Bids */
 
 @media (min-width: 576px) {
-  .listing-card {
+  .profile-listing-card {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center !important;
   }
 
-  .listing-text {
+  .profile-listing-text {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -211,7 +216,7 @@ profile-auction-status.ended {
     width: auto;
   }
 
-  .listing-card img {
+  .profile-listing-card img {
     width: 170px;
     height: 170px;
   }
