@@ -121,6 +121,9 @@ export function createListingCard(listing, container) {
   const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
   const isSeller = isLoggedIn() && seller?.name === userProfile?.name;
 
+  // Check is listing is active or ended
+  const isActive = new Date(endsAt) > new Date();
+
   // Create card column
   const col = document.createElement("div");
   col.className = "col-sm-6 col-md-4 col-lg-3";
@@ -133,6 +136,12 @@ export function createListingCard(listing, container) {
       <div class="bids-box position-absolute top-0 start-0 m-2 px-2 py-1">
         ${bids} bid${bids !== 1 ? "s" : ""}
       </div>
+      <div class="status-badge position-absolute top-0 end-0 m-2 px-2 py-1 ${
+        isActive ? "active" : "ended"
+      }">
+        ${isActive ? "Active" : "Ended"}
+      </div>
+
       <div class="seller-box position-absolute bottom-0 start-0 end-0 px-4 py-2">
         Posted by <strong>${sellerName}</strong>
       </div>

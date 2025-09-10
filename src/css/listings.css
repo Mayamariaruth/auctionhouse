@@ -115,6 +115,20 @@
   color: #717171;
 }
 
+.status-badge {
+  font-weight: bold;
+  color: #fff;
+  font-size: 13px;
+}
+
+.status-badge.active {
+  background-color: #439f6e;
+}
+
+.status-badge.ended {
+  background-color: #f93232;
+}
+
 @media (min-width: 998px) {
   .card-title {
     font-size: 20px;

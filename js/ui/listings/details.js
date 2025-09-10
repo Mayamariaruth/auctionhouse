@@ -39,8 +39,10 @@ function renderListingDetails(listing) {
   const title = listing.title;
   const description = listing.description?.trim() || "No description provided.";
   const seller = listing.seller || { name: "Unknown seller" };
-  const deadline = new Date(listing.endsAt).toLocaleString();
   const tags = listing.tags || [];
+  const endsAt = new Date(listing.endsAt);
+  const deadline = endsAt.toLocaleString();
+  const isActive = endsAt > new Date();
 
   // Check if current user is seller
   const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
@@ -68,8 +70,14 @@ function renderListingDetails(listing) {
               : ""
           }
         </div>
-        <p class="desc-details">${description}</p>
-        <p class="deadline-details">Ends ${deadline}</p>
+        <p class="desc-details mt-2">${description}</p>
+        <p class="deadline-details">
+          Ends ${deadline} 
+          <span class="auction-status ${isActive ? "active" : "ended"}">
+            ${isActive ? "Active" : "Ended"}
+          </span>
+        </p>
+
         <div class="listing-tags mb-4">
           ${renderTags(tags)}
         </div>

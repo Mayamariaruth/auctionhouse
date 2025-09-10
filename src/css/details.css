@@ -38,6 +38,20 @@
   font-weight: 100;
 }
 
+.auction-status {
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 13px;
+}
+
+.auction-status.active {
+  color: #439f6e;
+}
+
+.auction-status.ended {
+  color: #f93232;
+}
+
 .seller-details {
   font-size: 16px;
   font-weight: 100;
