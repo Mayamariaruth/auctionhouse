@@ -167,22 +167,24 @@
 
       <!-- Profile details -->
       <section id="profile-page" class="page-container">
-        <section class="profile-header position-relative mb-4">
+        <section class="profile-header mb-4 position-relative">
           <div id="profile-banner-wrapper">
             <img id="profile-banner" src="" alt="Profile Banner" />
           </div>
-          <div id="profile-avatar-wrapper" class="position-absolute">
-            <img id="profile-avatar" src="" alt="Profile Avatar" />
+          <div class="edit-profile-container position-absolute mt-2">
+            <button id="edit-profile-btn">
+              <i class="fa-solid fa-pen"></i> Edit Details
+            </button>
           </div>
-          <div id="profile-info" class="mt-5">
-            <div>
-              <button id="edit-profile-btn">
-                <i class="fa-solid fa-pen"></i> Edit Details
-              </button>
+          <div class="mobile-wrapper">
+            <div id="profile-avatar-wrapper">
+              <img id="profile-avatar" src="" alt="Profile Avatar" />
             </div>
-            <h1 id="profile-name"></h1>
-            <p id="profile-bio"></p>
-            <p id="profile-credits"></p>
+            <div id="profile-info">
+              <h1 id="profile-name"></h1>
+              <p id="profile-bio"></p>
+              <p id="profile-credits"></p>
+            </div>
           </div>
         </section>
 

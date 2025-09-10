@@ -10,10 +10,11 @@ export async function loadProfile() {
     const profile = await fetchProfile(username);
 
     document.getElementById("profile-name").textContent = profile.name;
-    document.getElementById("profile-bio").textContent = profile.bio || "";
+    document.getElementById("profile-bio").textContent =
+      profile.bio || "No bio provided";
     document.getElementById(
       "profile-credits"
-    ).textContent = `${profile.credits} credits`;
+    ).textContent = `Credits: ${profile.credits}`;
     document.getElementById("profile-avatar").src =
       (typeof profile.avatar === "object"
         ? profile.avatar?.url
