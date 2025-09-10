@@ -5,6 +5,7 @@ import { showStoredNotification } from "./utils/notifications.js";
 import { logoutListener } from "./ui/auth/logout.js";
 import { initListingsPage } from "./ui/listings/read.js";
 import { loadListingDetails } from "./ui/listings/details.js";
+import { loadProfile } from "./ui/profile/read.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
@@ -15,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (document.getElementById("listing-details")) {
     loadListingDetails();
+  }
+
+  if (document.getElementById("profile-page")) {
+    loadProfile();
   }
 
   // Form submissions (register + login)

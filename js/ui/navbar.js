@@ -34,13 +34,25 @@ export function updateNavbar() {
   const userCreditsDesktop = document.getElementById("user-credits-desktop");
   const userCreditsMobile = document.getElementById("user-credits-mobile");
 
-  if (loggedIn) {
+  if (loggedIn && profile?.name) {
     // Show logged-in links
     loggedInDesktop.forEach((el) => el.classList.remove("d-none"));
     loggedOutDesktop.forEach((el) => el.classList.add("d-none"));
 
     loggedInMobile.forEach((el) => el.classList.remove("d-none"));
     loggedOutMobile.forEach((el) => el.classList.add("d-none"));
+
+    // Update Profile link to include username
+    loggedInDesktop.forEach((el) => {
+      if (el.textContent.trim().toLowerCase() === "profile") {
+        el.href = `/html/profile.html?user=${profile.name}`;
+      }
+    });
+    loggedInMobile.forEach((el) => {
+      if (el.textContent.trim().toLowerCase() === "profile") {
+        el.href = `/html/profile.html?user=${profile.name}`;
+      }
+    });
 
     // Update credits
     const creditsText = `${profile?.credits ?? 0} credits`;
