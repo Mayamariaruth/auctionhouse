@@ -2,6 +2,7 @@ import { fetchListingById } from "../../api/listings/fetch.js";
 import { showNotification } from "../../utils/notifications.js";
 import { isLoggedIn } from "../../utils/auth.js";
 import { renderTags } from "./read.js";
+import { initBidForm } from "../bids/place.js";
 import { renderBidHistory } from "../bids/history.js";
 
 // Fetch listing ID from URL
@@ -88,6 +89,12 @@ export function renderBiddingSection(listing) {
         <button type="submit" class="bid-btn">Bid</button>
       </form>
     `;
+
+    // Form submission
+    initBidForm(listing.id, async () => {
+      const updatedListing = await fetchListingById(listing.id);
+      renderBidHistory(updatedListing.bids || [], bidHistoryEl);
+    });
   } else {
     loggedInEl.classList.add("d-none");
     loggedOutEl.classList.remove("d-none");

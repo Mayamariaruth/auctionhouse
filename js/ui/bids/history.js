@@ -13,7 +13,7 @@ export function renderBidHistory(bids, container) {
   container.innerHTML = `
     <h2>Bids</h2>
     <div class="bid-history-wrapper">
-      <table class="table table-striped bid-table">
+      <table class="bid-table">
         <thead>
           <tr>
             <th>Bidder</th>
@@ -35,5 +35,6 @@ export function renderBidHistory(bids, container) {
         </tbody>
       </table>
     </div>
+    <hr>
   `;
 }
