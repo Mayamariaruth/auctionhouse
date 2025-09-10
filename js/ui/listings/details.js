@@ -34,8 +34,7 @@ function renderListingDetails(listing) {
   const container = document.querySelector("#listing-details article");
 
   const imageUrl =
-    listing.media?.[0]?.url ||
-    "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0";
+    listing.media?.[0]?.url || "../../../assets/images/default-img.png";
   const title = listing.title;
   const description = listing.description?.trim() || "No description provided.";
   const seller = listing.seller?.name || "Unknown seller";

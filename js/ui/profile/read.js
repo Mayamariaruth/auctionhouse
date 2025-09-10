@@ -15,9 +15,14 @@ export async function loadProfile() {
       "profile-credits"
     ).textContent = `${profile.credits} credits`;
     document.getElementById("profile-avatar").src =
-      profile.avatar || "/images/default-avatar.png";
+      (typeof profile.avatar === "object"
+        ? profile.avatar?.url
+        : profile.avatar) || "../../../assets/images/default-avatar.png";
+
     document.getElementById("profile-banner").src =
-      profile.banner || "/images/default-banner.jpg";
+      (typeof profile.banner === "object"
+        ? profile.banner?.url
+        : profile.banner) || "../../../assets/images/default-banner.jpg";
   } catch (err) {
     console.error("Failed to load profile:", err);
   }

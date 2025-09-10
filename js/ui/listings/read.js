@@ -102,8 +102,7 @@ export function createListingCard(listing, container) {
     seller,
   } = listing;
 
-  const fallbackImage =
-    "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0";
+  const fallbackImage = "assets/images/default-img.png";
   const imageUrl =
     media && media.length
       ? typeof media[0] === "string"
@@ -177,8 +176,7 @@ export function createListingCard(listing, container) {
   if (img) {
     img.onerror = () => {
       img.onerror = null;
-      img.src =
-        "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+      img.src = "assets/images/default-img.png";
       img.alt = "Image unavailable";
     };
   }
