@@ -52,24 +52,8 @@
 
 .edit-profile-container {
   right: 0;
-}
-
-/* Tabs styling */
-#profile-tab .nav-tabs {
-  border-bottom: none;
-}
-
-#profile-tab .nav-link {
-  border: none;
-  background: transparent;
-  font-weight: 600;
-  color: black;
-}
-
-#profile-tab .nav-link.active {
-  background-color: #6b3d47;
-  color: white;
-  border: none;
+  cursor: pointer;
+  z-index: 100;
 }
 
 #edit-profile-btn {
@@ -78,6 +62,159 @@
   font-size: 14px;
   border: none;
   background-color: transparent;
+}
+
+#edit-profile-btn:hover {
+  color: black;
+}
+
+/* Tabs styling */
+/* Listings */
+.nav-tabs {
+  border-bottom: solid #6b3d47 1px !important;
+  display: flex;
+  width: 100%;
+}
+
+#profile-tab .nav-tabs,
+#profile-tab .nav-link,
+#profile-tab-content {
+  border-radius: 0 !important;
+}
+
+#profile-tab .nav-link {
+  border: none;
+  background: transparent;
+  font-weight: bold;
+  color: black;
+  width: 100%;
+  padding: 9px 0;
+  font-size: 18px;
+}
+
+#profile-tab .nav-item {
+  flex: 1;
+  text-align: center;
+}
+
+#profile-tab .nav-link.active {
+  background-color: #6b3d47;
+  color: white;
+  border: none;
+}
+
+.listing-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.profile-listing-heading {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.profile-listing-desc {
+  font-size: 16px;
+}
+
+.profile-listing-deadline {
+  font-size: 16px;
+  color: #717171;
+  font-weight: 100;
+}
+
+.listing-text p {
+  max-width: 100%;
+}
+
+.profile-auction-status {
+  font-size: 16px;
+}
+
+.listing-buttons button {
+  flex: 1;
+}
+
+.col-12 hr {
+  border-top: solid #ebebeb 2px;
+  opacity: 1;
+  margin-top: 0;
+}
+
+.profile-auction-status.active {
+  color: #439f6e;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+profile-auction-status.ended {
+  color: #f93232;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.profile-listing-btns {
+  width: 100%;
+}
+
+.profile-delete-btn {
+  border: solid #f93232 1px;
+  background-color: #f93232;
+  color: white;
+  font-weight: 500;
+  padding: 6px 30px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.profile-delete-btn:hover {
+  background-color: white;
+  color: #f93232;
+}
+
+.profile-edit-listing-btn {
+  font-weight: 500;
+  padding: 6px 30px;
+  border: solid black 1px;
+  background-color: transparent;
+  width: 100%;
+  font-size: 16px;
+}
+
+.profile-edit-listing-btn:hover {
+  background-color: #6b3d47;
+  border: solid #6b3d47 1px;
+  color: white;
+}
+
+/* Bids */
+
+@media (min-width: 576px) {
+  .listing-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center !important;
+  }
+
+  .listing-text {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .profile-listing-btns,
+  .profile-delete-btn,
+  .profile-edit-listing-btn {
+    width: auto;
+  }
+
+  .listing-card img {
+    width: 170px;
+    height: 170px;
+  }
 }
 
 @media (min-width: 660px) {

@@ -1,4 +1,5 @@
 import { fetchProfile } from "../../api/profile/fetch.js";
+import { displayProfileListings } from "./listings.js";
 
 // Load profile details
 export async function loadProfile() {
@@ -24,6 +25,9 @@ export async function loadProfile() {
       (typeof profile.banner === "object"
         ? profile.banner?.url
         : profile.banner) || "../../../assets/images/default-banner.jpg";
+
+    // Load tabs content
+    await displayProfileListings(username);
   } catch (err) {
     console.error("Failed to load profile:", err);
   }
