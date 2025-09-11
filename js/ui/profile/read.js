@@ -13,7 +13,7 @@ export function requireProfileOwner() {
   const user = getProfile();
   // Logged out user
   if (!user) {
-    window.location.href = "/html/login.html";
+    window.location.href = "../../../html/login.html";
     return false;
   }
 
@@ -21,7 +21,7 @@ export function requireProfileOwner() {
   const params = new URLSearchParams(window.location.search);
   const username = params.get("user");
   if (!username || username !== user.name) {
-    window.location.href = "/html/login.html";
+    window.location.href = "../../../html/login.html";
     return false;
   }
 

@@ -42,7 +42,7 @@ async function loadAddListingModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("/html/modals/add-listing.html");
+    const response = await fetch("../../../html/modals/add-listing.html");
     const html = await response.text();
     container.innerHTML = html;
   } catch (err) {
@@ -102,7 +102,7 @@ export function createListingCard(listing, container) {
     seller,
   } = listing;
 
-  const fallbackImage = "assets/images/default-img.png";
+  const fallbackImage = "../../../assets/images/default-img.png";
   const imageUrl =
     media && media.length
       ? typeof media[0] === "string"
@@ -187,7 +187,7 @@ export function createListingCard(listing, container) {
   if (img) {
     img.onerror = () => {
       img.onerror = null;
-      img.src = "assets/images/default-img.png";
+      img.src = "../../../assets/images/default-img.png";
       img.alt = "Image unavailable";
     };
   }
@@ -196,14 +196,14 @@ export function createListingCard(listing, container) {
   const imageWrapper = col.querySelector(".listing-image-wrapper");
   if (imageWrapper) {
     imageWrapper.addEventListener("click", () => {
-      window.location.href = `/html/listing.html?id=${id}`;
+      window.location.href = `../../../html/listing.html?id=${id}`;
     });
   }
 
   // Listing Button handler
   const btn = col.querySelector(".listing-btn");
   btn.addEventListener("click", () => {
-    window.location.href = `/html/listing.html?id=${id}`;
+    window.location.href = `../../../html/listing.html?id=${id}`;
   });
 }
 
