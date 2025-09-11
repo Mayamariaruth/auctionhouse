@@ -23,6 +23,7 @@ export async function loadListingDetails() {
   try {
     const listing = await fetchListingById(id);
     renderListingDetails(listing);
+    initImageModal();
     renderBiddingSection(listing);
   } catch (error) {
     console.error(error);
@@ -58,35 +59,34 @@ export function renderListingDetails(listing) {
   const isSeller = isLoggedIn() && seller.name === userProfile?.name;
 
   // Build carousel HTML
-  const galleryHtml =
-    imageUrls.length > 0
-      ? `
-        <div id="listing-gallery" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            ${imageUrls
-              .map(
-                (img, i) => `
-              <div class="carousel-item ${i === 0 ? "active" : ""}">
-                <img src="${img.url}" class="d-block w-100" alt="${
-                  img.alt || "Listing image"
-                }">
-              </div>
-            `
-              )
-              .join("")}
+  const galleryHtml = imageUrls.length
+    ? `
+    <div id="listing-gallery" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        ${imageUrls
+          .map(
+            (img, i) => `
+          <div class="carousel-item ${i === 0 ? "active" : ""}">
+            <img src="${img.url}" class="d-block w-100 carousel-img" alt="${
+              img.alt || "Listing image"
+            }" style="cursor:pointer;">
           </div>
-          <button class="carousel-control-prev bg-dark bg-opacity-50 p-3" type="button" data-bs-target="#listing-gallery" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
+        `
+          )
+          .join("")}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#listing-gallery" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
 
-          <button class="carousel-control-next bg-dark bg-opacity-50 p-3" type="button" data-bs-target="#listing-gallery" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      `
-      : `<img src="/auctionhouse/assets/images/default-img.png" alt="Listing image" />`;
+      <button class="carousel-control-next" type="button" data-bs-target="#listing-gallery" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  `
+    : `<img src="/auctionhouse/assets/images/default-img.png" alt="Listing image" />`;
 
   container.innerHTML = `
     <div class="detail-container">
@@ -190,4 +190,39 @@ export function renderBiddingSection(listing) {
       </div>
     `;
   }
+}
+
+function initImageModal() {
+  // Remove previous img modal
+  const existingModal = document.getElementById("image-modal");
+  if (existingModal) existingModal.remove();
+
+  // Modal HTML
+  const modalHtml = `
+    <div class="modal fade" id="image-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+          <div class="modal-body p-0">
+            <img id="modal-image" src="" alt="Full image" class="img-fluid w-100" />
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document
+    .getElementById("modal-container")
+    .insertAdjacentHTML("beforeend", modalHtml);
+
+  const modalEl = document.getElementById("image-modal");
+  const modalImage = document.getElementById("modal-image");
+  const bsModal = new bootstrap.Modal(modalEl);
+
+  // Add click handler to each img
+  document.querySelectorAll("#listing-gallery .carousel-img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      bsModal.show();
+    });
+  });
 }
