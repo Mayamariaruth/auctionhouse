@@ -45,12 +45,12 @@ export function updateNavbar() {
     // Update Profile link to include username
     loggedInDesktop.forEach((el) => {
       if (el.textContent.trim().toLowerCase() === "profile") {
-        el.href = `../../html/profile.html?user=${profile.name}`;
+        el.href = `/html/profile.html?user=${profile.name}`;
       }
     });
     loggedInMobile.forEach((el) => {
       if (el.textContent.trim().toLowerCase() === "profile") {
-        el.href = `../../html/profile.html?user=${profile.name}`;
+        el.href = `/html/profile.html?user=${profile.name}`;
       }
     });
 

@@ -8,7 +8,7 @@ export async function loadEditProfileModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("../../../html/modals/edit-profile.html");
+    const response = await fetch("/html/modals/edit-profile.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
     return true;

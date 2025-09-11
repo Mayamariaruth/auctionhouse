@@ -10,7 +10,7 @@ export async function loadEditListingModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("../../..//html/modals/edit-listing.html");
+    const response = await fetch("/html/modals/edit-listing.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
   } catch (err) {

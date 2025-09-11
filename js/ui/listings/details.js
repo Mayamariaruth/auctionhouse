@@ -34,8 +34,7 @@ export async function loadListingDetails() {
 function renderListingDetails(listing) {
   const container = document.querySelector("#listing-details article");
 
-  const imageUrl =
-    listing.media?.[0]?.url || "../../../assets/images/default-img.png";
+  const imageUrl = listing.media?.[0]?.url || "/assets/images/default-img.png";
   const title = listing.title;
   const description = listing.description?.trim() || "No description provided.";
   const seller = listing.seller || { name: "Unknown seller" };

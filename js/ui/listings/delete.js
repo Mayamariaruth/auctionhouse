@@ -8,7 +8,7 @@ export async function loadDeleteModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("../../../html/modals/delete-listing.html");
+    const response = await fetch("/html/modals/delete-listing.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
   } catch (err) {
