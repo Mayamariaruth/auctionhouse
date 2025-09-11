@@ -5,7 +5,11 @@ import { apiFetch } from "../request.js";
 export async function fetchListings({ search } = {}) {
   try {
     const baseUrl = `${API_AUCTIONS_LISTINGS}?_bids=true&_seller=true&sort=created&sortOrder=desc`;
-    const url = search ? `${baseUrl}&q=${encodeURIComponent(search)}` : baseUrl;
+    const url = search
+      ? `${API_AUCTIONS_LISTINGS}/search?q=${encodeURIComponent(
+          search
+        )}&sort=created&sortOrder=desc`
+      : baseUrl;
 
     const listings = await apiFetch(url);
     return listings;

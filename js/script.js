@@ -6,12 +6,14 @@ import { logoutListener } from "./ui/auth/logout.js";
 import { initListingsPage } from "./ui/listings/read.js";
 import { loadListingDetails } from "./ui/listings/details.js";
 import { loadProfile } from "./ui/profile/read.js";
+import { setupSearch } from "./utils/search.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   updateNavbar();
   showStoredNotification();
   logoutListener();
+  setupSearch();
   initListingsPage();
 
   if (document.getElementById("listing-details")) {
