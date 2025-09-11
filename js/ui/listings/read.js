@@ -63,26 +63,81 @@ export function initAddListingModal() {
   addBtn.addEventListener("click", () => bsModal.show());
 }
 
-// Display all listings in the grid
-export async function displayListings(search = "") {
+// Pagination variables
+let currentPage = 1;
+let isLoading = false;
+let currentSearch = "";
+
+// Display listings with Load more button
+export async function displayListings(search = "", reset = false) {
   const listingsContainer = document.getElementById("listings");
+  const loadMoreBtn = document.getElementById("load-more-btn");
+
   if (!listingsContainer) return;
 
-  try {
-    const listings = await fetchListings({ search });
+  // Reset container with new search or initial load
+  if (reset || currentSearch !== search) {
     listingsContainer.innerHTML = "";
+    currentPage = 1;
+    currentSearch = search;
+  }
 
-    if (!listings.length) {
+  // Show search info
+  const existingInfo = document.getElementById("search-info");
+  if (existingInfo) existingInfo.remove();
+  if (search) {
+    const info = document.createElement("p");
+    info.id = "search-info";
+    info.className = "text-left mt-4";
+    info.textContent = `Showing results for "${search}"`;
+    listingsContainer.parentNode.insertBefore(info, listingsContainer);
+  }
+
+  if (isLoading) return;
+  isLoading = true;
+
+  try {
+    const limit = 12;
+    const listings = await fetchListings({ search, page: currentPage, limit });
+
+    if (!listings.length && currentPage === 1) {
       listingsContainer.innerHTML = `<p class="text-center fs-5">No listings found.</p>`;
+      loadMoreBtn?.classList.add("d-none");
       return;
     }
 
-    listings.forEach((listing) => {
-      createListingCard(listing, listingsContainer);
-    });
+    // Append new listings
+    listings.forEach((listing) =>
+      createListingCard(listing, listingsContainer)
+    );
+
+    // Show or hide Load More button
+    if (!loadMoreBtn) {
+      const wrapper = document.createElement("div");
+      wrapper.id = "load-more-btn-container";
+      wrapper.className = "text-center mt-5";
+
+      // Create button
+      const btn = document.createElement("button");
+      btn.id = "load-more-btn";
+      btn.textContent = "Load more";
+
+      // Button click
+      btn.addEventListener("click", () => {
+        currentPage++;
+        displayListings(currentSearch);
+      });
+
+      wrapper.appendChild(btn);
+      listingsContainer.parentNode.appendChild(wrapper);
+    } else {
+      loadMoreBtn.classList.toggle("d-none", listings.length < limit);
+    }
   } catch (err) {
     listingsContainer.innerHTML = `<p class="text-danger text-center fs-5">Failed to load listings</p>`;
     console.error(err);
+  } finally {
+    isLoading = false;
   }
 }
 

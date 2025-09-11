@@ -129,6 +129,19 @@
   background-color: #f93232;
 }
 
+#search-info {
+  font-size: 16px;
+}
+
+#load-more-btn {
+  border: none;
+  background-color: #6b3d47;
+  color: white;
+  font-weight: bold;
+  padding: 9px 30px;
+  font-size: 16px;
+}
+
 @media (min-width: 998px) {
   .card-title {
     font-size: 20px;
@@ -141,5 +154,9 @@
 
   .fa-plus {
     font-size: 20px;
+  }
+
+  #search-info {
+    font-size: 18px;
   }
 }

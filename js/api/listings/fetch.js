@@ -2,14 +2,17 @@ import { API_AUCTIONS_LISTINGS } from "../constants.js";
 import { apiFetch } from "../request.js";
 
 // Fetch listings from API, including bids and optionally filtered by search
-export async function fetchListings({ search } = {}) {
+export async function fetchListings({
+  search = "",
+  page = 1,
+  limit = 12,
+} = {}) {
   try {
-    const baseUrl = `${API_AUCTIONS_LISTINGS}?_bids=true&_seller=true&sort=created&sortOrder=desc`;
-    const url = search
-      ? `${API_AUCTIONS_LISTINGS}/search?q=${encodeURIComponent(
-          search
-        )}&sort=created&sortOrder=desc`
-      : baseUrl;
+    const baseUrl = search
+      ? `${API_AUCTIONS_LISTINGS}/search?q=${encodeURIComponent(search)}`
+      : `${API_AUCTIONS_LISTINGS}?_bids=true&_seller=true&sort=created&sortOrder=desc`;
+
+    const url = `${baseUrl}&page=${page}&limit=${limit}`;
 
     const listings = await apiFetch(url);
     return listings;
