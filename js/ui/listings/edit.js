@@ -1,8 +1,6 @@
 import { editListing } from "../../api/listings/edit.js";
-import { displayListings } from "./read.js";
 import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
-import { displayProfileListings } from "../profile/listings.js";
 
 let currentListingId = null;
 

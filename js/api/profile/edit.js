@@ -9,6 +9,7 @@ export async function editProfile(name, profileData, token) {
       {
         method: "PUT",
         body: profileData,
+        auth: true,
       },
       token
     );
