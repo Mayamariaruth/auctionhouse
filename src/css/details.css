@@ -16,11 +16,17 @@
   object-fit: cover;
 }
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
 #image-modal .modal-body img {
   max-height: 80vh;
   width: auto;
   display: block;
   margin: 0 auto;
+  object-fit: contain;
 }
 
 .detail-right hr {

@@ -61,7 +61,7 @@ export function renderListingDetails(listing) {
   // Build carousel HTML
   const galleryHtml = imageUrls.length
     ? `
-    <div id="listing-gallery" class="carousel slide" data-bs-ride="carousel">
+    <div id="listing-gallery" class="carousel slide">
       <div class="carousel-inner">
         ${imageUrls
           .map(
@@ -69,7 +69,7 @@ export function renderListingDetails(listing) {
           <div class="carousel-item ${i === 0 ? "active" : ""}">
             <img src="${img.url}" class="d-block w-100 carousel-img" alt="${
               img.alt || "Listing image"
-            }" style="cursor:pointer;">
+            }">
           </div>
         `
           )
@@ -213,16 +213,16 @@ function initImageModal() {
     .getElementById("modal-container")
     .insertAdjacentHTML("beforeend", modalHtml);
 
-  const modalEl = document.getElementById("image-modal");
-  const modalImage = document.getElementById("modal-image");
-  const bsModal = new bootstrap.Modal(modalEl);
-
   // Add click handler to each img
   document.querySelectorAll("#listing-gallery .carousel-img").forEach((img) => {
-    img.addEventListener("click", () => {
+    img.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const modalImage = document.getElementById("modal-image");
       modalImage.src = img.src;
       modalImage.alt = img.alt;
-      bsModal.show();
+      bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("image-modal")
+      ).show();
     });
   });
 }
