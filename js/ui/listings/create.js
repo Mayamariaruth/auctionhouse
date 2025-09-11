@@ -88,7 +88,7 @@ export function initAddListingForm() {
     const tags = tagsInput
       ? tagsInput
           .split(",")
-          .map((t) => t.trim())
+          .map((t) => t.trim().replace(/^#/, ""))
           .filter(Boolean)
       : [];
 

@@ -134,10 +134,11 @@ export function initEditListingForm() {
 
     if (hasError) return;
 
+    // Tags cleanup
     const tags = tagsInput
       ? tagsInput
           .split(",")
-          .map((t) => t.trim())
+          .map((t) => t.trim().replace(/^#/, ""))
           .filter(Boolean)
       : [];
 

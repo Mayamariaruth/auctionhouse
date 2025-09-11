@@ -211,5 +211,5 @@ export function createListingCard(listing, container) {
 export function renderTags(tags = []) {
   if (!tags.length) return '<span class="tag-box">No tags</span>';
 
-  return tags.map((tag) => `<span class="tag-box">${tag}</span>`).join(" ");
+  return tags.map((tag) => `<span class="tag-box">${tag}</span>`).join("");
 }
