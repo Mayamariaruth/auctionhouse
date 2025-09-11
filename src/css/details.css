@@ -7,7 +7,6 @@
 #listing-gallery .carousel-item {
   height: 500px;
   overflow: hidden;
-  display: flex;
 }
 
 #listing-gallery .carousel-item img {
@@ -205,11 +204,6 @@
   background-color: #6b3d47;
   color: white;
   border: solid #6b3d47 1px;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  filter: invert(0);
 }
 
 @media (min-width: 768px) {

@@ -8,117 +8,76 @@ import { initEditListingModal } from "./edit.js";
 
 // Fetch listing ID from URL
 function getListingIdFromUrl() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
+  return new URLSearchParams(window.location.search).get("id");
 }
 
-// Load listing details from ID
+// Load listing details
 export async function loadListingDetails() {
   const id = getListingIdFromUrl();
-  if (!id) {
-    showNotification("No listing ID found in URL", "error");
-    return;
-  }
+  if (!id) return showNotification("No listing ID found in URL", "error");
 
   try {
     const listing = await fetchListingById(id);
     renderListingDetails(listing);
     initImageModal();
     renderBiddingSection(listing);
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     showNotification("Failed to load listing details", "error");
   }
 }
 
-// Display listing details
+// Render listing details
 export function renderListingDetails(listing) {
   const container = document.querySelector("#listing-details article");
-
-  const imageUrls = listing.media?.length
-    ? listing.media.map((m, i) => ({
-        url: m.url,
-        alt: m.alt || `Listing image ${i + 1}`,
-      }))
-    : [
-        {
-          url: "/auctionhouse/assets/images/default-img.png",
-          alt: "Listing image",
-        },
-      ];
-  const title = listing.title;
-  const description = listing.description?.trim() || "No description provided.";
-  const seller = listing.seller || { name: "Unknown seller" };
-  const tags = listing.tags || [];
-  const endsAt = new Date(listing.endsAt);
-  const deadline = endsAt.toLocaleString();
-  const isActive = endsAt > new Date();
-
-  // Check if current user is seller
   const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
-  const isSeller = isLoggedIn() && seller.name === userProfile?.name;
+  const isSeller = isLoggedIn() && listing.seller?.name === userProfile?.name;
 
-  // Build carousel HTML
-  const galleryHtml = imageUrls.length
-    ? `
-    <div id="listing-gallery" class="carousel slide">
-      <div class="carousel-inner">
-        ${imageUrls
-          .map(
-            (img, i) => `
-          <div class="carousel-item ${i === 0 ? "active" : ""}">
-            <img src="${img.url}" class="d-block w-100 carousel-img" alt="${
-              img.alt || "Listing image"
-            }">
-          </div>
-        `
-          )
-          .join("")}
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#listing-gallery" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-
-      <button class="carousel-control-next" type="button" data-bs-target="#listing-gallery" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  `
-    : `<img src="/auctionhouse/assets/images/default-img.png" alt="Listing image" />`;
-
+  // Base HTML + image carousel
   container.innerHTML = `
     <div class="detail-container">
       <div class="detail-left mt-4 mt-md-0">
-        ${galleryHtml}
-        <p class="seller-details mt-3">Posted by <span id="seller-name">${
-          seller.name
-        }</span></p>
+        <div id="listing-gallery" class="carousel slide">
+          <div class="carousel-inner"></div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#listing-gallery" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#listing-gallery" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <p class="seller-details mt-3">
+          Posted by <span id="seller-name">${
+            listing.seller?.name || "Unknown"
+          }</span>
+        </p>
       </div>
 
       <div class="detail-right">
         <div class="detail-header">
-          <h1>${title.charAt(0).toUpperCase() + title.slice(1)}</h1>
+          <h1>${
+            listing.title.charAt(0).toUpperCase() + listing.title.slice(1)
+          }</h1>
           ${
             isSeller
-              ? `<button class="edit-detail-btn" title="Edit">
-                    <i class="fa-solid fa-pen"></i>
-                  </button>`
+              ? `<button class="edit-detail-btn" title="Edit"><i class="fa-solid fa-pen"></i></button>`
               : ""
           }
         </div>
-        <p class="desc-details mt-2">${description}</p>
+        <p class="desc-details mt-2">${
+          listing.description?.trim() || "No description provided."
+        }</p>
         <p class="deadline-details">
-          Ends ${deadline} 
-          <span class="auction-status ${isActive ? "active" : "ended"}">
-            ${isActive ? "Active" : "Ended"}
+          Ends ${new Date(listing.endsAt).toLocaleString()}
+          <span class="auction-status ${
+            new Date(listing.endsAt) > new Date() ? "active" : "ended"
+          }">
+            ${new Date(listing.endsAt) > new Date() ? "Active" : "Ended"}
           </span>
         </p>
-
-        <div class="listing-tags mb-4">
-          ${renderTags(tags)}
-        </div>
+        <div class="listing-tags mb-4">${renderTags(listing.tags || [])}</div>
         <hr>
         <div id="bidding-section">
           <div id="bid-history"></div>
@@ -130,7 +89,29 @@ export function renderListingDetails(listing) {
     </div>
   `;
 
-  // Open edit listing modal if current user is the seller
+  // Populate carousel items dynamically
+  const innerEl = container.querySelector("#listing-gallery .carousel-inner");
+  const images = listing.media?.length
+    ? listing.media
+    : [
+        {
+          url: "/auctionhouse/assets/images/default-img.png",
+          alt: "Listing image",
+        },
+      ];
+
+  innerEl.innerHTML = images
+    .map(
+      (img, i) => `
+      <div class="carousel-item${i === 0 ? " active" : ""}">
+        <img src="${img.url}" class="d-block w-100 carousel-img" alt="${
+        img.alt || "Listing image"
+      }">
+      </div>`
+    )
+    .join("");
+
+  // Edit button
   if (isSeller) {
     const editBtn = container.querySelector(".edit-detail-btn");
     if (editBtn) {
@@ -142,7 +123,7 @@ export function renderListingDetails(listing) {
   }
 }
 
-// Display the bidding section with different logged in/logged out prompts
+// Render bidding section
 export function renderBiddingSection(listing) {
   const bidHistoryEl = document.getElementById("bid-history");
   const loggedInEl = document.querySelector("#bidding-section .logged-in");
@@ -160,15 +141,12 @@ export function renderBiddingSection(listing) {
   loggedOutEl.classList.add("d-none");
 
   if (!isActive) {
-    // Listing ended — show message to everyone
     loggedInEl.classList.remove("d-none");
     loggedInEl.innerHTML = `<p class="fw-semibold">This auction has ended. Bidding is closed.</p>`;
   } else if (isSeller) {
-    // Active listing but user is seller — no bid form
     loggedInEl.classList.remove("d-none");
     loggedInEl.innerHTML = `<p class="fw-semibold">You cannot bid on your own listing.</p>`;
   } else if (loggedIn) {
-    // Active listing & logged in user (not seller) — show bid form
     loggedInEl.classList.remove("d-none");
     loggedInEl.innerHTML = `
       <form id="bid-form">
@@ -177,11 +155,10 @@ export function renderBiddingSection(listing) {
       </form>
     `;
     initBidForm(listing.id, async () => {
-      const updatedListing = await fetchListingById(listing.id);
-      renderBidHistory(updatedListing.bids || [], bidHistoryEl);
+      const updated = await fetchListingById(listing.id);
+      renderBidHistory(updated.bids || [], bidHistoryEl);
     });
   } else {
-    // Active listing & not logged in — show login prompt
     loggedOutEl.classList.remove("d-none");
     loggedOutEl.innerHTML = `
       <div class="d-flex flex-column mt-4">
@@ -192,12 +169,11 @@ export function renderBiddingSection(listing) {
   }
 }
 
+// Image modal
 function initImageModal() {
-  // Remove previous img modal
   const existingModal = document.getElementById("image-modal");
   if (existingModal) existingModal.remove();
 
-  // Modal HTML
   const modalHtml = `
     <div class="modal fade" id="image-modal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -213,7 +189,6 @@ function initImageModal() {
     .getElementById("modal-container")
     .insertAdjacentHTML("beforeend", modalHtml);
 
-  // Add click handler to each img
   document.querySelectorAll("#listing-gallery .carousel-img").forEach((img) => {
     img.addEventListener("click", (e) => {
       e.stopPropagation();
