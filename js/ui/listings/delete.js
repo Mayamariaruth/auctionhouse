@@ -1,4 +1,5 @@
 import { deleteListing } from "../../api/listings/delete.js";
+import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 
 let currentDeleteListingId = null;
 
@@ -31,6 +32,7 @@ export function initDeleteListingModal() {
     if (!currentDeleteListingId) return;
 
     try {
+      showModalSpinner();
       await deleteListing(currentDeleteListingId);
 
       bsDeleteModal.hide();
@@ -39,6 +41,8 @@ export function initDeleteListingModal() {
       window.location.reload();
     } catch (err) {
       console.error("Failed to delete listing:", err);
+    } finally {
+      hideModalSpinner();
     }
   });
 }

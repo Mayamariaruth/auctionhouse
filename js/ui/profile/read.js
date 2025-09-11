@@ -7,6 +7,7 @@ import {
   initEditProfileForm,
 } from "./edit.js";
 import { getProfile } from "../../utils/auth.js";
+import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
 // Redirect if user is not logged in or a logged in user accessing the wrong profile
 export function requireProfileOwner() {
@@ -37,6 +38,7 @@ export async function loadProfile() {
   if (!username) return;
 
   try {
+    showSpinner();
     const profile = await fetchProfile(username);
 
     document.getElementById("profile-name").textContent = profile.name;
@@ -65,5 +67,7 @@ export async function loadProfile() {
     initEditProfileForm();
   } catch (err) {
     console.error("Failed to load profile:", err);
+  } finally {
+    hideSpinner();
   }
 }

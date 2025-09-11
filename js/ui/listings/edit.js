@@ -3,6 +3,7 @@ import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 import { renderListingDetails } from "./details.js";
 import { displayListings } from "./read.js";
+import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 
 let currentListingId = null;
 
@@ -70,6 +71,7 @@ export function initEditListingForm() {
   // Event listener
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    showModalSpinner();
     clearErrors(form);
 
     if (!currentListingId) return;
@@ -162,6 +164,8 @@ export function initEditListingForm() {
       }
     } catch (err) {
       setError(form, "title", err.message || "Failed to update listing");
+    } finally {
+      hideModalSpinner();
     }
   });
 }

@@ -11,7 +11,8 @@ export function setupSearch() {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const query = input.value.trim();
-      displayListings(query);
+      displayListings(query, true);
+      input.value = "";
 
       // Close mobile menu after search
       const mobileMenu = document.getElementById("mobile-menu");

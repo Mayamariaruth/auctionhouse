@@ -1,6 +1,7 @@
 import { editProfile } from "../../api/profile/edit.js";
 import { fetchProfile } from "../../api/profile/fetch.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
+import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 
 // Load Edit profile modal HTML
 export async function loadEditProfileModal() {
@@ -54,6 +55,7 @@ export function initEditProfileForm() {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    showModalSpinner();
     clearErrors(form);
 
     const banner = document.getElementById("edit-profile-banner").value.trim();
@@ -104,6 +106,8 @@ export function initEditProfileForm() {
     } catch (err) {
       console.error("Failed to update profile:", err);
       setError(form, "bio", err.message || "Failed to update profile");
+    } finally {
+      hideModalSpinner();
     }
   });
 }

@@ -7,6 +7,7 @@ import {
   loadEditListingModal,
 } from "./edit.js";
 import { loadDeleteModal, initDeleteListingModal } from "./delete.js";
+import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
 // Initialize landing page with button, listings grid and modals
 export async function initListingsPage() {
@@ -98,6 +99,7 @@ export async function displayListings(search = "", reset = false) {
 
   try {
     const limit = 12;
+    showSpinner();
     const listings = await fetchListings({ search, page: currentPage, limit });
 
     if (!listings.length && currentPage === 1) {
@@ -137,6 +139,7 @@ export async function displayListings(search = "", reset = false) {
     listingsContainer.innerHTML = `<p class="text-danger text-center fs-5">Failed to load listings</p>`;
     console.error(err);
   } finally {
+    hideSpinner();
     isLoading = false;
   }
 }

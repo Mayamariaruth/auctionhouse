@@ -5,6 +5,7 @@ import { renderTags } from "./read.js";
 import { initBidForm } from "../bids/place.js";
 import { renderBidHistory } from "../bids/history.js";
 import { initEditListingModal } from "./edit.js";
+import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
 // Fetch listing ID from URL
 function getListingIdFromUrl() {
@@ -17,6 +18,7 @@ export async function loadListingDetails() {
   if (!id) return showNotification("No listing ID found in URL", "error");
 
   try {
+    showSpinner();
     const listing = await fetchListingById(id);
     renderListingDetails(listing);
     initImageModal();
@@ -24,6 +26,8 @@ export async function loadListingDetails() {
   } catch (err) {
     console.error(err);
     showNotification("Failed to load listing details", "error");
+  } finally {
+    hideSpinner();
   }
 }
 

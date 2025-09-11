@@ -3,6 +3,7 @@ import { showNotification } from "../../utils/notifications.js";
 import { fetchProfile } from "../../api/profile/fetch.js";
 import { getProfile } from "../../utils/auth.js";
 import { updateNavbarCredits } from "../navbar.js";
+import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 
 // Bid form submission on listing detail page
 export function initBidForm(listingId, onSuccess) {
@@ -11,6 +12,7 @@ export function initBidForm(listingId, onSuccess) {
 
   bidForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    showModalSpinner();
     const amountValue = Number(bidForm.amount.value);
 
     if (!amountValue || isNaN(amountValue) || amountValue <= 0) {
@@ -38,6 +40,8 @@ export function initBidForm(listingId, onSuccess) {
     } catch (error) {
       showNotification(error.message || "Failed to place bid", "error");
       console.error(error);
+    } finally {
+      hideModalSpinner();
     }
   });
 }

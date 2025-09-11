@@ -3,6 +3,7 @@ import { createListing } from "../../api/listings/create.js";
 import { showNotification } from "../../utils/notifications.js";
 import { displayListings } from "./read.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
+import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 
 // Add Listing form submission
 export function initAddListingForm() {
@@ -11,6 +12,7 @@ export function initAddListingForm() {
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    showModalSpinner();
 
     clearErrors(form);
 
@@ -117,6 +119,8 @@ export function initAddListingForm() {
     } catch (err) {
       console.error(err);
       showNotification(err.message || "Failed to add listing", "error");
+    } finally {
+      hideModalSpinner();
     }
   });
 }

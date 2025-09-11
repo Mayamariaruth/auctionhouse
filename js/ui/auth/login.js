@@ -1,5 +1,6 @@
 import { loginUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
+import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
 export async function onLogin(event) {
   event.preventDefault();
@@ -25,6 +26,7 @@ export async function onLogin(event) {
   }
 
   try {
+    showSpinner();
     const user = await loginUser({ email, password });
 
     // Store success message for display after redirect
@@ -47,5 +49,7 @@ export async function onLogin(event) {
     } else {
       showNotification(error.message, "error");
     }
+  } finally {
+    hideSpinner();
   }
 }

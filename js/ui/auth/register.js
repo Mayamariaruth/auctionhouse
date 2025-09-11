@@ -1,5 +1,6 @@
 import { registerUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
+import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
 export async function onRegister(event) {
   event.preventDefault();
@@ -70,6 +71,7 @@ export async function onRegister(event) {
   }
 
   try {
+    showSpinner();
     const result = await registerUser(name, email, password);
 
     if (result) {
@@ -86,5 +88,7 @@ export async function onRegister(event) {
     }
   } catch (error) {
     showNotification(error.message, "error");
+  } finally {
+    hideSpinner();
   }
 }
