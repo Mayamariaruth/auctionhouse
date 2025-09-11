@@ -104,44 +104,47 @@ function renderListingDetails(listing) {
   }
 }
 
-// Display the bidding section
+// Display the bidding section with different logged in/logged out prompts
 export function renderBiddingSection(listing) {
   const bidHistoryEl = document.getElementById("bid-history");
   const loggedInEl = document.querySelector("#bidding-section .logged-in");
   const loggedOutEl = document.querySelector("#bidding-section .logged-out");
 
-  // Render bid history
   renderBidHistory(listing.bids || [], bidHistoryEl);
 
-  // Toggle sections
-  if (isLoggedIn()) {
-    loggedOutEl.classList.add("d-none");
+  const endsAt = new Date(listing.endsAt);
+  const isActive = endsAt > new Date();
+  const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
+  const isSeller = listing.seller?.name === userProfile?.name;
+  const loggedIn = isLoggedIn();
+
+  loggedInEl.classList.add("d-none");
+  loggedOutEl.classList.add("d-none");
+
+  if (!isActive) {
+    // Listing ended — show message to everyone
     loggedInEl.classList.remove("d-none");
-
-    const isSeller =
-      listing.seller?.name ===
-      JSON.parse(localStorage.getItem("profile") || "{}").name;
-
-    if (isSeller) {
-      loggedInEl.innerHTML = "";
-    } else if (isLoggedIn()) {
-      loggedInEl.innerHTML = `
-        <form id="bid-form">
-          <input type="number" min="1" name="amount" placeholder="Enter your bid" required />
-          <button type="submit" class="bid-btn">Bid</button>
-        </form>
-      `;
-    }
-
-    // Form submission
+    loggedInEl.innerHTML = `<p class="fw-semibold">This auction has ended. Bidding is closed.</p>`;
+  } else if (isSeller) {
+    // Active listing but user is seller — no bid form
+    loggedInEl.classList.remove("d-none");
+    loggedInEl.innerHTML = `<p class="fw-semibold">You cannot bid on your own listing.</p>`;
+  } else if (loggedIn) {
+    // Active listing & logged in user (not seller) — show bid form
+    loggedInEl.classList.remove("d-none");
+    loggedInEl.innerHTML = `
+      <form id="bid-form">
+        <input type="number" min="1" name="amount" placeholder="Enter your bid" required />
+        <button type="submit" class="bid-btn">Bid</button>
+      </form>
+    `;
     initBidForm(listing.id, async () => {
       const updatedListing = await fetchListingById(listing.id);
       renderBidHistory(updatedListing.bids || [], bidHistoryEl);
     });
   } else {
-    loggedInEl.classList.add("d-none");
+    // Active listing & not logged in — show login prompt
     loggedOutEl.classList.remove("d-none");
-
     loggedOutEl.innerHTML = `
       <div class="d-flex flex-column mt-4">
         <p class="fw-semibold details-login-text">Login to place a bid on this listing</p>
