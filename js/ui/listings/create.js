@@ -23,6 +23,12 @@ export function initAddListingForm() {
     const title = form.querySelector("#listing-title").value.trim();
     const description = form.querySelector("#listing-description").value.trim();
     const mediaInput = form.querySelector("#listing-image").value.trim();
+    const media = mediaInput
+      ? mediaInput
+          .split(",")
+          .map((url, i) => ({ url: url.trim(), alt: `Listing image ${i + 1}` }))
+          .filter((m) => isValidImageUrl(m.url))
+      : [];
     const tagsInput = form.querySelector("#listing-tags").value.trim();
     const endsAt = form.querySelector("#listing-deadline").value;
 
@@ -54,9 +60,17 @@ export function initAddListingForm() {
     }
 
     // Image validation
-    if (mediaInput && !isValidImageUrl(mediaInput)) {
-      setError(form, "image", "Invalid image URL");
-      hasError = true;
+    if (mediaInput) {
+      const urls = mediaInput
+        .split(",")
+        .map((u) => u.trim())
+        .filter(Boolean);
+
+      const invalid = urls.find((url) => !isValidImageUrl(url));
+      if (invalid) {
+        setError(form, "image", `Invalid image URL: ${invalid}`);
+        hasError = true;
+      }
     }
 
     // Deadline validation
@@ -82,7 +96,7 @@ export function initAddListingForm() {
     const listingData = {
       title,
       description,
-      media: mediaInput ? [{ url: mediaInput, alt: "Listing image" }] : [],
+      media,
       tags,
       endsAt,
     };

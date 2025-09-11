@@ -34,10 +34,9 @@ function renderBidCard(bid) {
       <div class="card bid-card d-flex flex-row align-items-center p-3">
         <!-- Listing Image -->
         <div class="bid-image flex-shrink-0 mb-3 me-3">
-          <a href="/html/listing.html?id=${listing.id}">
+          <a href="html/listing.html?id=${listing.id}">
             <img src="${
-              listing.media?.[0]?.url ||
-              "../../../assets/images/default-img.png"
+              listing.media?.[0]?.url || "assets/images/default-img.png"
             }" 
                  alt="${listing.title}" class="img-fluid" />
           </a>
@@ -46,7 +45,7 @@ function renderBidCard(bid) {
         <!-- Text content -->
         <div class="bid-text flex-grow-1">
           <h5 class="mb-1">
-            <a href="/html/listing.html?id=${
+            <a href="html/listing.html?id=${
               listing.id
             }" class="text-decoration-none text-dark">
               ${listing.title}

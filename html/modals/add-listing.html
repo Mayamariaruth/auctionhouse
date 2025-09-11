@@ -17,13 +17,13 @@
           <!-- Image field -->
           <div class="mb-3">
             <label for="listing-image" class="form-label"
-              >Image (URL link)</label
+              >Images (comma-separated URLs)</label
             >
             <input
               type="text"
               class="form-control"
               id="listing-image"
-              placeholder="https://images.unsplash.com/photo-1756370473190-4c41ddbd5FNKENNRJNKNE77"
+              placeholder="https://example.com/img1, https://example.com/img2"
             />
             <span class="error-message" id="image-error"></span>
           </div>
@@ -58,7 +58,9 @@
 
           <!-- Tags field -->
           <div class="mb-3">
-            <label for="listing-tags" class="form-label">Tags</label>
+            <label for="listing-tags" class="form-label"
+              >Tags (comma-separated words)</label
+            >
             <input
               type="text"
               class="form-control"

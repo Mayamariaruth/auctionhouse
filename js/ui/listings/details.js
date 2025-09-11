@@ -49,11 +49,11 @@ function renderListingDetails(listing) {
 
   // Build carousel HTML
   const galleryHtml =
-    listing.media && listing.media.length > 0
+    imageUrl && imageUrl.length > 0
       ? `
         <div id="listing-gallery" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
-            ${listing.media
+            ${imageUrl
               .map(
                 (img, i) => `
               <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -175,7 +175,7 @@ export function renderBiddingSection(listing) {
     loggedOutEl.innerHTML = `
       <div class="d-flex flex-column mt-4">
         <p class="fw-semibold details-login-text">Login to place a bid on this listing</p>
-        <a href="/html/login.html" id="details-login-btn">Login</a>
+        <a href="html/login.html" id="details-login-btn">Login</a>
       </div>
     `;
   }

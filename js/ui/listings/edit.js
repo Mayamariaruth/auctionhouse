@@ -10,7 +10,7 @@ export async function loadEditListingModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("html/modals/edit-listing.html");
+    const response = await fetch("/html/modals/edit-listing.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
   } catch (err) {
@@ -23,7 +23,7 @@ export function initEditListingModal(listing, onSuccess) {
   if (!listing) return;
 
   const form = document.getElementById("edit-listing-form");
-  if (!form) return console.warn("Edit listing form not found in DOM");
+  if (!form) return;
 
   currentListingId = listing.id;
 
@@ -31,7 +31,7 @@ export function initEditListingModal(listing, onSuccess) {
   form.querySelector("#edit-listing-description").value =
     listing.description || "";
   form.querySelector("#edit-listing-image").value =
-    listing.media?.[0]?.url || "";
+    listing.media?.map((m) => m.url).join(", ") || "";
   form.querySelector("#edit-listing-tags").value =
     listing.tags?.join(", ") || "";
   form.querySelector("#edit-listing-deadline").value = listing.endsAt
@@ -73,11 +73,18 @@ export function initEditListingForm() {
       .querySelector("#edit-listing-description")
       .value.trim();
     const mediaInput = form.querySelector("#edit-listing-image").value.trim();
+    const media = mediaInput
+      ? mediaInput
+          .split(",")
+          .map((url, i) => ({ url: url.trim(), alt: `Listing image ${i + 1}` }))
+          .filter((m) => isValidImageUrl(m.url))
+      : [];
     const tagsInput = form.querySelector("#edit-listing-tags").value.trim();
     const endsAt = form.querySelector("#edit-listing-deadline").value;
 
     let hasError = false;
 
+    // Title validation
     if (!title) {
       setError(form, "title", "Title is required");
       hasError = true;
@@ -86,6 +93,7 @@ export function initEditListingForm() {
       hasError = true;
     }
 
+    // Description validation
     if (!description) {
       setError(form, "description", "Description is required");
       hasError = true;
@@ -101,11 +109,21 @@ export function initEditListingForm() {
       hasError = true;
     }
 
-    if (mediaInput && !isValidImageUrl(mediaInput)) {
-      setError(form, "image", "Invalid image URL");
-      hasError = true;
+    // Image validation
+    if (mediaInput) {
+      const urls = mediaInput
+        .split(",")
+        .map((u) => u.trim())
+        .filter(Boolean);
+
+      const invalid = urls.find((url) => !isValidImageUrl(url));
+      if (invalid) {
+        setError(form, "image", `Invalid image URL: ${invalid}`);
+        hasError = true;
+      }
     }
 
+    // Deadline validation
     if (!endsAt) {
       setError(form, "deadline", "Deadline is required");
       hasError = true;
@@ -126,7 +144,7 @@ export function initEditListingForm() {
     const updatedData = {
       title,
       description,
-      media: mediaInput ? [{ url: mediaInput, alt: "Listing image" }] : [],
+      media,
       tags,
       endsAt,
     };

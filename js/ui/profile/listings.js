@@ -67,10 +67,9 @@ function renderListingCard(listing) {
         <!-- Image + text -->
         <div class="d-flex flex-row">
           <div class="listing-image flex-shrink-0 me-3">
-            <a href="/html/listing.html?id=${listing.id}">
+            <a href="html/listing.html?id=${listing.id}">
               <img src="${
-                listing.media?.[0]?.url ||
-                "../../../assets/images/default-img.png"
+                listing.media?.[0]?.url || "assets/images/default-img.png"
               }" 
                   alt="${listing.title}" 
                   class="img-fluid" />
@@ -80,7 +79,7 @@ function renderListingCard(listing) {
           <!-- Text content -->
           <div class="profile-listing-text flex-grow-1">
             <h5 class="mb-1 profile-listing-heading">
-              <a href="/html/listing.html?id=${
+              <a href="html/listing.html?id=${
                 listing.id
               }" class="text-decoration-none text-dark">
                 ${listing.title}
