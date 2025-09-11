@@ -82,7 +82,7 @@ export async function onRegister(event) {
         })
       );
 
-      window.location.href = "/html/login.html";
+      window.location.href = "html/login.html";
     }
   } catch (error) {
     showNotification(error.message, "error");

@@ -19,7 +19,7 @@ export async function loadDeleteModal() {
 // Initialize Delete Listing modal
 export function initDeleteListingModal() {
   const deleteModalEl = document.getElementById("delete-listing-modal");
-  if (!deleteModalEl) return console.warn("Delete Listing modal not found");
+  if (!deleteModalEl) return;
 
   const bsDeleteModal = new bootstrap.Modal(deleteModalEl);
 

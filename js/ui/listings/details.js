@@ -47,12 +47,40 @@ function renderListingDetails(listing) {
   const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
   const isSeller = isLoggedIn() && seller.name === userProfile?.name;
 
+  // Build carousel HTML
+  const galleryHtml =
+    listing.media && listing.media.length > 0
+      ? `
+        <div id="listing-gallery" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            ${listing.media
+              .map(
+                (img, i) => `
+              <div class="carousel-item ${i === 0 ? "active" : ""}">
+                <img src="${img.url}" class="d-block w-100" alt="${
+                  img.alt || "Listing image"
+                }">
+              </div>
+            `
+              )
+              .join("")}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#listing-gallery" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#listing-gallery" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      `
+      : `<img src="assets/images/default-img.png" alt="Listing image" />`;
+
   container.innerHTML = `
     <div class="detail-container">
       <div class="detail-left mt-4 mt-md-0">
-        <img src="${imageUrl}" alt="${
-    listing.media?.[0]?.alt || "Listing image"
-  }" />
+        ${galleryHtml}
         <p class="seller-details mt-3">Posted by <span id="seller-name">${
           seller.name
         }</span></p>
