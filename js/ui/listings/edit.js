@@ -1,6 +1,8 @@
 import { editListing } from "../../api/listings/edit.js";
 import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
+import { renderListingDetails } from "./details.js";
+import { displayListings } from "./read.js";
 
 let currentListingId = null;
 
@@ -34,9 +36,13 @@ export function initEditListingModal(listing, onSuccess) {
     listing.media?.map((m) => m.url).join(", ") || "";
   form.querySelector("#edit-listing-tags").value =
     listing.tags?.join(", ") || "";
-  form.querySelector("#edit-listing-deadline").value = listing.endsAt
-    ? new Date(listing.endsAt).toISOString().slice(0, 16)
-    : "";
+
+  // Show deadline but disable input
+  const deadlineInput = form.querySelector("#edit-listing-deadline");
+  if (deadlineInput) {
+    deadlineInput.value = listing.endsAt ? listing.endsAt.slice(0, 16) : "";
+    deadlineInput.disabled = true;
+  }
 
   clearErrors(form);
 
@@ -80,7 +86,6 @@ export function initEditListingForm() {
           .filter((m) => isValidImageUrl(m.url))
       : [];
     const tagsInput = form.querySelector("#edit-listing-tags").value.trim();
-    const endsAt = form.querySelector("#edit-listing-deadline").value;
 
     let hasError = false;
 
@@ -115,21 +120,11 @@ export function initEditListingForm() {
         .split(",")
         .map((u) => u.trim())
         .filter(Boolean);
-
       const invalid = urls.find((url) => !isValidImageUrl(url));
       if (invalid) {
         setError(form, "image", `Invalid image URL: ${invalid}`);
         hasError = true;
       }
-    }
-
-    // Deadline validation
-    if (!endsAt) {
-      setError(form, "deadline", "Deadline is required");
-      hasError = true;
-    } else if (new Date(endsAt) <= new Date()) {
-      setError(form, "deadline", "Deadline must be in the future");
-      hasError = true;
     }
 
     if (hasError) return;
@@ -147,7 +142,6 @@ export function initEditListingForm() {
       description,
       media,
       tags,
-      endsAt,
     };
 
     try {
@@ -157,7 +151,15 @@ export function initEditListingForm() {
       const bsModal = bootstrap.Modal.getInstance(modalEl);
       bsModal.hide();
 
-      window.location.reload();
+      await displayListings();
+
+      const detailsContainer = document.querySelector(
+        "#listing-details article"
+      );
+      if (detailsContainer) {
+        const updatedListing = await fetchListingById(currentListingId);
+        renderListingDetails(updatedListing);
+      }
     } catch (err) {
       setError(form, "title", err.message || "Failed to update listing");
     }

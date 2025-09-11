@@ -31,7 +31,7 @@ export async function loadListingDetails() {
 }
 
 // Display listing details
-function renderListingDetails(listing) {
+export function renderListingDetails(listing) {
   const container = document.querySelector("#listing-details article");
 
   const imageUrls = listing.media?.length
@@ -75,12 +75,13 @@ function renderListingDetails(listing) {
               )
               .join("")}
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#listing-gallery" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <button class="carousel-control-prev bg-dark bg-opacity-50 p-3" type="button" data-bs-target="#listing-gallery" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#listing-gallery" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+          <button class="carousel-control-next bg-dark bg-opacity-50 p-3" type="button" data-bs-target="#listing-gallery" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
             <span class="visually-hidden">Next</span>
           </button>
         </div>
