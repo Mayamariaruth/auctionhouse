@@ -147,7 +147,9 @@ export function createListingCard(listing, container) {
       </div>
     </div>
     <div class="card-body">
-      <h5 class="card-title">${title}</h5>
+      <h5 class="card-title">${
+        title.charAt(0).toUpperCase() + title.slice(1)
+      }</h5>
       ${
         isSeller
           ? `<button class="edit-listing-btn" title="Edit">

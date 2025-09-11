@@ -61,7 +61,7 @@ function renderListingDetails(listing) {
 
       <div class="detail-right">
         <div class="detail-header">
-          <h1>${title}</h1>
+          <h1>${title.charAt(0).toUpperCase() + title.slice(1)}</h1>
           ${
             isSeller
               ? `<button class="edit-detail-btn" title="Edit">
@@ -118,12 +118,20 @@ export function renderBiddingSection(listing) {
     loggedOutEl.classList.add("d-none");
     loggedInEl.classList.remove("d-none");
 
-    loggedInEl.innerHTML = `
-      <form id="bid-form">
-        <input type="number" min="1" name="amount" placeholder="Enter your bid" required />
-        <button type="submit" class="bid-btn">Bid</button>
-      </form>
-    `;
+    const isSeller =
+      listing.seller?.name ===
+      JSON.parse(localStorage.getItem("profile") || "{}").name;
+
+    if (isSeller) {
+      loggedInEl.innerHTML = "";
+    } else if (isLoggedIn()) {
+      loggedInEl.innerHTML = `
+        <form id="bid-form">
+          <input type="number" min="1" name="amount" placeholder="Enter your bid" required />
+          <button type="submit" class="bid-btn">Bid</button>
+        </form>
+      `;
+    }
 
     // Form submission
     initBidForm(listing.id, async () => {

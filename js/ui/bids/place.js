@@ -36,7 +36,7 @@ export function initBidForm(listingId, onSuccess) {
 
       if (onSuccess) onSuccess();
     } catch (error) {
-      showNotification("Failed to place bid", "error");
+      showNotification(error.message || "Failed to place bid", "error");
       console.error(error);
     }
   });

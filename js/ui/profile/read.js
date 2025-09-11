@@ -6,9 +6,32 @@ import {
   initEditProfileModal,
   initEditProfileForm,
 } from "./edit.js";
+import { getProfile } from "../../utils/auth.js";
+
+// Redirect if user is not logged in or a logged in user accessing the wrong profile
+export function requireProfileOwner() {
+  const user = getProfile();
+  // Logged out user
+  if (!user) {
+    window.location.href = "/html/login.html";
+    return false;
+  }
+
+  // Logged in user but wrong profile
+  const params = new URLSearchParams(window.location.search);
+  const username = params.get("user");
+  if (!username || username !== user.name) {
+    window.location.href = "/html/login.html";
+    return false;
+  }
+
+  return true;
+}
 
 // Load profile details
 export async function loadProfile() {
+  if (!requireProfileOwner()) return;
+
   const params = new URLSearchParams(window.location.search);
   const username = params.get("user");
   if (!username) return;
