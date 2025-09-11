@@ -13,7 +13,7 @@ export function requireProfileOwner() {
   const user = getProfile();
   // Logged out user
   if (!user) {
-    window.location.href = "html/login.html";
+    window.location.href = "/auctionhouse/html/login.html";
     return false;
   }
 
@@ -21,7 +21,7 @@ export function requireProfileOwner() {
   const params = new URLSearchParams(window.location.search);
   const username = params.get("user");
   if (!username || username !== user.name) {
-    window.location.href = "html/login.html";
+    window.location.href = "/auctionhouse/html/login.html";
     return false;
   }
 
@@ -48,12 +48,12 @@ export async function loadProfile() {
     document.getElementById("profile-avatar").src =
       (typeof profile.avatar === "object"
         ? profile.avatar?.url
-        : profile.avatar) || "assets/images/default-avatar.png";
+        : profile.avatar) || "/auctionhouse/assets/images/default-avatar.png";
 
     document.getElementById("profile-banner").src =
       (typeof profile.banner === "object"
         ? profile.banner?.url
-        : profile.banner) || "assets/images/default-banner.jpg";
+        : profile.banner) || "/auctionhouse/assets/images/default-banner.jpg";
 
     // Load tabs content
     await displayProfileListings(username);

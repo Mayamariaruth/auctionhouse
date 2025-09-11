@@ -34,7 +34,17 @@ export async function loadListingDetails() {
 function renderListingDetails(listing) {
   const container = document.querySelector("#listing-details article");
 
-  const imageUrl = listing.media?.[0]?.url || "assets/images/default-img.png";
+  const imageUrls = listing.media?.length
+    ? listing.media.map((m, i) => ({
+        url: m.url,
+        alt: m.alt || `Listing image ${i + 1}`,
+      }))
+    : [
+        {
+          url: "/auctionhouse/assets/images/default-img.png",
+          alt: "Listing image",
+        },
+      ];
   const title = listing.title;
   const description = listing.description?.trim() || "No description provided.";
   const seller = listing.seller || { name: "Unknown seller" };
@@ -49,11 +59,11 @@ function renderListingDetails(listing) {
 
   // Build carousel HTML
   const galleryHtml =
-    imageUrl && imageUrl.length > 0
+    imageUrls.length > 0
       ? `
         <div id="listing-gallery" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
-            ${imageUrl
+            ${imageUrls
               .map(
                 (img, i) => `
               <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -75,7 +85,7 @@ function renderListingDetails(listing) {
           </button>
         </div>
       `
-      : `<img src="assets/images/default-img.png" alt="Listing image" />`;
+      : `<img src="/auctionhouse/assets/images/default-img.png" alt="Listing image" />`;
 
   container.innerHTML = `
     <div class="detail-container">
@@ -175,7 +185,7 @@ export function renderBiddingSection(listing) {
     loggedOutEl.innerHTML = `
       <div class="d-flex flex-column mt-4">
         <p class="fw-semibold details-login-text">Login to place a bid on this listing</p>
-        <a href="html/login.html" id="details-login-btn">Login</a>
+        <a href="/auctionhouse/html/login.html" id="details-login-btn">Login</a>
       </div>
     `;
   }
