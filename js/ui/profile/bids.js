@@ -56,7 +56,7 @@ function renderBidCard(bid) {
             listing.description || "No description"
           }</p>
           <strong class="mb-4 bid-amount">
-            Bid: ${bid.amount}
+            My bid: ${bid.amount}
           </strong>
           <p class="mt-2 bid-deadline pe-3">
             Ends ${endsAt.toLocaleString()} 

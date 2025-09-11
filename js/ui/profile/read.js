@@ -37,7 +37,7 @@ export async function loadProfile() {
     await displayProfileBids(username);
 
     // Initialize Edit modal
-    loadEditProfileModal();
+    await loadEditProfileModal();
     initEditProfileModal();
     initEditProfileForm();
   } catch (err) {

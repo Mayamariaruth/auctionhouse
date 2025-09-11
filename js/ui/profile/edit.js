@@ -1,5 +1,6 @@
 import { editProfile } from "../../api/profile/edit.js";
 import { fetchProfile } from "../../api/profile/fetch.js";
+import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 
 // Load Edit profile modal HTML
 export async function loadEditProfileModal() {
@@ -10,6 +11,7 @@ export async function loadEditProfileModal() {
     const response = await fetch("/html/modals/edit-profile.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
+    return true;
   } catch (err) {
     console.error("Failed to load Edit Profile modal:", err);
   }
@@ -52,16 +54,42 @@ export function initEditProfileForm() {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    clearErrors(form);
+
+    const banner = document.getElementById("edit-profile-banner").value.trim();
+    const avatar = document.getElementById("edit-profile-avatar").value.trim();
+    const bio = document.getElementById("edit-profile-bio").value.trim();
+
+    let hasError = false;
+
+    // Banner URL validation
+    if (banner && !isValidImageUrl(banner)) {
+      setError(form, "banner", "Invalid Banner URL, it must start with 'http'");
+      hasError = true;
+    }
+
+    // Avatar URL validation
+    if (avatar && !isValidImageUrl(avatar)) {
+      setError(form, "avatar", "Invalid Avatar UR, it must start with 'http'L");
+      hasError = true;
+    }
+
+    // Bio validation
+    if (bio.length > 150) {
+      setError(form, "bio", "Bio cannot exceed 150 characters");
+      hasError = true;
+    }
+
+    if (hasError) return;
 
     const params = new URLSearchParams(window.location.search);
     const username = params.get("user");
     const token = localStorage.getItem("accessToken");
 
-    const updatedData = {
-      banner: { url: document.getElementById("edit-profile-banner").value },
-      avatar: { url: document.getElementById("edit-profile-avatar").value },
-      bio: document.getElementById("edit-profile-bio").value,
-    };
+    const updatedData = {};
+    if (banner) updatedData.banner = { url: banner };
+    if (avatar) updatedData.avatar = { url: avatar };
+    if (bio) updatedData.bio = bio;
 
     try {
       await editProfile(username, updatedData, token);
@@ -75,6 +103,7 @@ export function initEditProfileForm() {
       window.location.reload();
     } catch (err) {
       console.error("Failed to update profile:", err);
+      setError(form, "bio", err.message || "Failed to update profile");
     }
   });
 }

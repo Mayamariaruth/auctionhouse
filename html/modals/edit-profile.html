@@ -7,34 +7,42 @@
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
+    <div class="modal-content p-3">
       <div class="modal-header">
         <h2 class="modal-title" id="edit-profile-modal-label">
           Edit Profile Details
         </h2>
       </div>
+
       <!-- Form -->
       <div class="modal-body">
-        <form id="edit-profile-form">
+        <form id="edit-profile-form" novalidate>
           <!-- Banner field -->
           <div class="mb-3">
-            <label for="edit-profile-banner" class="form-label"
-              >Banner (URL link)</label
-            >
+            <label for="edit-profile-banner" class="form-label">
+              Banner (URL link)
+            </label>
             <input
               type="text"
               class="form-control"
               id="edit-profile-banner"
               required
             />
+            <span class="error-message" id="edit-banner-error"></span>
           </div>
 
           <!-- Avatar field -->
           <div class="mb-3">
-            <label for="edit-profile-avatar" class="form-label"
-              >Avatar (URL link)</label
-            >
-            <input type="text" class="form-control" id="edit-profile-avatar" />
+            <label for="edit-profile-avatar" class="form-label">
+              Avatar (URL link)
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="edit-profile-avatar"
+              required
+            />
+            <span class="error-message" id="edit-avatar-error"></span>
           </div>
 
           <!-- Bio field -->
@@ -44,11 +52,13 @@
               class="form-control"
               id="edit-profile-bio"
               rows="3"
+              required
             ></textarea>
+            <span class="error-message" id="edit-bio-error"></span>
           </div>
 
           <!-- Buttons -->
-          <div class="d-flex flex-column gap-2">
+          <div class="d-flex flex-column gap-2 mt-4">
             <button type="submit" class="confirm-btn">Save</button>
             <button type="button" class="cancel-btn" data-bs-dismiss="modal">
               Cancel
