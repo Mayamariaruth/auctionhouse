@@ -140,7 +140,7 @@ export function initEditListingForm() {
           .filter(Boolean)
       : [];
 
-      // Updated data
+    // Updated data
     const updatedData = {
       title,
       description,
@@ -165,6 +165,8 @@ export function initEditListingForm() {
         const updatedListing = await fetchListingById(currentListingId);
         renderListingDetails(updatedListing);
       }
+      // Show success notification
+      showNotification("Listing updated successfully!", "success");
     } catch (err) {
       setError(form, "title", err.message || "Failed to update listing");
     } finally {

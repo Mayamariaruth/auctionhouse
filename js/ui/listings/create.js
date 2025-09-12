@@ -10,18 +10,18 @@ export function initAddListingForm() {
   const form = document.getElementById("add-listing-form");
   if (!form) return;
 
+  // Event listener
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     showModalSpinner();
 
     clearErrors(form);
 
+    // Incorrect user Error handling
     if (!isLoggedIn()) return setError(form, "title", "You must be logged in");
-
     const profile = getProfile();
     if (!profile) return setError(form, "title", "Profile not found");
 
-    // Form elements
     const title = form.querySelector("#listing-title").value.trim();
     const description = form.querySelector("#listing-description").value.trim();
     const mediaInput = form.querySelector("#listing-image").value.trim();

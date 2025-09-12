@@ -39,6 +39,9 @@ export function initDeleteListingModal() {
       currentDeleteListingId = null;
 
       window.location.reload();
+
+      // Show success notification
+      showNotification("Listing deleted successfully!", "success");
     } catch (err) {
       console.error("Failed to delete listing:", err);
     } finally {
