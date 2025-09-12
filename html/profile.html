@@ -3,15 +3,11 @@
   <head>
     <!-- Base URL -->
     <script>
-      // Local dev
       const isLocal =
         location.hostname === "127.0.0.1" || location.hostname === "localhost";
-      if (isLocal) {
-        document.write('<base href="/">');
-      } else {
-        // GitHub Pages
-        document.write('<base href="/auctionhouse/">');
-      }
+      const base = document.createElement("base");
+      base.href = isLocal ? "/" : "/auctionhouse/";
+      document.head.appendChild(base);
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -123,6 +119,7 @@
         <button
           id="mobile-menu-toggle"
           class="btn btn-link p-0 position-relative"
+          aria-controls="mobile-menu"
         >
           <i class="fa-solid fa-bars fa-2x" id="menu-icon"></i>
         </button>
@@ -179,23 +176,27 @@
       </section>
 
       <!-- Messages -->
-      <div id="notifications"></div>
+      <div id="notifications" role="alert"></div>
 
       <!-- Profile details -->
       <section id="profile-page" class="page-container">
         <section class="profile-header mb-md-5 position-relative">
+          <!-- Profile banner -->
           <div id="profile-banner-wrapper">
             <img id="profile-banner" src="" alt="Profile Banner" />
           </div>
+          <!-- Edit profile button -->
           <div class="edit-profile-container position-absolute mt-2">
-            <button id="edit-profile-btn">
+            <button id="edit-profile-btn" aria-label="Edit profile details">
               <i class="fa-solid fa-pen"></i> Edit Details
             </button>
           </div>
+          <!-- Profile avatar -->
           <div class="mobile-wrapper">
             <div id="profile-avatar-wrapper">
               <img id="profile-avatar" src="" alt="Profile Avatar" />
             </div>
+            <!-- Profile info -->
             <div id="profile-info">
               <h1 id="profile-name"></h1>
               <p id="profile-bio"></p>
@@ -232,7 +233,7 @@
               </button>
             </li>
           </ul>
-
+          <!-- Tabs content -->
           <div class="tab-content mt-3" id="profile-tab-content">
             <div
               class="tab-pane fade show active"

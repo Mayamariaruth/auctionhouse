@@ -1,17 +1,11 @@
 import { updateNavbar } from "../navbar.js";
-import { isLoggedIn } from "../../utils/auth.js";
-
-// Clear user data from storage
-export function clearAuthData() {
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("profile");
-}
+import { isLoggedIn, clearAuth } from "../../utils/auth.js";
 
 // Handle logging out
 function handleLogout(event) {
   event.preventDefault();
 
-  clearAuthData();
+  clearAuth();
   updateNavbar();
 
   sessionStorage.setItem(

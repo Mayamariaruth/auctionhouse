@@ -3,15 +3,11 @@
   <head>
     <!-- Base URL -->
     <script>
-      // Local dev
       const isLocal =
         location.hostname === "127.0.0.1" || location.hostname === "localhost";
-      if (isLocal) {
-        document.write('<base href="/">');
-      } else {
-        // GitHub Pages
-        document.write('<base href="/auctionhouse/">');
-      }
+      const base = document.createElement("base");
+      base.href = isLocal ? "/" : "/auctionhouse/";
+      document.head.appendChild(base);
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -123,6 +119,7 @@
         <button
           id="mobile-menu-toggle"
           class="btn btn-link p-0 position-relative"
+          aria-controls="mobile-menu"
         >
           <i class="fa-solid fa-bars fa-2x" id="menu-icon"></i>
         </button>
@@ -179,7 +176,7 @@
       </section>
 
       <!-- Messages -->
-      <div id="notifications"></div>
+      <div id="notifications" role="alert"></div>
 
       <!-- Register form -->
       <section class="auth-form d-flex flex-column">

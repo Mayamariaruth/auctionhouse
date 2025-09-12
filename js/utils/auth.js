@@ -14,3 +14,9 @@ export function getProfile() {
     return null;
   }
 }
+
+// Clear user data from storage
+export function clearAuth() {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("profile");
+}

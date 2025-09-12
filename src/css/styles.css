@@ -73,11 +73,11 @@ body {
 
 .notification-success {
   font-size: 16px;
-  border: solid #439f6e 1px;
+  border: solid #2c7a4a 1px;
 }
 
 .fa-circle-check {
-  color: #439f6e;
+  color: #2c7a4a;
 }
 
 .notification-error {
