@@ -3,6 +3,7 @@ import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 import { getProfile } from "../../utils/auth.js";
 import { showNotification } from "../../utils/notifications.js";
+import { fetchPath } from "../../utils/fetchPath.js";
 
 // Load Edit profile modal HTML
 let editProfileModalLoaded = false;
@@ -11,7 +12,7 @@ export async function loadEditProfileModal() {
   if (!container || editProfileModalLoaded) return;
 
   try {
-    const response = await fetch("/auctionhouse/html/modals/edit-profile.html");
+    const response = await fetchPath("html/modals/edit-profile.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
     editProfileModalLoaded = true;

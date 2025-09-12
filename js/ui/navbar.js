@@ -42,15 +42,17 @@ export function updateNavbar() {
     loggedInMobile.forEach((el) => el.classList.remove("d-none"));
     loggedOutMobile.forEach((el) => el.classList.add("d-none"));
 
-    // Update Profile link to include username
+    // Update Profile nav link to include username in URL
+    const currentPath = window.location.pathname;
+    const prefix = currentPath.includes("/html/") ? "" : "html/";
     loggedInDesktop.forEach((el) => {
       if (el.textContent.trim().toLowerCase() === "profile") {
-        el.href = `html/profile.html?user=${profile.name}`;
+        el.href = `${prefix}profile.html?user=${profile.name}`;
       }
     });
     loggedInMobile.forEach((el) => {
       if (el.textContent.trim().toLowerCase() === "profile") {
-        el.href = `html/profile.html?user=${profile.name}`;
+        el.href = `${prefix}profile.html?user=${profile.name}`;
       }
     });
 

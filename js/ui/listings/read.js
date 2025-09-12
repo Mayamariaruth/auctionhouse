@@ -8,6 +8,7 @@ import {
 } from "./edit.js";
 import { loadDeleteModal, initDeleteListingModal } from "./delete.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
+import { fetchPath } from "../../utils/fetchPath.js";
 
 // Initialize landing page with button, listings grid and modals
 export async function initListingsPage() {
@@ -43,7 +44,7 @@ async function loadAddListingModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("html/modals/add-listing.html");
+    const response = await fetchPath("html/modals/add-listing.html");
     const html = await response.text();
     container.innerHTML = html;
   } catch (err) {

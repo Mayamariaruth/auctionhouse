@@ -4,6 +4,7 @@ import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 import { renderListingDetails } from "./details.js";
 import { displayListings } from "./read.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
+import { fetchPath } from "../../utils/fetchPath.js";
 
 let currentListingId = null;
 
@@ -13,7 +14,7 @@ export async function loadEditListingModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("html/modals/edit-listing.html");
+    const response = await fetchPath("html/modals/edit-listing.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
   } catch (err) {

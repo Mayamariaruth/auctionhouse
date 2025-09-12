@@ -16,7 +16,7 @@ function handleLogout(event) {
     })
   );
 
-  window.location.href = "index.html";
+  window.location.href = "../index.html";
 }
 
 // Attach logout event listeners

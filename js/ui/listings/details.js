@@ -99,7 +99,7 @@ export function renderListingDetails(listing) {
     ? listing.media
     : [
         {
-          url: "/auctionhouse/assets/images/default-img.png",
+          url: "../assets/images/default-img.png",
           alt: "Listing image",
         },
       ];
@@ -173,7 +173,7 @@ export function renderBiddingSection(listing) {
     loggedOutEl.innerHTML = `
       <div class="d-flex flex-column mt-4">
         <p class="fw-semibold details-login-text">Login to place a bid on this listing</p>
-        <a href="/auctionhouse/html/login.html" id="details-login-btn">Login</a>
+        <a href="login.html" id="details-login-btn">Login</a>
       </div>
     `;
   }

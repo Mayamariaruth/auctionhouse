@@ -1,5 +1,6 @@
 import { deleteListing } from "../../api/listings/delete.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
+import { fetchPath } from "../../utils/fetchPath.js";
 
 let currentDeleteListingId = null;
 
@@ -9,7 +10,7 @@ export async function loadDeleteModal() {
   if (!container) return;
 
   try {
-    const response = await fetch("html/modals/delete-listing.html");
+    const response = await fetchPath("html/modals/delete-listing.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
   } catch (err) {

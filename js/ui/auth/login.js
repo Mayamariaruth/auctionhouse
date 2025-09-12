@@ -39,7 +39,7 @@ export async function onLogin(event) {
       })
     );
 
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
   } catch (error) {
     if (error.message.includes("Email must be a valid email")) {
       emailField.classList.add("input-error");
