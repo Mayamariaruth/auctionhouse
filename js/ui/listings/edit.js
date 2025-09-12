@@ -47,6 +47,7 @@ export function initEditListingModal(listing, onSuccess) {
 
   clearErrors(form);
 
+  // Show modal
   const modalEl = document.getElementById("edit-listing-modal");
   const bsModal = new bootstrap.Modal(modalEl);
   bsModal.show();
@@ -139,6 +140,7 @@ export function initEditListingForm() {
           .filter(Boolean)
       : [];
 
+      // Updated data
     const updatedData = {
       title,
       description,
@@ -149,6 +151,7 @@ export function initEditListingForm() {
     try {
       await editListing(currentListingId, updatedData);
 
+      // Hide modal
       const modalEl = document.getElementById("edit-listing-modal");
       const bsModal = bootstrap.Modal.getInstance(modalEl);
       bsModal.hide();

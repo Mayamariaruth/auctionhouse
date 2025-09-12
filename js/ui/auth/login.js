@@ -2,6 +2,7 @@ import { loginUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
+// Handle login event
 export async function onLogin(event) {
   event.preventDefault();
 

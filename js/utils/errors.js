@@ -8,7 +8,7 @@ export function isValidImageUrl(url) {
   }
 }
 
-// Set error message and highlight field
+// Set error message and highlight form field
 export function setError(form, fieldId, message) {
   const field = form.querySelector(
     `#${form.id.includes("edit") ? "edit-" : "listing-"}${fieldId}`
@@ -24,7 +24,7 @@ export function setError(form, fieldId, message) {
   }
 }
 
-// Clear all errors from the form
+// Clear all errors from the form fields
 export function clearErrors(form) {
   const errorEls = form.querySelectorAll(".error-message");
   errorEls.forEach((el) => {

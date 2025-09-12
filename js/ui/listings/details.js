@@ -37,7 +37,7 @@ export function renderListingDetails(listing) {
   const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
   const isSeller = isLoggedIn() && listing.seller?.name === userProfile?.name;
 
-  // Base HTML + image carousel
+  // Listing HTML + image carousel
   container.innerHTML = `
     <div class="detail-container">
       <div class="detail-left mt-4 mt-md-0">
@@ -144,6 +144,7 @@ export function renderBiddingSection(listing) {
   loggedInEl.classList.add("d-none");
   loggedOutEl.classList.add("d-none");
 
+  // Render bidding option based on user and auction state (logged in, is seller, ended auction)
   if (!isActive) {
     loggedInEl.classList.remove("d-none");
     loggedInEl.innerHTML = `<p class="fw-semibold">This auction has ended. Bidding is closed.</p>`;
@@ -163,6 +164,7 @@ export function renderBiddingSection(listing) {
       renderBidHistory(updated.bids || [], bidHistoryEl);
     });
   } else {
+    // Logged out users bidding option
     loggedOutEl.classList.remove("d-none");
     loggedOutEl.innerHTML = `
       <div class="d-flex flex-column mt-4">
@@ -173,7 +175,7 @@ export function renderBiddingSection(listing) {
   }
 }
 
-// Image modal
+// Image modal for the carousel
 function initImageModal() {
   const existingModal = document.getElementById("image-modal");
   if (existingModal) existingModal.remove();
@@ -193,6 +195,7 @@ function initImageModal() {
     .getElementById("modal-container")
     .insertAdjacentHTML("beforeend", modalHtml);
 
+  // Event listener
   document.querySelectorAll("#listing-gallery .carousel-img").forEach((img) => {
     img.addEventListener("click", (e) => {
       e.stopPropagation();

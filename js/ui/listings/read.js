@@ -64,7 +64,7 @@ export function initAddListingModal() {
   addBtn.addEventListener("click", () => bsModal.show());
 }
 
-// Pagination variables
+// Pagination/search variables
 let currentPage = 1;
 let isLoading = false;
 let currentSearch = "";

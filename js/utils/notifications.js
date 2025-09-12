@@ -39,11 +39,7 @@ export function showNotification(message, type = "success") {
   container.appendChild(notification);
 
   // Auto-remove after 5s
-  setTimeout(() => {
-    if (notification && notification.parentNode) {
-      setTimeout(() => notification.remove(), 300);
-    }
-  }, 5000);
+  setTimeout(() => notification.remove(), 5000);
 }
 
 // Display a notification stored in sessionStorage

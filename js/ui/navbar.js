@@ -1,6 +1,6 @@
 import { isLoggedIn, getProfile } from "../utils/auth.js";
 
-// Mobile menu toggle
+// Mobile menu toggle function
 export function initMobileMenu() {
   const toggleBtn = document.getElementById("mobile-menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");

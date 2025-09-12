@@ -8,6 +8,7 @@ export function setupSearch() {
     const input = form.querySelector(".search-input");
     if (!input) return;
 
+    // Form submission
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const query = input.value.trim();

@@ -2,6 +2,7 @@ import { registerUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
+// Handle register event
 export async function onRegister(event) {
   event.preventDefault();
 
@@ -21,7 +22,7 @@ export async function onRegister(event) {
 
   let hasError = false;
 
-  // Empty field check
+  // Empty field validation
   if (!name) {
     nameField.classList.add("input-error");
     hasError = true;

@@ -5,7 +5,7 @@ import {
 } from "../listings/edit.js";
 import { openDeleteListingModal, loadDeleteModal } from "../listings/delete.js";
 
-// Fetch listings
+// Fetch listings in tabs section
 export async function displayProfileListings(username) {
   const container = document.getElementById("user-listings");
   if (!container || !username) return;
@@ -32,6 +32,7 @@ export async function displayProfileListings(username) {
       const card = container.querySelector(`[data-id="${listing.id}"]`);
       if (!card) return;
 
+      // Delete button event listener
       const deleteBtn = card.querySelector(".profile-delete-btn");
       if (deleteBtn) {
         deleteBtn.addEventListener("click", (e) => {
@@ -40,6 +41,7 @@ export async function displayProfileListings(username) {
         });
       }
 
+      // Edit button event listener
       const editBtn = card.querySelector(".profile-edit-listing-btn");
       if (editBtn) {
         editBtn.addEventListener("click", (e) => {
@@ -60,6 +62,7 @@ function renderListingCard(listing) {
   const isActive = endsAt > new Date();
   const bids = listing._count?.bids || 0;
 
+  // Profile HTML
   return `
     <div class="col-12" data-id="${listing.id}">
       <div class="profile-listing-card p-3 pt-2">

@@ -1,18 +1,20 @@
 import { editProfile } from "../../api/profile/edit.js";
-import { fetchProfile } from "../../api/profile/fetch.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
+import { getProfile } from "../../utils/auth.js";
+import { showNotification } from "../../utils/notifications.js";
 
 // Load Edit profile modal HTML
+let editProfileModalLoaded = false;
 export async function loadEditProfileModal() {
   const container = document.getElementById("modal-container");
-  if (!container) return;
+  if (!container || editProfileModalLoaded) return;
 
   try {
     const response = await fetch("/auctionhouse/html/modals/edit-profile.html");
     const html = await response.text();
     container.insertAdjacentHTML("beforeend", html);
-    return true;
+    editProfileModalLoaded = true;
   } catch (err) {
     console.error("Failed to load Edit Profile modal:", err);
   }
@@ -23,23 +25,17 @@ export function initEditProfileModal() {
   const editBtn = document.getElementById("edit-profile-btn");
   if (!editBtn) return;
 
-  editBtn.addEventListener("click", async () => {
-    const params = new URLSearchParams(window.location.search);
-    const username = params.get("user");
-    if (!username) return;
-
-    const profile = await fetchProfile(username);
+  // Event listener
+  editBtn.addEventListener("click", () => {
+    const user = getProfile();
+    if (!user) return;
 
     // Pre-populate form fields
     document.getElementById("edit-profile-banner").value =
-      typeof profile.banner === "object"
-        ? profile.banner?.url
-        : profile.banner || "";
+      typeof user.banner === "object" ? user.banner?.url : user.banner || "";
     document.getElementById("edit-profile-avatar").value =
-      typeof profile.avatar === "object"
-        ? profile.avatar?.url
-        : profile.avatar || "";
-    document.getElementById("edit-profile-bio").value = profile.bio || "";
+      typeof user.avatar === "object" ? user.avatar?.url : user.avatar || "";
+    document.getElementById("edit-profile-bio").value = user.bio || "";
 
     // Show modal
     const modalEl = document.getElementById("edit-profile-modal");
@@ -53,6 +49,7 @@ export function initEditProfileForm() {
   const form = document.getElementById("edit-profile-form");
   if (!form) return;
 
+  // Event listener
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     showModalSpinner();
@@ -72,7 +69,7 @@ export function initEditProfileForm() {
 
     // Avatar URL validation
     if (avatar && !isValidImageUrl(avatar)) {
-      setError(form, "avatar", "Invalid Avatar UR, it must start with 'http'L");
+      setError(form, "avatar", "Invalid Avatar URL, it must start with 'http'");
       hasError = true;
     }
 
@@ -84,25 +81,34 @@ export function initEditProfileForm() {
 
     if (hasError) return;
 
-    const params = new URLSearchParams(window.location.search);
-    const username = params.get("user");
-    const token = localStorage.getItem("accessToken");
+    const user = getProfile();
+    if (!user) return;
 
+    // Updated data
     const updatedData = {};
     if (banner) updatedData.banner = { url: banner };
     if (avatar) updatedData.avatar = { url: avatar };
     if (bio) updatedData.bio = bio;
 
     try {
-      await editProfile(username, updatedData, token);
+      await editProfile(user.name, updatedData);
+
+      // Update profile object in localStorage
+      const updatedProfile = { ...user, ...updatedData };
+      localStorage.setItem("profile", JSON.stringify(updatedProfile));
+
+      // Update profile details
+      if (banner) document.getElementById("profile-banner").src = banner;
+      if (avatar) document.getElementById("profile-avatar").src = avatar;
+      if (bio) document.getElementById("profile-bio").textContent = bio;
 
       // Close modal
       const modalEl = document.getElementById("edit-profile-modal");
       const bsModal = bootstrap.Modal.getInstance(modalEl);
       bsModal.hide();
 
-      // Refresh profile
-      window.location.reload();
+      // Show success notification
+      showNotification("Profile updated successfully!", "success");
     } catch (err) {
       console.error("Failed to update profile:", err);
       setError(form, "bio", err.message || "Failed to update profile");

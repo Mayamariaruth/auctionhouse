@@ -1,6 +1,6 @@
 import { fetchBidsByProfile } from "../../api/profile/fetch.js";
 
-// Fetch profile bids
+// Fetch profile bids in tabs section
 export async function displayProfileBids(username) {
   const container = document.getElementById("user-bids");
   if (!container) return;
@@ -9,6 +9,7 @@ export async function displayProfileBids(username) {
     const bids = await fetchBidsByProfile(username);
     container.innerHTML = "";
 
+    // No bids text content
     if (!bids.length) {
       container.innerHTML = `<p class="text-center fs-5">No bids found.</p>`;
       return;
@@ -29,6 +30,7 @@ function renderBidCard(bid) {
   const endsAt = new Date(bid.listing.endsAt);
   const isActive = endsAt > new Date();
 
+  // Bids HTML
   return `
     <div class="col-12">
       <div class="card bid-card d-flex flex-row align-items-center p-3">
