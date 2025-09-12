@@ -50,7 +50,7 @@
 .date-text {
   font-size: 14px;
   font-weight: lighter;
-  color: #717171;
+  color: black;
 }
 
 #add-listing-btn {
@@ -89,7 +89,7 @@
 .tag-box {
   display: inline-block;
   background-color: #ebebeb;
-  color: #717171;
+  color: black;
   padding: 4px 13px;
   font-size: 13px;
 }
@@ -112,7 +112,7 @@
   background-color: transparent;
   position: absolute;
   right: 0;
-  color: #717171;
+  color: #5d5d5d;
 }
 
 .status-badge {
@@ -126,7 +126,7 @@
 }
 
 .status-badge.ended {
-  background-color: #f93232;
+  background-color: #d32f2f;
 }
 
 #search-info {

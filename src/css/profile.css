@@ -57,7 +57,7 @@
 }
 
 #edit-profile-btn {
-  color: #717171;
+  color: #5d5d5d;
   font-weight: 300;
   font-size: 14px;
   border: none;
@@ -125,7 +125,7 @@
 
 .profile-listing-deadline {
   font-size: 16px;
-  color: #717171;
+  color: black;
   font-weight: 100;
 }
 
@@ -159,8 +159,8 @@
   font-size: 16px;
 }
 
-profile-auction-status.ended {
-  color: #f93232;
+.profile-auction-status.ended {
+  color: #d32f2f;
   font-weight: 600;
   font-size: 16px;
 }
@@ -170,8 +170,8 @@ profile-auction-status.ended {
 }
 
 .profile-delete-btn {
-  border: solid #f93232 1px;
-  background-color: #f93232;
+  border: solid #d32f2f 1px;
+  background-color: #d32f2f;
   color: white;
   font-weight: 500;
   padding: 6px 30px;
@@ -181,7 +181,7 @@ profile-auction-status.ended {
 
 .profile-delete-btn:hover {
   background-color: white;
-  color: #f93232;
+  color: #d32f2f;
 }
 
 .profile-edit-listing-btn {

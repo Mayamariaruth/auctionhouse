@@ -52,7 +52,7 @@
 
 .deadline-details {
   font-size: 16px;
-  color: #717171;
+  color: black;
   font-weight: 100;
 }
 
@@ -63,11 +63,11 @@
 }
 
 .auction-status.active {
-  color: #2C7A4A;
+  color: #2c7a4a;
 }
 
 .auction-status.ended {
-  color: #f93232;
+  color: #d32f2f;
 }
 
 .seller-details {
@@ -80,7 +80,7 @@
 }
 
 .back-btn {
-  color: #717171;
+  color: #5d5d5d;
   text-decoration: none;
   font-weight: 300;
   font-size: 14px;
@@ -89,7 +89,7 @@
 .edit-detail-btn {
   border: none;
   background-color: transparent;
-  color: #717171;
+  color: #5d5d5d;
   font-size: 18px;
 }
 

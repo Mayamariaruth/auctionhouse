@@ -36,6 +36,8 @@ export function renderListingDetails(listing) {
   const container = document.querySelector("#listing-details article");
   const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
   const isSeller = isLoggedIn() && listing.seller?.name === userProfile?.name;
+  const endsAt = new Date(listing.endsAt);
+  const isActive = endsAt > new Date();
 
   // Listing HTML + image carousel
   container.innerHTML = `
@@ -74,11 +76,9 @@ export function renderListingDetails(listing) {
           listing.description?.trim() || "No description provided."
         }</p>
         <p class="deadline-details">
-          Ends ${new Date(listing.endsAt).toLocaleString()}
-          <span class="auction-status ${
-            new Date(listing.endsAt) > new Date() ? "active" : "ended"
-          }">
-            ${new Date(listing.endsAt) > new Date() ? "Active" : "Ended"}
+          Ends ${endsAt.toLocaleString()}
+          <span class="auction-status ${isActive ? "active" : "ended"}">
+            ${isActive ? "Active" : "Ended"}
           </span>
         </p>
         <div class="listing-tags mb-4">${renderTags(listing.tags || [])}</div>
@@ -144,17 +144,21 @@ export function renderBiddingSection(listing) {
   loggedInEl.classList.add("d-none");
   loggedOutEl.classList.add("d-none");
 
-  // Render bidding option based on user and auction state (logged in, is seller, ended auction)
+  // Render bidding option/text based on user and auction state
   if (!isActive) {
+    // Ended auction
     loggedInEl.classList.remove("d-none");
     loggedInEl.innerHTML = `<p class="fw-semibold">This auction has ended. Bidding is closed.</p>`;
   } else if (isSeller) {
+    // Listing seller
     loggedInEl.classList.remove("d-none");
     loggedInEl.innerHTML = `<p class="fw-semibold">You cannot bid on your own listing.</p>`;
   } else if (loggedIn) {
+    // Logged in user
     loggedInEl.classList.remove("d-none");
     loggedInEl.innerHTML = `
       <form id="bid-form">
+        <label class="sr-only" for="amount">Bid amount</label>
         <input type="number" min="1" name="amount" placeholder="Enter your bid" required />
         <button type="submit" class="bid-btn">Bid</button>
       </form>
@@ -180,6 +184,7 @@ function initImageModal() {
   const existingModal = document.getElementById("image-modal");
   if (existingModal) existingModal.remove();
 
+  // Modal HTML
   const modalHtml = `
     <div class="modal fade" id="image-modal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
