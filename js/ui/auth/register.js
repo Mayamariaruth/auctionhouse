@@ -93,3 +93,10 @@ export async function onRegister(event) {
     hideSpinner();
   }
 }
+
+// Form submission
+export function initRegisterForm() {
+  const form = document.getElementById("register");
+  if (!form) return;
+  form.addEventListener("submit", onRegister);
+}

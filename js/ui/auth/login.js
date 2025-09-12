@@ -54,3 +54,10 @@ export async function onLogin(event) {
     hideSpinner();
   }
 }
+
+// Form submission
+export function initLoginForm() {
+  const form = document.getElementById("login");
+  if (!form) return;
+  form.addEventListener("submit", onLogin);
+}
