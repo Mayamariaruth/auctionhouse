@@ -180,7 +180,7 @@ export function renderBiddingSection(listing) {
 }
 
 // Image modal for the carousel
-function initImageModal() {
+export function initImageModal() {
   const existingModal = document.getElementById("image-modal");
   if (existingModal) existingModal.remove();
 

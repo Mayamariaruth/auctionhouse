@@ -21,7 +21,6 @@ export async function initListingsPage() {
   initEditListingModal();
   initEditListingForm();
   initDeleteListingModal();
-  await displayListings();
 
   // Check for ?search= param from other pages
   const params = new URLSearchParams(window.location.search);

@@ -37,7 +37,9 @@ export async function displayProfileListings(username) {
       if (deleteBtn) {
         deleteBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          openDeleteListingModal(listing.id, username);
+          openDeleteListingModal(listing.id, async () => {
+            await displayProfileListings(username);
+          });
         });
       }
 
@@ -46,7 +48,9 @@ export async function displayProfileListings(username) {
       if (editBtn) {
         editBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          initEditListingModal(listing, username);
+          initEditListingModal(listing, async () => {
+            await displayProfileListings(username);
+          });
         });
       }
     });

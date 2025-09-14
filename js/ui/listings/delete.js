@@ -39,7 +39,11 @@ export function initDeleteListingModal() {
       bsDeleteModal.hide();
       currentDeleteListingId = null;
 
-      window.location.reload();
+      if (deleteModalEl._onSuccess) {
+        await deleteModalEl._onSuccess();
+      } else {
+        window.location.href = "../index.html";
+      }
 
       // Show success notification
       showNotification("Listing deleted successfully!", "success");
@@ -52,7 +56,7 @@ export function initDeleteListingModal() {
 }
 
 // Open Delete Listing modal
-export function openDeleteListingModal(listingId) {
+export function openDeleteListingModal(listingId, onSuccess) {
   currentDeleteListingId = listingId;
 
   // Close Edit Listing modal if it's open
@@ -66,4 +70,6 @@ export function openDeleteListingModal(listingId) {
     bootstrap.Modal.getInstance(deleteModalEl) ||
     new bootstrap.Modal(deleteModalEl);
   bsDeleteModal.show();
+
+  deleteModalEl._onSuccess = onSuccess;
 }

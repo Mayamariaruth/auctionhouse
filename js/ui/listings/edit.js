@@ -1,10 +1,15 @@
 import { editListing } from "../../api/listings/edit.js";
 import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
-import { renderListingDetails } from "./details.js";
+import {
+  renderListingDetails,
+  renderBiddingSection,
+  initImageModal,
+} from "./details.js";
 import { displayListings } from "./read.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 import { fetchPath } from "../../utils/fetchPath.js";
+import { fetchListingById } from "../../api/listings/fetch.js";
 
 let currentListingId = null;
 
@@ -53,7 +58,8 @@ export function initEditListingModal(listing, onSuccess) {
   const bsModal = new bootstrap.Modal(modalEl);
   bsModal.show();
 
-  form.dataset.onSuccess = onSuccess ? true : "";
+  form.dataset.onSuccessCallback = onSuccess ? "true" : "";
+  form._onSuccess = onSuccess;
 }
 
 // Edit listing form submission
@@ -157,15 +163,18 @@ export function initEditListingForm() {
       const bsModal = bootstrap.Modal.getInstance(modalEl);
       bsModal.hide();
 
-      await displayListings();
-
-      const detailsContainer = document.querySelector(
-        "#listing-details article"
-      );
-      if (detailsContainer) {
+      // Handle form submission on different pages
+      if (form._onSuccess) {
+        await form._onSuccess();
+      } else if (document.getElementById("listing-details")) {
         const updatedListing = await fetchListingById(currentListingId);
         renderListingDetails(updatedListing);
+        renderBiddingSection(updatedListing);
+        initImageModal();
+      } else {
+        await displayListings("", true);
       }
+
       // Show success notification
       showNotification("Listing updated successfully!", "success");
     } catch (err) {

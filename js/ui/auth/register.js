@@ -1,6 +1,7 @@
 import { registerUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
+import { redirectIfLoggedIn } from "./login.js";
 
 // Handle register event
 export async function onRegister(event) {
@@ -96,6 +97,9 @@ export async function onRegister(event) {
 
 // Form submission
 export function initRegisterForm() {
+  // Redirect if already logged in
+  if (redirectIfLoggedIn()) return;
+
   const form = document.getElementById("register");
   if (!form) return;
   form.addEventListener("submit", onRegister);

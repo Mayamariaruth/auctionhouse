@@ -1,6 +1,17 @@
 import { loginUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
+import { getProfile } from "../../utils/auth.js";
+
+// Redirect logged-in users from login
+export function redirectIfLoggedIn() {
+  const user = getProfile();
+  if (user) {
+    window.location.href = `profile.html?user=${user.name}`;
+    return true;
+  }
+  return false;
+}
 
 // Handle login event
 export async function onLogin(event) {
@@ -57,6 +68,9 @@ export async function onLogin(event) {
 
 // Form submission
 export function initLoginForm() {
+  // Redirect if already logged in
+  if (redirectIfLoggedIn()) return;
+
   const form = document.getElementById("login");
   if (!form) return;
   form.addEventListener("submit", onLogin);

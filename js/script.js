@@ -12,11 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   updateNavbar();
   showStoredNotification();
-  initRegisterForm();
-  initLoginForm();
   logoutListener();
   setupSearch();
   initListingsPage();
+
+  if (document.getElementById("login")) {
+    initLoginForm();
+  }
+
+  if (document.getElementById("register")) {
+    initRegisterForm();
+  }
 
   if (document.getElementById("listing-details")) {
     loadListingDetails();
