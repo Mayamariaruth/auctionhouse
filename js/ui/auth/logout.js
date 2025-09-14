@@ -16,7 +16,9 @@ function handleLogout(event) {
     })
   );
 
-  window.location.href = "../index.html";
+  // Update file path based on where user logs out from
+  const basePath = window.location.pathname.includes("/html/") ? "../" : "";
+  window.location.href = basePath + "index.html";
 }
 
 // Attach logout event listeners
