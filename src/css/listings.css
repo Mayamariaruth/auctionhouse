@@ -48,7 +48,7 @@
 }
 
 .date-text {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: lighter;
   color: black;
 }
@@ -69,7 +69,7 @@
 
 .bids-box {
   background-color: #5d5d5d;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
   color: white;
 }
@@ -91,7 +91,7 @@
   background-color: #ebebeb;
   color: black;
   padding: 4px 13px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .listing-btn {
@@ -99,6 +99,8 @@
   border: solid #000 1px;
   width: 100%;
   padding: 5px 0;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .listing-btn:hover {
@@ -118,7 +120,7 @@
 .status-badge {
   font-weight: bold;
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .status-badge.active {

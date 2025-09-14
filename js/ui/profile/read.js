@@ -9,19 +9,25 @@ import {
 import { getProfile } from "../../utils/auth.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 
-// Redirect if user is not logged in or a logged in user accessing the wrong profile
+// Redirect users not logged in or logged in users accessing the wrong profile
 export function requireProfileOwner() {
   const user = getProfile();
-  // Logged out user
   if (!user) {
     window.location.href = "login.html";
     return false;
   }
 
-  // Logged in user but wrong profile
   const params = new URLSearchParams(window.location.search);
-  const username = params.get("user");
-  if (!username || username !== user.name) {
+  let username = params.get("user");
+
+  // If no user param, assume it's the logged-in user
+  if (!username) {
+    window.location.href = `profile.html?user=${user.name}`;
+    return false;
+  }
+
+  // Logged in but wrong profile
+  if (username !== user.name) {
     window.location.href = "login.html";
     return false;
   }

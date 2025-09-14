@@ -22,6 +22,11 @@ export async function initListingsPage() {
   initEditListingForm();
   initDeleteListingModal();
   await displayListings();
+
+  // Check for ?search= param from other pages
+  const params = new URLSearchParams(window.location.search);
+  const search = params.get("search") || "";
+  await displayListings(search, true);
 }
 
 // Toggle Add Listing button

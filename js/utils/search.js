@@ -8,21 +8,22 @@ export function setupSearch() {
     const input = form.querySelector(".search-input");
     if (!input) return;
 
-    // Form submission
+    // Event listener
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const query = input.value.trim();
-      displayListings(query, true);
-      input.value = "";
+      if (!query) return;
 
-      // Close mobile menu after search
-      const mobileMenu = document.getElementById("mobile-menu");
-      const menuIcon = document.getElementById("menu-icon");
-      if (mobileMenu && !mobileMenu.classList.contains("d-none")) {
-        mobileMenu.classList.add("d-none");
-        menuIcon.classList.toggle("fa-bars");
-        menuIcon.classList.toggle("fa-xmark");
+      // If we’re on index.html, run search
+      if (document.getElementById("listings")) {
+        displayListings(query, true);
+      } else {
+        // Otherwise redirect to index.html with query param
+        window.location.href = `../index.html?search=${encodeURIComponent(
+          query
+        )}`;
       }
+      input.value = "";
     });
   });
 }

@@ -9,7 +9,9 @@ export async function fetchListings({
 } = {}) {
   try {
     const baseUrl = search
-      ? `${API_AUCTIONS_LISTINGS}/search?q=${encodeURIComponent(search)}`
+      ? `${API_AUCTIONS_LISTINGS}/search?q=${encodeURIComponent(
+          search
+        )}&_bids=true&_seller=true&sort=created&sortOrder=desc`
       : `${API_AUCTIONS_LISTINGS}?_bids=true&_seller=true&sort=created&sortOrder=desc`;
 
     const url = `${baseUrl}&page=${page}&limit=${limit}`;

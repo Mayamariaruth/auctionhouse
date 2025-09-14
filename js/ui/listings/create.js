@@ -115,7 +115,7 @@ export function initAddListingForm() {
       const bsModal = bootstrap.Modal.getInstance(modalEl);
       bsModal.hide();
 
-      displayListings();
+      displayListings("", true);
     } catch (err) {
       console.error(err);
       showNotification(err.message || "Failed to add listing", "error");
