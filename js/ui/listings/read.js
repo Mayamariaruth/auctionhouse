@@ -226,7 +226,7 @@ export function createListingCard(listing, container) {
         ${renderTags(tags)}
       </div>
       <button class="listing-btn">
-        ${isLoggedIn() ? "Bid" : "See Listing"}
+        ${isLoggedIn() ? "Bid" : "See more"}
       </button>
     </div>
   </div>

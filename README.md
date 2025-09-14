@@ -1,9 +1,12 @@
 # Auction House
 
+![Responsive Auction house](assets/images/readme.png)
+
 ## Table of Contents
 
 1. [Project Overview](#project-overview)
 2. [Key Features](#key-features)
+   - [Future Features](#future-features)
 3. [Technologies Used](#technologies-used)
 4. [API Usage](#api-usage)
 5. [How to Run](#how-to-run)
@@ -23,12 +26,17 @@ Auction House is an auction platform designed for students at Noroff. It allows 
 - **Profile** – Customize your profile with a bio, avatar, and banner. View your listings and bidding history in one place.
 - **Search** – Browse and search for listings by title, content, or tags.
 
+### Future Features
+
+- **Wins** - Display won auctions for users.
+
 ## API Usage
 
 This project uses the [Noroff API v2](https://docs.noroff.dev/docs/v2) to fetch and manage auction data. The API supports full **CRUD operations** (Create, Read, Update, Delete), allowing for dynamic content interaction including listings and profiles.
 
 ## Technologies Used
 
+- **Figma**
 - **HTML5**
 - **CSS3**
 - **Bootstrap**
