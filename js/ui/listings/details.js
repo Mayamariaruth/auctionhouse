@@ -93,26 +93,33 @@ export function renderListingDetails(listing) {
     </div>
   `;
 
-  // Populate carousel items dynamically
+  // Populate carousel images dynamically or use default image
   const innerEl = container.querySelector("#listing-gallery .carousel-inner");
-  const images = listing.media?.length
-    ? listing.media
-    : [
-        {
-          url: "../assets/images/default-img.png",
-          alt: "Listing image",
-        },
-      ];
 
-  innerEl.innerHTML = images
-    .map(
-      (img, i) => `
+  let mediaArray = listing.media?.filter((m) => m?.url) || [];
+
+  // If no valid URLs, use one fallback image
+  if (!mediaArray.length) {
+    mediaArray = [
+      { url: "../assets/images/default-img.png", alt: "Default image" },
+    ];
+  }
+
+  innerEl.innerHTML = mediaArray
+    .map((img, i) => {
+      const imgUrl = img.url;
+      const imgAlt = img.alt || "Listing image";
+
+      return `
       <div class="carousel-item${i === 0 ? " active" : ""}">
-        <img src="${img.url}" class="d-block w-100 carousel-img" alt="${
-        img.alt || "Listing image"
-      }">
-      </div>`
-    )
+        <img 
+          src="${imgUrl}" 
+          class="d-block w-100 carousel-img" 
+          alt="${imgAlt}" 
+          onerror="this.onerror=null;this.src='../assets/images/default-img.png'; this.alt='Image unavailable';"
+        >
+      </div>`;
+    })
     .join("");
 
   // Edit button
