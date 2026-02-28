@@ -3,7 +3,48 @@ import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 import { redirectIfLoggedIn } from "./login.js";
 
-// Handle register event
+// Validate register inputs
+function validateRegisterInput(name, email, password) {
+  const trimmedName = name?.trim();
+  const trimmedEmail = email?.trim();
+  const trimmedPassword = password?.trim();
+
+  const errors = {};
+  if (!trimmedName) errors.name = "Name required";
+  if (!trimmedEmail) errors.email = "Email required";
+  if (!trimmedPassword) errors.password = "Password required";
+
+  if (
+    trimmedName &&
+    /[^\w\s]/.test(trimmedName) &&
+    !trimmedName.includes("_")
+  ) {
+    errors.name = "Name can only contain letters, numbers, and underscores";
+  }
+
+  if (
+    trimmedEmail &&
+    (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail) ||
+      !trimmedEmail.endsWith("@stud.noroff.no"))
+  ) {
+    errors.email = "Email must be a valid @stud.noroff.no address";
+  }
+
+  if (trimmedPassword && trimmedPassword.length < 8) {
+    errors.password = "Password must be at least 8 characters";
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+    values: {
+      name: trimmedName,
+      email: trimmedEmail,
+      password: trimmedPassword,
+    },
+  };
+}
+
 export async function onRegister(event) {
   event.preventDefault();
 
@@ -12,80 +53,40 @@ export async function onRegister(event) {
   const emailField = form.email;
   const passwordField = form.password;
 
-  const name = nameField.value.trim();
-  const email = emailField.value.trim();
-  const password = passwordField.value;
-
-  // Clear previous validation styling
-  [nameField, emailField, passwordField].forEach((field) =>
-    field.classList.remove("input-error")
+  [nameField, emailField, passwordField].forEach((f) =>
+    f.classList.remove("input-error"),
   );
 
-  let hasError = false;
+  const { isValid, errors, values } = validateRegisterInput(
+    nameField.value,
+    emailField.value,
+    passwordField.value,
+  );
 
-  // Empty field validation
-  if (!name) {
-    nameField.classList.add("input-error");
-    hasError = true;
-  }
-  if (!email) {
-    emailField.classList.add("input-error");
-    hasError = true;
-  }
-  if (!password) {
-    passwordField.classList.add("input-error");
-    hasError = true;
-  }
-
-  if (hasError) {
-    showNotification("Please fill in all fields", "error");
-    return;
-  }
-
-  // Name validation
-  const punctuationMatches = name.match(/[^\w\s]/g);
-  if (
-    punctuationMatches &&
-    punctuationMatches.length > 0 &&
-    !name.includes("_")
-  ) {
-    nameField.classList.add("input-error");
-    showNotification(
-      "Name can only contain letters, numbers, and underscores",
-      "error"
-    );
-    return;
-  }
-
-  // Email validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email) || !email.endsWith("@stud.noroff.no")) {
-    emailField.classList.add("input-error");
-    showNotification("Email must be a valid @stud.noroff.no address", "error");
-    return;
-  }
-
-  // Password validation
-  if (password.length < 8) {
-    passwordField.classList.add("input-error");
-    showNotification("Password must be at least 8 characters", "error");
+  if (!isValid) {
+    if (errors.name) nameField.classList.add("input-error");
+    if (errors.email) emailField.classList.add("input-error");
+    if (errors.password) passwordField.classList.add("input-error");
+    showNotification("Please correct the highlighted fields", "error");
     return;
   }
 
   try {
     showSpinner();
-    const result = await registerUser(name, email, password);
+    const result = await registerUser(
+      values.name,
+      values.email,
+      values.password,
+    );
 
     if (result) {
-      // Store success message for display after redirect
       sessionStorage.setItem(
         "notification",
         JSON.stringify({
           type: "success",
           message: "Registered successfully!",
-        })
+        }),
       );
-
       window.location.href = "login.html";
     }
   } catch (error) {
@@ -95,11 +96,8 @@ export async function onRegister(event) {
   }
 }
 
-// Form submission
 export function initRegisterForm() {
-  // Redirect if already logged in
   if (redirectIfLoggedIn()) return;
-
   const form = document.getElementById("register");
   if (!form) return;
   form.addEventListener("submit", onRegister);
