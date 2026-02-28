@@ -12,6 +12,7 @@ body {
 
 main {
   max-width: 1500px;
+  margin: 0 auto;
 }
 
 .title-section {

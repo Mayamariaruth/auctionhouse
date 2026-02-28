@@ -2,7 +2,17 @@ import { loginUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 import { setAuth } from "../../utils/auth.js";
-import { redirectIfLoggedIn } from "./login.js";
+import { getProfile } from "../../utils/auth.js";
+
+// Redirect logged-in users
+export function redirectIfLoggedIn() {
+  const user = getProfile();
+  if (user) {
+    window.location.href = `profile.html?user=${user.name}`;
+    return true;
+  }
+  return false;
+}
 
 // Validate login input
 function validateLoginInput(email, password) {
