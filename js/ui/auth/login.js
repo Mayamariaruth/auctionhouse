@@ -3,6 +3,7 @@ import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 import { getProfile } from "../../utils/auth.js";
 import { setAuth } from "../../utils/auth.js";
+import { fetchProfile } from "../../api/profile/fetch.js";
 
 // Redirect logged-in users from login
 export function redirectIfLoggedIn() {

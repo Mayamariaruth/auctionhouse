@@ -47,12 +47,13 @@ export async function loadProfile() {
     showSpinner();
     const profile = await fetchProfile(username);
 
+    localStorage.setItem("profile", JSON.stringify(profile));
+
     document.getElementById("profile-name").textContent = profile.name;
     document.getElementById("profile-bio").textContent =
       profile.bio || "No bio provided";
-    document.getElementById(
-      "profile-credits"
-    ).textContent = `Credits: ${profile.credits}`;
+    document.getElementById("profile-credits").textContent =
+      `Credits: ${profile.credits}`;
     document.getElementById("profile-avatar").src =
       (typeof profile.avatar === "object"
         ? profile.avatar?.url
