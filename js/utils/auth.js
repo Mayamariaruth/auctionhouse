@@ -6,6 +6,12 @@ export function isLoggedIn() {
   return !!(token && profile);
 }
 
+// Store logged in user details
+export function setAuth({ accessToken, profile }) {
+  localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("profile", JSON.stringify(profile));
+}
+
 // Get the current logged-in profile
 export function getProfile() {
   try {

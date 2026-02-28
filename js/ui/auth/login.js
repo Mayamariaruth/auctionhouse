@@ -2,6 +2,7 @@ import { loginUser } from "../../api/auth.js";
 import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 import { getProfile } from "../../utils/auth.js";
+import { setAuth } from "../../utils/auth.js";
 
 // Redirect logged-in users from login
 export function redirectIfLoggedIn() {
@@ -26,7 +27,7 @@ export async function onLogin(event) {
 
   // Clear previous validation styling
   [emailField, passwordField].forEach((field) =>
-    field.classList.remove("input-error")
+    field.classList.remove("input-error"),
   );
 
   // Input validation
@@ -40,6 +41,13 @@ export async function onLogin(event) {
   try {
     showSpinner();
     const user = await loginUser({ email, password });
+    console.log("LOGIN RESULT:", user);
+
+    // Store token and profile
+    setAuth({
+      accessToken: user.accessToken,
+      profile: user,
+    });
 
     // Store success message for display after redirect
     sessionStorage.setItem(
@@ -47,7 +55,7 @@ export async function onLogin(event) {
       JSON.stringify({
         type: "success",
         message: `Welcome back, ${user.name}!`,
-      })
+      }),
     );
 
     window.location.href = "../index.html";

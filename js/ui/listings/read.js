@@ -1,4 +1,4 @@
-import { isLoggedIn } from "../../utils/auth.js";
+import { getProfile, isLoggedIn } from "../../utils/auth.js";
 import { fetchListings } from "../../api/listings/fetch.js";
 import { initAddListingForm } from "./create.js";
 import {
@@ -115,7 +115,7 @@ export async function displayListings(search = "", reset = false) {
 
     // Append new listings
     listings.forEach((listing) =>
-      createListingCard(listing, listingsContainer)
+      createListingCard(listing, listingsContainer),
     );
 
     // Show or hide Load More button
@@ -181,8 +181,9 @@ export function createListingCard(listing, container) {
       : "No description provided.";
 
   // Check if current user is seller
-  const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
-  const isSeller = isLoggedIn() && seller?.name === userProfile?.name;
+  const userProfile = getProfile();
+  const isSeller =
+    isLoggedIn() && userProfile && seller?.name === userProfile.name;
 
   // Check is listing is active or ended
   const isActive = new Date(endsAt) > new Date();
