@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* global bootstrap */
 import { editListing } from "../../api/listings/edit.js";
 import { openDeleteListingModal } from "./delete.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
@@ -10,6 +12,7 @@ import { displayListings } from "./read.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 import { fetchPath } from "../../utils/fetchPath.js";
 import { fetchListingById } from "../../api/listings/fetch.js";
+import { showNotification } from "../../utils/notifications.js";
 
 let currentListingId = null;
 
@@ -116,7 +119,7 @@ export function initEditListingForm() {
       setError(
         form,
         "description",
-        "Description must be at least 10 characters"
+        "Description must be at least 10 characters",
       );
       hasError = true;
     } else if (description.length > 150) {

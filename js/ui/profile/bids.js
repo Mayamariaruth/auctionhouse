@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { fetchBidsByProfile } from "../../api/profile/fetch.js";
 
 // Fetch profile bids in tabs section

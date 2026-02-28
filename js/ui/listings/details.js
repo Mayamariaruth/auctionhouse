@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* global bootstrap */
 import { fetchListingById } from "../../api/listings/fetch.js";
 import { showNotification } from "../../utils/notifications.js";
 import { isLoggedIn } from "../../utils/auth.js";
@@ -215,7 +217,7 @@ export function initImageModal() {
       modalImage.src = img.src;
       modalImage.alt = img.alt;
       bootstrap.Modal.getOrCreateInstance(
-        document.getElementById("image-modal")
+        document.getElementById("image-modal"),
       ).show();
     });
   });

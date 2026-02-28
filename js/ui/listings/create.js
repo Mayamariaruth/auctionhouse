@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* global bootstrap */
 import { isLoggedIn, getProfile } from "../../utils/auth.js";
 import { createListing } from "../../api/listings/create.js";
 import { showNotification } from "../../utils/notifications.js";
@@ -53,7 +55,7 @@ export function initAddListingForm() {
       setError(
         form,
         "description",
-        "Description must be at least 10 characters"
+        "Description must be at least 10 characters",
       );
       hasError = true;
     } else if (description.length > 150) {

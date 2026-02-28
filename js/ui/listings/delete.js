@@ -1,6 +1,8 @@
+/* global bootstrap */
 import { deleteListing } from "../../api/listings/delete.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
 import { fetchPath } from "../../utils/fetchPath.js";
+import { showNotification } from "../../utils/notifications.js";
 
 let currentDeleteListingId = null;
 

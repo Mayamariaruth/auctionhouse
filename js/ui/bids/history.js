@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 // Display bidding history
 export function renderBidHistory(bids, container) {
   if (!container) return;
@@ -29,7 +30,7 @@ export function renderBidHistory(bids, container) {
               <td>${bid.bidder?.name || "Unknown"}</td>
               <td>${new Date(bid.created).toLocaleString()}</td>
               <td>${bid.amount}</td>
-            </tr>`
+            </tr>`,
             )
             .join("")}
         </tbody>

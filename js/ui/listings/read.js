@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* global bootstrap */
 import { getProfile, isLoggedIn } from "../../utils/auth.js";
 import { fetchListings } from "../../api/listings/fetch.js";
 import { initAddListingForm } from "./create.js";

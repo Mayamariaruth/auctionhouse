@@ -1,3 +1,4 @@
+/* global bootstrap */
 import { editProfile } from "../../api/profile/edit.js";
 import { isValidImageUrl, setError, clearErrors } from "../../utils/errors.js";
 import { showModalSpinner, hideModalSpinner } from "../../utils/spinner.js";
