@@ -52,6 +52,12 @@ To view this project locally, you can clone the repository:
 git clone https://github.com/Mayamariaruth/auctionhouse.git
 ```
 
+Install the dependencies:
+
+```
+npm install
+```
+
 ## Contributing
 
 Contributions are welcome and encouraged! To contribute:
