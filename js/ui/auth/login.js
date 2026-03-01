@@ -3,6 +3,7 @@ import { showNotification } from "../../utils/notifications.js";
 import { showSpinner, hideSpinner } from "../../utils/spinner.js";
 import { setAuth } from "../../utils/auth.js";
 import { getProfile } from "../../utils/auth.js";
+import { fetchProfile } from "../../api/profile/fetch.js";
 
 // Redirect logged-in users
 export function redirectIfLoggedIn() {
@@ -60,6 +61,13 @@ export async function onLogin(event) {
     setAuth({
       accessToken: user.accessToken,
       profile: user,
+    });
+
+    const fullProfile = await fetchProfile(user.name);
+
+    setAuth({
+      accessToken: user.accessToken,
+      profile: fullProfile,
     });
 
     sessionStorage.setItem(
