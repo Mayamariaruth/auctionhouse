@@ -15,6 +15,11 @@ main {
   margin: 0 auto;
 }
 
+main.auth-layout {
+  max-width: none;
+  width: 100%;
+}
+
 .title-section {
   background-color: #ebebeb;
   text-align: center;
